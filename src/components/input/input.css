@@ -1,0 +1,605 @@
+/**
+ * Mirage Input Component System
+ * RTL-Optimized Persian Input Components
+ * Version: 1.0.0
+ */
+
+/* ==========================================================================
+   Base Input Styles
+   ========================================================================== */
+
+.mir-input-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--mir-space-2);
+}
+
+.mir-label {
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    color: var(--mir-gray-700);
+    text-align: right;
+    direction: rtl;
+    margin-bottom: var(--mir-space-1);
+    display: block;
+}
+
+.mir-label.required::after {
+    content: ' *';
+    color: var(--mir-red-500);
+    font-weight: 600;
+}
+
+.mir-input {
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    width: 100%;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border: 1.5px solid var(--mir-gray-200);
+    border-radius: var(--mir-radius-lg);
+    font-size: var(--mir-text-base);
+    line-height: 1.5;
+    color: var(--mir-gray-900);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    direction: rtl;
+    text-align: right;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mir-input:focus {
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.mir-input::placeholder {
+    color: var(--mir-gray-400);
+    font-weight: 400;
+    opacity: 1;
+}
+
+.mir-input:disabled {
+    background: var(--mir-gray-100);
+    color: var(--mir-gray-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ==========================================================================
+   Input Variants
+   ========================================================================== */
+
+/* Primary Input */
+.mir-input-primary {
+    border-color: var(--mir-primary);
+    background: rgba(99, 102, 241, 0.02);
+}
+
+.mir-input-primary:focus {
+    border-color: var(--mir-primary-600);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Success Input */
+.mir-input-success {
+    border-color: var(--mir-green-300);
+    background: rgba(16, 185, 129, 0.02);
+}
+
+.mir-input-success:focus {
+    border-color: var(--mir-green-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Warning Input */
+.mir-input-warning {
+    border-color: var(--mir-yellow-300);
+    background: rgba(245, 158, 11, 0.02);
+}
+
+.mir-input-warning:focus {
+    border-color: var(--mir-yellow-500);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Error Input */
+.mir-input-error {
+    border-color: var(--mir-red-300);
+    background: rgba(239, 68, 68, 0.02);
+}
+
+.mir-input-error:focus {
+    border-color: var(--mir-red-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* ==========================================================================
+   Input Sizes
+   ========================================================================== */
+
+.mir-input-xs {
+    padding: var(--mir-space-2) var(--mir-space-3);
+    font-size: var(--mir-text-xs);
+    border-radius: var(--mir-radius-md);
+}
+
+.mir-input-sm {
+    padding: calc(var(--mir-space-2) + 2px) var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    border-radius: var(--mir-radius-md);
+}
+
+.mir-input-md {
+    /* Default size - already defined above */
+}
+
+.mir-input-lg {
+    padding: var(--mir-space-4) var(--mir-space-5);
+    font-size: var(--mir-text-lg);
+    border-radius: var(--mir-radius-xl);
+}
+
+.mir-input-xl {
+    padding: var(--mir-space-5) var(--mir-space-6);
+    font-size: var(--mir-text-xl);
+    border-radius: var(--mir-radius-2xl);
+}
+
+/* ==========================================================================
+   Input with Icons
+   ========================================================================== */
+
+.mir-input-with-icon {
+    position: relative;
+}
+
+.mir-input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--mir-gray-400);
+    transition: color 0.2s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.mir-input-icon-right {
+    right: var(--mir-space-4);
+}
+
+.mir-input-icon-left {
+    left: var(--mir-space-4);
+}
+
+.mir-input-with-icon .mir-input {
+    padding-right: calc(var(--mir-space-4) + 32px);
+}
+
+.mir-input-with-icon.mir-input-icon-left-only .mir-input {
+    padding-left: calc(var(--mir-space-4) + 32px);
+    padding-right: var(--mir-space-4);
+}
+
+.mir-input-with-icon .mir-input:focus + .mir-input-icon,
+.mir-input-with-icon .mir-input:focus ~ .mir-input-icon {
+    color: var(--mir-primary);
+}
+
+/* ==========================================================================
+   Password Input
+   ========================================================================== */
+
+.mir-password-toggle {
+    position: absolute;
+    top: 50%;
+    left: var(--mir-space-4);
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--mir-gray-400);
+    cursor: pointer;
+    padding: var(--mir-space-1);
+    border-radius: var(--mir-radius-sm);
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.mir-password-toggle:hover {
+    color: var(--mir-gray-600);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mir-password-toggle:focus {
+    outline: 2px solid var(--mir-primary);
+    outline-offset: 2px;
+}
+
+.mir-input-with-toggle .mir-input {
+    padding-left: calc(var(--mir-space-4) + 32px);
+}
+
+/* ==========================================================================
+   Search Input
+   ========================================================================== */
+
+.mir-search-input {
+    position: relative;
+}
+
+.mir-search-clear {
+    position: absolute;
+    top: 50%;
+    left: var(--mir-space-4);
+    transform: translateY(-50%);
+    background: var(--mir-gray-100);
+    border: none;
+    color: var(--mir-gray-500);
+    cursor: pointer;
+    padding: var(--mir-space-1);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.mir-search-clear:hover {
+    background: var(--mir-gray-200);
+    color: var(--mir-gray-700);
+}
+
+.mir-search-clear.show {
+    display: flex;
+}
+
+.mir-search-input.has-value .mir-input {
+    padding-left: calc(var(--mir-space-4) + 32px);
+}
+
+/* ==========================================================================
+   Textarea
+   ========================================================================== */
+
+.mir-textarea {
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    width: 100%;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border: 1.5px solid var(--mir-gray-200);
+    border-radius: var(--mir-radius-lg);
+    font-size: var(--mir-text-base);
+    line-height: 1.6;
+    color: var(--mir-gray-900);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    direction: rtl;
+    text-align: right;
+    outline: none;
+    resize: vertical;
+    min-height: 120px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mir-textarea:focus {
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.mir-textarea::placeholder {
+    color: var(--mir-gray-400);
+    font-weight: 400;
+}
+
+.mir-textarea:disabled {
+    background: var(--mir-gray-100);
+    color: var(--mir-gray-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+    resize: none;
+}
+
+/* Textarea Sizes */
+.mir-textarea-sm {
+    padding: var(--mir-space-2) var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    min-height: 80px;
+}
+
+.mir-textarea-lg {
+    padding: var(--mir-space-4) var(--mir-space-5);
+    font-size: var(--mir-text-lg);
+    min-height: 160px;
+}
+
+/* ==========================================================================
+   Select Dropdown
+   ========================================================================== */
+
+.mir-select {
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    width: 100%;
+    padding: var(--mir-space-3) calc(var(--mir-space-4) + 24px) var(--mir-space-3) var(--mir-space-4);
+    border: 1.5px solid var(--mir-gray-200);
+    border-radius: var(--mir-radius-lg);
+    font-size: var(--mir-text-base);
+    line-height: 1.5;
+    color: var(--mir-gray-900);
+    background: rgba(255, 255, 255, 0.8) url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'><polyline points='6,9 12,15 18,9'/></svg>") no-repeat;
+    background-position: left var(--mir-space-4) center;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    direction: rtl;
+    text-align: right;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mir-select:focus {
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.mir-select:disabled {
+    background-color: var(--mir-gray-100);
+    color: var(--mir-gray-500);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.mir-select option {
+    direction: rtl;
+    text-align: right;
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+}
+
+/* Select Sizes */
+.mir-select-sm {
+    padding: calc(var(--mir-space-2) + 2px) calc(var(--mir-space-3) + 24px) calc(var(--mir-space-2) + 2px) var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    background-position: left var(--mir-space-3) center;
+}
+
+.mir-select-lg {
+    padding: var(--mir-space-4) calc(var(--mir-space-5) + 24px) var(--mir-space-4) var(--mir-space-5);
+    font-size: var(--mir-text-lg);
+    background-position: left var(--mir-space-5) center;
+}
+
+/* ==========================================================================
+   Input Validation Messages
+   ========================================================================== */
+
+.mir-input-message {
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    font-size: var(--mir-text-sm);
+    margin-top: var(--mir-space-1);
+    direction: rtl;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+}
+
+.mir-input-message-success {
+    color: var(--mir-green-600);
+}
+
+.mir-input-message-warning {
+    color: var(--mir-yellow-600);
+}
+
+.mir-input-message-error {
+    color: var(--mir-red-600);
+}
+
+.mir-input-message-info {
+    color: var(--mir-gray-600);
+}
+
+.mir-input-message-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Input Group & Addons
+   ========================================================================== */
+
+.mir-input-addon-group {
+    display: flex;
+    direction: rtl;
+    border-radius: var(--mir-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mir-input-addon {
+    background: var(--mir-gray-100);
+    border: 1.5px solid var(--mir-gray-200);
+    padding: var(--mir-space-3) var(--mir-space-4);
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    font-size: var(--mir-text-base);
+    color: var(--mir-gray-700);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.mir-input-addon-group .mir-input {
+    border-radius: 0;
+    border-right: 0;
+    box-shadow: none;
+}
+
+.mir-input-addon-group .mir-input:focus {
+    box-shadow: none;
+    z-index: 1;
+    position: relative;
+}
+
+.mir-input-addon-right {
+    border-left: 0;
+    border-top-right-radius: var(--mir-radius-lg);
+    border-bottom-right-radius: var(--mir-radius-lg);
+}
+
+.mir-input-addon-left {
+    border-right: 0;
+    border-top-left-radius: var(--mir-radius-lg);
+    border-bottom-left-radius: var(--mir-radius-lg);
+}
+
+/* ==========================================================================
+   Floating Label
+   ========================================================================== */
+
+.mir-floating-label {
+    position: relative;
+}
+
+.mir-floating-label .mir-input {
+    padding-top: calc(var(--mir-space-3) + 12px);
+    padding-bottom: var(--mir-space-2);
+}
+
+.mir-floating-label .mir-label {
+    position: absolute;
+    right: var(--mir-space-4);
+    top: var(--mir-space-3);
+    font-size: var(--mir-text-base);
+    color: var(--mir-gray-400);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    background: transparent;
+    z-index: 1;
+    margin: 0;
+}
+
+.mir-floating-label .mir-input:focus ~ .mir-label,
+.mir-floating-label .mir-input:not(:placeholder-shown) ~ .mir-label {
+    top: var(--mir-space-1);
+    font-size: var(--mir-text-xs);
+    color: var(--mir-primary);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Persian Number Support
+   ========================================================================== */
+
+.mir-persian-numbers {
+    font-feature-settings: 'ss01' on;
+}
+
+.mir-persian-numbers::placeholder {
+    font-feature-settings: 'ss01' on;
+}
+
+/* ==========================================================================
+   Dark Mode Support
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .mir-input,
+    .mir-textarea,
+    .mir-select {
+        background: rgba(31, 41, 55, 0.8);
+        border-color: var(--mir-gray-600);
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-input:focus,
+    .mir-textarea:focus,
+    .mir-select:focus {
+        background: rgba(31, 41, 55, 0.95);
+        border-color: var(--mir-primary-400);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    
+    .mir-input::placeholder,
+    .mir-textarea::placeholder {
+        color: var(--mir-gray-500);
+    }
+    
+    .mir-label {
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-input-addon {
+        background: var(--mir-gray-700);
+        border-color: var(--mir-gray-600);
+        color: var(--mir-gray-200);
+    }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .mir-input,
+    .mir-textarea,
+    .mir-select {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    .mir-input-addon-group {
+        flex-direction: column;
+        border-radius: var(--mir-radius-lg);
+    }
+    
+    .mir-input-addon-group .mir-input {
+        border-right: 1.5px solid var(--mir-gray-200);
+        border-radius: 0;
+    }
+    
+    .mir-input-addon-group .mir-input:first-child {
+        border-top-right-radius: var(--mir-radius-lg);
+        border-top-left-radius: var(--mir-radius-lg);
+    }
+    
+    .mir-input-addon-group .mir-input:last-child {
+        border-bottom-right-radius: var(--mir-radius-lg);
+        border-bottom-left-radius: var(--mir-radius-lg);
+    }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+.mir-input:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: var(--mir-red-300);
+    background: rgba(239, 68, 68, 0.02);
+}
+
+.mir-input:invalid:not(:focus):not(:placeholder-shown):focus {
+    border-color: var(--mir-red-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mir-input,
+    .mir-textarea,
+    .mir-select,
+    .mir-input-icon,
+    .mir-password-toggle,
+    .mir-floating-label .mir-label {
+        transition: none;
+    }
+} 

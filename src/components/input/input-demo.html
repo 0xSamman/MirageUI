@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سیستم ورودی میراژ - Mirage Input System Demo</title>
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--mir-space-6);
+            font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--mir-space-8);
+            background: linear-gradient(135deg, var(--mir-primary), var(--mir-purple-500));
+            color: white;
+            padding: var(--mir-space-8);
+            border-radius: var(--mir-radius-2xl);
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-title {
+            font-size: var(--mir-text-4xl);
+            font-weight: 700;
+            margin-bottom: var(--mir-space-2);
+        }
+
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            opacity: 0.9;
+            margin-bottom: var(--mir-space-4);
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--mir-radius-xl);
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            font-size: var(--mir-text-2xl);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-4);
+            color: var(--mir-gray-900);
+            text-align: right;
+            border-bottom: 2px solid var(--mir-primary);
+            padding-bottom: var(--mir-space-2);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-4);
+        }
+
+        .demo-item {
+            background: rgba(255, 255, 255, 0.6);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .demo-label {
+            font-size: var(--mir-text-sm);
+            font-weight: 600;
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-2);
+            text-align: right;
+        }
+
+        .code-preview {
+            background: var(--mir-gray-900);
+            color: var(--mir-gray-100);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            overflow-x: auto;
+            margin-top: var(--mir-space-4);
+            direction: ltr;
+            text-align: left;
+        }
+
+        .size-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--mir-space-3);
+            align-items: flex-end;
+        }
+
+        .form-example {
+            background: rgba(255, 255, 255, 0.9);
+            padding: var(--mir-space-6);
+            border-radius: var(--mir-radius-xl);
+            margin-top: var(--mir-space-4);
+        }
+
+        .mir-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--mir-space-4);
+        }
+
+        .mir-form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .mir-form-actions {
+            display: flex;
+            gap: var(--mir-space-3);
+            justify-content: flex-end;
+            margin-top: var(--mir-space-6);
+            padding-top: var(--mir-space-4);
+            border-top: 1px solid var(--mir-gray-200);
+        }
+
+        .validation-demo {
+            background: rgba(255, 255, 255, 0.9);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            margin-top: var(--mir-space-4);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--mir-space-4);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-2);
+            color: var(--mir-primary);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--mir-space-4);
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mir-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Header -->
+        <header class="demo-header">
+            <h1 class="demo-title">سیستم ورودی میراژ</h1>
+            <p class="demo-subtitle">کامپوننت‌های ورودی بهینه‌شده برای رابط‌های کاربری فارسی</p>
+            <div style="display: flex; gap: var(--mir-space-3); justify-content: center; margin-top: var(--mir-space-4);">
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">RTL بهینه‌شده</span>
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">اعداد فارسی</span>
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">اعتبارسنجی</span>
+            </div>
+        </header>
+
+        <!-- Basic Inputs -->
+        <section class="demo-section">
+            <h2>انواع ورودی اصلی - Basic Input Types</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Text Input</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">نام</label>
+                        <input type="text" class="mir-input" placeholder="نام خود را وارد کنید" dir="rtl">
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Email Input</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label required">ایمیل</label>
+                        <input type="email" class="mir-input" placeholder="example@domain.com" dir="ltr">
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Password Input</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label required">رمز عبور</label>
+                        <div class="mir-input-with-icon">
+                            <input type="password" class="mir-input" placeholder="رمز عبور خود را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Phone Input (Persian Numbers)</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">شماره تلفن</label>
+                        <input type="tel" class="mir-input mir-persian-numbers" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="rtl">
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Search Input</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">جستجو</label>
+                        <div class="mir-input-with-icon">
+                            <input type="search" class="mir-input" placeholder="جستجو کنید...">
+                            <i data-feather="search" class="mir-input-icon mir-input-icon-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Number Input</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">عدد</label>
+                        <input type="number" class="mir-input mir-persian-numbers" placeholder="۱۲۳۴" dir="rtl">
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-preview">
+&lt;div class="mir-input-group"&gt;
+    &lt;label class="mir-label"&gt;نام&lt;/label&gt;
+    &lt;input type="text" class="mir-input" placeholder="نام خود را وارد کنید"&gt;
+&lt;/div&gt;
+
+&lt;!-- Phone with Persian Numbers --&gt;
+&lt;input type="tel" class="mir-input mir-persian-numbers" placeholder="۰۹۱۲۳۴۵۶۷۸۹"&gt;
+            </div>
+        </section>
+
+        <!-- Input Sizes -->
+        <section class="demo-section">
+            <h2>اندازه‌های ورودی - Input Sizes</h2>
+            
+            <div class="size-demo">
+                <div class="mir-form-group" style="width: 100%;">
+                    <label class="mir-label">خیلی کوچک (XS)</label>
+                    <input type="text" class="mir-input mir-input-xs" placeholder="اندازه XS" dir="rtl">
+                </div>
+                <div class="mir-form-group" style="width: 100%;">
+                    <label class="mir-label">کوچک (SM)</label>
+                    <input type="text" class="mir-input mir-input-sm" placeholder="اندازه SM" dir="rtl">
+                </div>
+                <div class="mir-form-group" style="width: 100%;">
+                    <label class="mir-label">متوسط (MD)</label>
+                    <input type="text" class="mir-input" placeholder="اندازه MD (پیش‌فرض)" dir="rtl">
+                </div>
+                <div class="mir-form-group" style="width: 100%;">
+                    <label class="mir-label">بزرگ (LG)</label>
+                    <input type="text" class="mir-input mir-input-lg" placeholder="اندازه LG" dir="rtl">
+                </div>
+                <div class="mir-form-group" style="width: 100%;">
+                    <label class="mir-label">خیلی بزرگ (XL)</label>
+                    <input type="text" class="mir-input mir-input-xl" placeholder="اندازه XL" dir="rtl">
+                </div>
+            </div>
+
+            <div class="code-preview">
+&lt;input type="text" class="mir-input mir-input-xs" placeholder="XS"&gt;
+&lt;input type="text" class="mir-input mir-input-sm" placeholder="SM"&gt;
+&lt;input type="text" class="mir-input" placeholder="MD (Default)"&gt;
+&lt;input type="text" class="mir-input mir-input-lg" placeholder="LG"&gt;
+&lt;input type="text" class="mir-input mir-input-xl" placeholder="XL"&gt;
+            </div>
+        </section>
+
+        <!-- Input Variants -->
+        <section class="demo-section">
+            <h2>انواع حالت‌ها - Input Variants</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Primary</div>
+                    <input type="text" class="mir-input mir-input-primary" placeholder="Primary Input">
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Success</div>
+                    <input type="text" class="mir-input mir-input-success" placeholder="Success Input">
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Warning</div>
+                    <input type="text" class="mir-input mir-input-warning" placeholder="Warning Input">
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Error</div>
+                    <input type="text" class="mir-input mir-input-error" placeholder="Error Input">
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Disabled</div>
+                    <input type="text" class="mir-input" placeholder="Disabled Input" disabled>
+                </div>
+            </div>
+        </section>
+
+        <!-- Textarea -->
+        <section class="demo-section">
+            <h2>منطقه متن - Textarea</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Standard Textarea</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">توضیحات</label>
+                        <textarea class="mir-textarea" rows="4" placeholder="توضیحات خود را بنویسید..." dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Auto-resize Textarea</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">متن با تغییر اندازه خودکار</label>
+                        <textarea class="mir-textarea" data-auto-resize placeholder="شروع به نوشتن کنید..." dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Textarea with Character Counter</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">پیام (حداکثر ۲۰۰ کاراکتر)</label>
+                        <textarea class="mir-textarea" data-max-length="200" placeholder="پیام خود را بنویسید..." dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Large Textarea</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">متن طولانی</label>
+                        <textarea class="mir-textarea mir-textarea-lg" placeholder="متن طولانی خود را بنویسید..." dir="rtl"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Select Dropdown -->
+        <section class="demo-section">
+            <h2>لیست انتخاب - Select Dropdown</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Standard Select</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">دسته‌بندی</label>
+                        <select class="mir-select" dir="rtl">
+                            <option>انتخاب کنید</option>
+                            <option>فناوری</option>
+                            <option>طراحی</option>
+                            <option>بازاریابی</option>
+                            <option>فروش</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Small Select</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">اندازه کوچک</label>
+                        <select class="mir-select mir-select-sm" dir="rtl">
+                            <option>کوچک</option>
+                            <option>گزینه ۱</option>
+                            <option>گزینه ۲</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Large Select</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">اندازه بزرگ</label>
+                        <select class="mir-select mir-select-lg" dir="rtl">
+                            <option>بزرگ</option>
+                            <option>گزینه ۱</option>
+                            <option>گزینه ۲</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Disabled Select</div>
+                    <div class="mir-form-group">
+                        <label class="mir-label">غیرفعال</label>
+                        <select class="mir-select" disabled dir="rtl">
+                            <option>غیرفعال</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Form Example -->
+        <section class="demo-section">
+            <h2>نمونه فرم کامل - Complete Form Example</h2>
+            
+            <div class="form-example">
+                <form class="mir-form" id="demoForm">
+                    <div class="mir-form-grid">
+                        <!-- Personal Information -->
+                        <div class="mir-form-group">
+                            <label class="mir-label required">نام</label>
+                            <input type="text" class="mir-input" name="firstName" placeholder="نام" required dir="rtl">
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label required">نام خانوادگی</label>
+                            <input type="text" class="mir-input" name="lastName" placeholder="نام خانوادگی" required dir="rtl">
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label required">ایمیل</label>
+                            <input type="email" class="mir-input" name="email" placeholder="example@domain.com" dir="ltr" required>
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label required">شماره تلفن</label>
+                            <input type="tel" class="mir-input mir-persian-numbers" name="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required dir="rtl">
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label required">رمز عبور</label>
+                            <div class="mir-input-with-icon">
+                                <input type="password" class="mir-input" name="password" placeholder="رمز عبور" required dir="rtl">
+                            </div>
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label">تاریخ تولد</label>
+                            <input type="date" class="mir-input" name="birthDate" dir="rtl">
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label">شهر</label>
+                            <select class="mir-select" name="city" dir="rtl">
+                                <option value="">انتخاب کنید</option>
+                                <option value="tehran">تهران</option>
+                                <option value="isfahan">اصفهان</option>
+                                <option value="shiraz">شیراز</option>
+                                <option value="mashhad">مشهد</option>
+                            </select>
+                        </div>
+
+                        <div class="mir-form-group">
+                            <label class="mir-label">وب‌سایت</label>
+                            <div class="mir-input-addon-group">
+                                <span class="mir-input-addon mir-input-addon-right">https://</span>
+                                <input type="text" class="mir-input" name="website" placeholder="yoursite.com" dir="ltr">
+                            </div>
+                        </div>
+
+                        <div class="mir-form-group mir-form-group-full">
+                            <label class="mir-label">درباره شما</label>
+                            <textarea class="mir-textarea" name="bio" data-max-length="500" placeholder="کمی درباره خود بنویسید..." dir="rtl"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mir-form-actions">
+                        <button type="reset" class="mir-btn mir-btn-secondary">پاک کردن</button>
+                        <button type="submit" class="mir-btn mir-btn-primary">ثبت اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+
+        <!-- Usage Guide -->
+        <section class="demo-section">
+            <h2>راهنمای استفاده - Usage Guide</h2>
+            
+            <div class="code-preview">
+&lt;!-- Import CSS --&gt;
+&lt;link rel="stylesheet" href="components/input/input.css"&gt;
+
+&lt;!-- Import JavaScript --&gt;
+&lt;script src="components/input/input.js"&gt;&lt;/script&gt;
+
+&lt;!-- Basic Input --&gt;
+&lt;div class="mir-input-group"&gt;
+    &lt;label class="mir-label"&gt;نام&lt;/label&gt;
+    &lt;input type="text" class="mir-input" placeholder="نام خود را وارد کنید"&gt;
+&lt;/div&gt;
+
+&lt;!-- Input with Validation (JavaScript) --&gt;
+&lt;script&gt;
+// Setup validation
+const nameInput = document.querySelector('#name');
+new MirageInput(nameInput, {
+    validation: {
+        required: true,
+        minLength: 2
+    }
+});
+
+// Validate form
+const form = document.querySelector('#myForm');
+const isValid = MirageInput.validateForm(form);
+&lt;/script&gt;
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Form submission demo
+        document.addEventListener('DOMContentLoaded', function() {
+            const demoForm = document.querySelector('#demoForm');
+            if (demoForm) {
+                demoForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('✅ فرم با موفقیت ارسال شد! (این یک نمایش است)');
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
