@@ -16,6 +16,9 @@
     <!-- Mirage Design System Styles -->
     <link rel="stylesheet" href="assets/css/mirage-styles.css">
     
+    <!-- Input Component Styles -->
+    <link rel="stylesheet" href="components/input/input.css">
+    
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
     
@@ -311,32 +314,36 @@
                         <form class="mir-form">
                             <div class="mir-form-grid">
                                 <!-- Text Inputs -->
-                                <div class="mir-form-group">
-                                    <label class="mir-label">نام</label>
-                                    <input type="text" class="mir-input" placeholder="نام خود را وارد کنید" dir="rtl">
+                                <div class="mir-input-group">
+                                    <input type="text" id="name" class="mir-input" placeholder=" " dir="rtl">
+                                    <label class="mir-label" for="name">نام</label>
+                                    <i class="mir-input-icon" data-feather="user"></i>
                                 </div>
 
-                                <div class="mir-form-group">
-                                    <label class="mir-label">ایمیل</label>
-                                    <input type="email" class="mir-input" placeholder="example@domain.com" dir="ltr">
+                                <div class="mir-input-group">
+                                    <input type="email" id="email" class="mir-input" placeholder=" " dir="ltr">
+                                    <label class="mir-label" for="email">ایمیل</label>
+                                    <i class="mir-input-icon" data-feather="mail"></i>
                                 </div>
 
                                 <!-- Phone with Persian Numbers -->
-                                <div class="mir-form-group">
-                                    <label class="mir-label">شماره تلفن</label>
-                                    <input type="tel" class="mir-input mir-persian-numbers" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="rtl">
+                                <div class="mir-input-group">
+                                    <input type="tel" id="phone" class="mir-input mir-persian-numbers" placeholder=" " dir="rtl">
+                                    <label class="mir-label" for="phone">شماره تلفن</label>
+                                    <i class="mir-input-icon" data-feather="phone"></i>
                                 </div>
 
                                 <!-- Select Dropdown -->
-                                <div class="mir-form-group">
-                                    <label class="mir-label">دسته‌بندی</label>
-                                    <select class="mir-select" dir="rtl">
+                                <div class="mir-input-group">
+                                    <select id="category" class="mir-select" dir="rtl">
                                         <option>انتخاب کنید</option>
                                         <option>فناوری</option>
                                         <option>طراحی</option>
                                         <option>بازاریابی</option>
                                         <option>فروش</option>
                                     </select>
+                                    <label class="mir-label" for="category">دسته‌بندی</label>
+                                    <i class="mir-input-icon" data-feather="tag"></i>
                                 </div>
 
                                 <!-- Textarea -->
@@ -534,5 +541,10 @@
 
     <!-- Scripts -->
     <script src="assets/js/mirage-script.js"></script>
+    <script src="components/input/input.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+    </script>
 </body>
 </html> 

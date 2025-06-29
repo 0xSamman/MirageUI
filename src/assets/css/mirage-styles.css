@@ -30,21 +30,21 @@
   --mir-info: #06b6d4;
   
   /* Typography Scale */
-  --mir-text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --mir-text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --mir-text-xs: 12px;
+  --mir-text-sm: 14px;
   --mir-text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
-  --mir-text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
-  --mir-text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.875rem);
+  --mir-text-lg: 18px;
+  --mir-text-xl: 20px;
   --mir-text-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
   --mir-text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 3rem);
   
   /* Spacing System - Golden Ratio Based */
   --mir-space-1: 0.25rem;
-  --mir-space-2: 0.375rem;
-  --mir-space-3: 0.625rem;
-  --mir-space-4: 1rem;
-  --mir-space-5: 1.625rem;
-  --mir-space-6: 2.625rem;
+  --mir-space-2: 4px;
+  --mir-space-3: 8px;
+  --mir-space-4: 12px;
+  --mir-space-5: 16px;
+  --mir-space-6: 20px;
   --mir-space-7: 4.25rem;
   --mir-space-8: 6.875rem;
   
@@ -60,6 +60,10 @@
   --mir-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
   --mir-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
   --mir-shadow-glow: 0 0 0 3px var(--mir-primary-soft);
+
+  --mir-radius-md: 6px;
+  --mir-radius-xl: 10px;
+  --mir-radius-2xl: 14px;
 }
 
 /* ========================================

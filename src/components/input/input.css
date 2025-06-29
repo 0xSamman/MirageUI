@@ -1,6 +1,7 @@
 /**
  * Mirage Input Component System
  * RTL-Optimized Persian Input Components
+ * Pure CSS Implementation - No JavaScript Required
  * Version: 1.0.0
  */
 
@@ -8,7 +9,7 @@
    Base Input Styles
    ========================================================================== */
 
-.mir-input-group {
+.mir-input-group-legacy {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -16,17 +17,39 @@
 }
 
 .mir-label {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
     font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
-    font-size: var(--mir-text-sm);
+    font-size: var(--mir-text-base);
     font-weight: 500;
-    color: var(--mir-gray-700);
+    color: var(--mir-gray-600);
     text-align: right;
     direction: rtl;
-    margin-bottom: var(--mir-space-1);
-    display: block;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background: transparent;
+    z-index: 2;
+    margin: 0;
 }
 
-.mir-label.required::after {
+/* Legacy block label for older styles */
+.mir-label-block {
+    position: static;
+    display: block;
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-700);
+    margin-bottom: var(--mir-space-1);
+    pointer-events: auto;
+    transform: none;
+    top: auto;
+    right: auto;
+    background: transparent;
+}
+
+.mir-label.required::after,
+.mir-label-block.required::after {
     content: ' *';
     color: var(--mir-red-500);
     font-weight: 600;
@@ -465,37 +488,186 @@
 }
 
 /* ==========================================================================
-   Floating Label
+   Standard Input Groups - Pure CSS Implementation
    ========================================================================== */
 
+/*
+ * Standard Mirage Input Component:
+ * - Uses :focus to detect when input is focused
+ * - Uses :not(:placeholder-shown) to detect when input has content
+ * - No JavaScript required for label animation
+ * - placeholder=" " (single space) is required for :not(:placeholder-shown) to work
+ */
+
+.mir-input-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.mir-input-group .mir-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 14px;
+    padding: 18px 48px 8px 16px;
+    font-size: var(--mir-text-base);
+    color: var(--mir-gray-900);
+    transition: all 0.2s ease;
+    outline: none;
+    text-align: right;
+    font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    direction: rtl;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mir-input-group .mir-input:focus {
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.mir-input-group .mir-input.mir-error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.mir-input-group .mir-input.mir-error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+.mir-input-group .mir-label {
+    /* Base absolute positioning inherited from .mir-label */
+}
+
+.mir-input-group .mir-input:focus + .mir-label,
+.mir-input-group .mir-input:not(:placeholder-shown) + .mir-label {
+    top: -3px;
+    transform: translateY(0) scale(0.75);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+    color: var(--mir-primary);
+}
+
+/* Enhanced label animation - Pure CSS */
+.mir-input-group .mir-input:focus + .mir-label {
+    color: var(--mir-primary);
+}
+
+.mir-input-group .mir-input:not(:focus):not(:placeholder-shown) + .mir-label {
+    color: var(--mir-gray-600);
+}
+
+/* Handle browser autofill - Pure CSS */
+.mir-input-group .mir-input:-webkit-autofill + .mir-label,
+.mir-input-group .mir-input:-webkit-autofill:hover + .mir-label,
+.mir-input-group .mir-input:-webkit-autofill:focus + .mir-label {
+    top: 2px;
+    transform: translateY(0) scale(0.75);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+    color: var(--mir-gray-600);
+}
+
+.mir-input-group .mir-input:-webkit-autofill:focus + .mir-label {
+    color: var(--mir-primary);
+}
+
+/* Handle pre-filled inputs and valid states - Pure CSS */
+.mir-input-group .mir-input:valid:not(:placeholder-shown) + .mir-label {
+    top: -3px;
+    transform: translateY(0) scale(0.75);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+    color: var(--mir-gray-600);
+}
+
+.mir-input-group .mir-input-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mir-gray-600);
+    transition: color 0.2s ease;
+    font-size: 20px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.mir-input-group .mir-input:focus ~ .mir-input-icon {
+    color: var(--mir-primary);
+}
+
+/* Alternative input group wrapper for backward compatibility */
 .mir-floating-label {
     position: relative;
 }
 
 .mir-floating-label .mir-input {
-    padding-top: calc(var(--mir-space-3) + 12px);
-    padding-bottom: var(--mir-space-2);
+    padding: 18px 48px 8px 16px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 14px;
 }
 
 .mir-floating-label .mir-label {
-    position: absolute;
-    right: var(--mir-space-4);
-    top: var(--mir-space-3);
-    font-size: var(--mir-text-base);
-    color: var(--mir-gray-400);
-    transition: all 0.2s ease;
-    pointer-events: none;
-    background: transparent;
-    z-index: 1;
-    margin: 0;
+    /* Base absolute positioning inherited from .mir-label */
 }
 
 .mir-floating-label .mir-input:focus ~ .mir-label,
 .mir-floating-label .mir-input:not(:placeholder-shown) ~ .mir-label {
-    top: var(--mir-space-1);
-    font-size: var(--mir-text-xs);
+    top: 2px;
+    transform: translateY(0) scale(0.75);
     color: var(--mir-primary);
     font-weight: 500;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+}
+
+/* Enhanced label animation - Pure CSS */
+.mir-floating-label .mir-input:focus ~ .mir-label {
+    color: var(--mir-primary);
+}
+
+.mir-floating-label .mir-input:not(:focus):not(:placeholder-shown) ~ .mir-label {
+    color: var(--mir-gray-600);
+}
+
+/* Handle browser autofill - Pure CSS */
+.mir-floating-label .mir-input:-webkit-autofill ~ .mir-label,
+.mir-floating-label .mir-input:-webkit-autofill:hover ~ .mir-label,
+.mir-floating-label .mir-input:-webkit-autofill:focus ~ .mir-label {
+    top: 2px;
+    transform: translateY(0) scale(0.75);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+    color: var(--mir-gray-600);
+}
+
+.mir-floating-label .mir-input:-webkit-autofill:focus ~ .mir-label {
+    color: var(--mir-primary);
+}
+
+/* Handle pre-filled inputs and valid states - Pure CSS */
+.mir-floating-label .mir-input:valid:not(:placeholder-shown) ~ .mir-label {
+    top: 2px;
+    transform: translateY(0) scale(0.75);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 4px;
+    right: 40px;
+    color: var(--mir-gray-600);
 }
 
 /* ==========================================================================
@@ -599,7 +771,35 @@
     .mir-select,
     .mir-input-icon,
     .mir-password-toggle,
-    .mir-floating-label .mir-label {
+    .mir-floating-label .mir-label,
+    .mir-input-group .mir-input,
+    .mir-input-group .mir-label,
+    .mir-input-group .mir-input-icon {
         transition: none;
     }
+}
+
+/* ==========================================================================
+   RTL Support for Input Groups
+   ========================================================================== */
+
+[dir="rtl"] .mir-input-group .mir-input {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .mir-input-group .mir-label {
+    right: 48px;
+    left: auto;
+}
+
+[dir="rtl"] .mir-input-group .mir-input:focus + .mir-label,
+[dir="rtl"] .mir-input-group .mir-input:not(:placeholder-shown) + .mir-label {
+    right: 35px;
+    left: auto;
+}
+
+[dir="rtl"] .mir-input-group .mir-input-icon {
+    right: 16px;
+    left: auto;
 } 

@@ -11,6 +11,9 @@
     <!-- Mirage Design System Styles -->
     <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
     
+    <!-- Input Component Styles -->
+    <link rel="stylesheet" href="input.css">
+    
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
     
@@ -187,73 +190,112 @@
             </div>
         </header>
 
-        <!-- Basic Inputs -->
+        <!-- Standard Input Groups -->
         <section class="demo-section">
-            <h2>انواع ورودی اصلی - Basic Input Types</h2>
+            <h2>ورودی‌های استاندارد میراژ - Mirage Input Components</h2>
+            <p style="color: var(--mir-gray-600); margin-bottom: var(--mir-space-4); text-align: right;">کامپوننت‌های ورودی استاندارد با انیمیشن زیبا، پیاده‌سازی خالص CSS و پشتیبانی کامل از RTL</p>
             
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div class="demo-label">Text Input</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label">نام</label>
-                        <input type="text" class="mir-input" placeholder="نام خود را وارد کنید" dir="rtl">
+                    <div class="demo-label">Mobile Input with Icon</div>
+                    <div class="mir-input-group">
+                        <input type="tel" 
+                               id="mobile" 
+                               name="mobile" 
+                               class="mir-input" 
+                               placeholder=" " 
+                               autocomplete="tel">
+                        <label class="mir-label" for="mobile">شماره موبایل</label>
+                        <i class="mir-input-icon" data-feather="phone"></i>
                     </div>
                 </div>
 
                 <div class="demo-item">
                     <div class="demo-label">Email Input</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label required">ایمیل</label>
-                        <input type="email" class="mir-input" placeholder="example@domain.com" dir="ltr">
+                    <div class="mir-input-group">
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               class="mir-input" 
+                               placeholder=" " 
+                               autocomplete="email">
+                        <label class="mir-label" for="email">آدرس ایمیل</label>
+                        <i class="mir-input-icon" data-feather="mail"></i>
                     </div>
                 </div>
 
                 <div class="demo-item">
                     <div class="demo-label">Password Input</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label required">رمز عبور</label>
-                        <div class="mir-input-with-icon">
-                            <input type="password" class="mir-input" placeholder="رمز عبور خود را وارد کنید">
-                        </div>
+                    <div class="mir-input-group">
+                        <input type="password" 
+                               id="password" 
+                               name="password" 
+                               class="mir-input" 
+                               placeholder=" ">
+                        <label class="mir-label" for="password">کلمه عبور</label>
+                        <i class="mir-input-icon" data-feather="lock"></i>
                     </div>
                 </div>
 
                 <div class="demo-item">
-                    <div class="demo-label">Phone Input (Persian Numbers)</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label">شماره تلفن</label>
-                        <input type="tel" class="mir-input mir-persian-numbers" placeholder="۰۹۱۲۳۴۵۶۷۸۹" dir="rtl">
+                    <div class="demo-label">Name Input</div>
+                    <div class="mir-input-group">
+                        <input type="text" 
+                               id="fullname" 
+                               name="fullname" 
+                               class="mir-input" 
+                               placeholder=" ">
+                        <label class="mir-label" for="fullname">نام و نام خانوادگی</label>
+                        <i class="mir-input-icon" data-feather="user"></i>
+                    </div>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Error State</div>
+                    <div class="mir-input-group">
+                        <input type="email" 
+                               id="email-error" 
+                               name="email-error" 
+                               class="mir-input mir-error" 
+                               placeholder=" " 
+                               value="invalid-email">
+                        <label class="mir-label" for="email-error">ایمیل نامعتبر</label>
+                        <i class="mir-input-icon" data-feather="alert-circle"></i>
+                    </div>
+                    <div class="mir-input-message mir-input-message-error">
+                        <i class="mir-input-message-icon" data-feather="alert-circle"></i>
+                        لطفاً یک آدرس ایمیل معتبر وارد کنید
                     </div>
                 </div>
 
                 <div class="demo-item">
                     <div class="demo-label">Search Input</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label">جستجو</label>
-                        <div class="mir-input-with-icon">
-                            <input type="search" class="mir-input" placeholder="جستجو کنید...">
-                            <i data-feather="search" class="mir-input-icon mir-input-icon-right"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="demo-item">
-                    <div class="demo-label">Number Input</div>
-                    <div class="mir-form-group">
-                        <label class="mir-label">عدد</label>
-                        <input type="number" class="mir-input mir-persian-numbers" placeholder="۱۲۳۴" dir="rtl">
+                    <div class="mir-input-group">
+                        <input type="search" 
+                               id="search" 
+                               name="search" 
+                               class="mir-input" 
+                               placeholder=" ">
+                        <label class="mir-label" for="search">جستجو کنید...</label>
+                        <i class="mir-input-icon" data-feather="search"></i>
                     </div>
                 </div>
             </div>
 
             <div class="code-preview">
-&lt;div class="mir-input-group"&gt;
-    &lt;label class="mir-label"&gt;نام&lt;/label&gt;
-    &lt;input type="text" class="mir-input" placeholder="نام خود را وارد کنید"&gt;
-&lt;/div&gt;
-
-&lt;!-- Phone with Persian Numbers --&gt;
-&lt;input type="tel" class="mir-input mir-persian-numbers" placeholder="۰۹۱۲۳۴۵۶۷۸۹"&gt;
+                <strong>Standard Mirage Input Component - Pure CSS Implementation</strong><br><br>
+<strong>HTML Usage:</strong><br>
+&lt;div class="mir-input-group"&gt;<br>
+&nbsp;&nbsp;&lt;input type="tel" id="mobile" name="mobile" class="mir-input" placeholder=" " autocomplete="tel"&gt;<br>
+&nbsp;&nbsp;&lt;label class="mir-label" for="mobile"&gt;شماره موبایل&lt;/label&gt;<br>
+&nbsp;&nbsp;&lt;i class="mir-input-icon" data-feather="phone"&gt;&lt;/i&gt;<br>
+&lt;/div&gt;<br><br>
+<strong>Key Features:</strong><br>
+• placeholder=" " (single space) is required for CSS :not(:placeholder-shown)<br>
+• Pure CSS implementation - no JavaScript required<br>
+• Works with autofill, pre-filled values, and all modern browsers<br>
+• RTL optimized for Persian/Arabic languages<br>
+• This is the standard input style for Mirage Design System
             </div>
         </section>
 
@@ -261,35 +303,69 @@
         <section class="demo-section">
             <h2>اندازه‌های ورودی - Input Sizes</h2>
             
-            <div class="size-demo">
-                <div class="mir-form-group" style="width: 100%;">
-                    <label class="mir-label">خیلی کوچک (XS)</label>
-                    <input type="text" class="mir-input mir-input-xs" placeholder="اندازه XS" dir="rtl">
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">خیلی کوچک (XS)</div>
+                    <div class="mir-input-group">
+                        <input type="text" id="xs-input" class="mir-input mir-input-xs" placeholder=" ">
+                        <label class="mir-label" for="xs-input">اندازه XS</label>
+                        <i class="mir-input-icon" data-feather="hash"></i>
+                    </div>
                 </div>
-                <div class="mir-form-group" style="width: 100%;">
-                    <label class="mir-label">کوچک (SM)</label>
-                    <input type="text" class="mir-input mir-input-sm" placeholder="اندازه SM" dir="rtl">
+
+                <div class="demo-item">
+                    <div class="demo-label">کوچک (SM)</div>
+                    <div class="mir-input-group">
+                        <input type="text" id="sm-input" class="mir-input mir-input-sm" placeholder=" ">
+                        <label class="mir-label" for="sm-input">اندازه SM</label>
+                        <i class="mir-input-icon" data-feather="hash"></i>
+                    </div>
                 </div>
-                <div class="mir-form-group" style="width: 100%;">
-                    <label class="mir-label">متوسط (MD)</label>
-                    <input type="text" class="mir-input" placeholder="اندازه MD (پیش‌فرض)" dir="rtl">
+
+                <div class="demo-item">
+                    <div class="demo-label">متوسط (MD)</div>
+                    <div class="mir-input-group">
+                        <input type="text" id="md-input" class="mir-input" placeholder=" ">
+                        <label class="mir-label" for="md-input">اندازه MD (پیش‌فرض)</label>
+                        <i class="mir-input-icon" data-feather="hash"></i>
+                    </div>
                 </div>
-                <div class="mir-form-group" style="width: 100%;">
-                    <label class="mir-label">بزرگ (LG)</label>
-                    <input type="text" class="mir-input mir-input-lg" placeholder="اندازه LG" dir="rtl">
+
+                <div class="demo-item">
+                    <div class="demo-label">بزرگ (LG)</div>
+                    <div class="mir-input-group">
+                        <input type="text" id="lg-input" class="mir-input mir-input-lg" placeholder=" ">
+                        <label class="mir-label" for="lg-input">اندازه LG</label>
+                        <i class="mir-input-icon" data-feather="hash"></i>
+                    </div>
                 </div>
-                <div class="mir-form-group" style="width: 100%;">
-                    <label class="mir-label">خیلی بزرگ (XL)</label>
-                    <input type="text" class="mir-input mir-input-xl" placeholder="اندازه XL" dir="rtl">
+
+                <div class="demo-item">
+                    <div class="demo-label">خیلی بزرگ (XL)</div>
+                    <div class="mir-input-group">
+                        <input type="text" id="xl-input" class="mir-input mir-input-xl" placeholder=" ">
+                        <label class="mir-label" for="xl-input">اندازه XL</label>
+                        <i class="mir-input-icon" data-feather="hash"></i>
+                    </div>
                 </div>
             </div>
 
             <div class="code-preview">
-&lt;input type="text" class="mir-input mir-input-xs" placeholder="XS"&gt;
-&lt;input type="text" class="mir-input mir-input-sm" placeholder="SM"&gt;
-&lt;input type="text" class="mir-input" placeholder="MD (Default)"&gt;
-&lt;input type="text" class="mir-input mir-input-lg" placeholder="LG"&gt;
-&lt;input type="text" class="mir-input mir-input-xl" placeholder="XL"&gt;
+&lt;!-- Input Sizes --&gt;
+&lt;div class="mir-input-group"&gt;
+    &lt;input type="text" id="xs" class="mir-input mir-input-xs" placeholder=" "&gt;
+    &lt;label class="mir-label" for="xs"&gt;اندازه XS&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="mir-input-group"&gt;
+    &lt;input type="text" id="sm" class="mir-input mir-input-sm" placeholder=" "&gt;
+    &lt;label class="mir-label" for="sm"&gt;اندازه SM&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="mir-input-group"&gt;
+    &lt;input type="text" id="md" class="mir-input" placeholder=" "&gt;
+    &lt;label class="mir-label" for="md"&gt;اندازه MD (پیش‌فرض)&lt;/label&gt;
+&lt;/div&gt;
             </div>
         </section>
 
@@ -419,8 +495,6 @@
             </div>
         </section>
 
-
-
         <!-- Form Example -->
         <section class="demo-section">
             <h2>نمونه فرم کامل - Complete Form Example</h2>
@@ -494,8 +568,6 @@
             </div>
         </section>
 
-
-
         <!-- Usage Guide -->
         <section class="demo-section">
             <h2>راهنمای استفاده - Usage Guide</h2>
@@ -504,13 +576,13 @@
 &lt;!-- Import CSS --&gt;
 &lt;link rel="stylesheet" href="components/input/input.css"&gt;
 
-&lt;!-- Import JavaScript --&gt;
+&lt;!-- Import JavaScript (Optional - only for validation/Persian numbers) --&gt;
 &lt;script src="components/input/input.js"&gt;&lt;/script&gt;
 
-&lt;!-- Basic Input --&gt;
+&lt;!-- Standard Mirage Input --&gt;
 &lt;div class="mir-input-group"&gt;
-    &lt;label class="mir-label"&gt;نام&lt;/label&gt;
-    &lt;input type="text" class="mir-input" placeholder="نام خود را وارد کنید"&gt;
+    &lt;input type="text" id="name" class="mir-input" placeholder=" "&gt;
+    &lt;label class="mir-label" for="name"&gt;نام&lt;/label&gt;
 &lt;/div&gt;
 
 &lt;!-- Input with Validation (JavaScript) --&gt;
@@ -534,6 +606,8 @@ const isValid = MirageInput.validateForm(form);
 
     <!-- Scripts -->
     <script src="../../assets/js/mirage-script.js"></script>
+    <!-- input.js is optional now - only needed for validation and Persian numbers -->
+    <script src="input.js"></script>
     <script>
         // Initialize Feather Icons
         feather.replace();
