@@ -1,0 +1,449 @@
+/* ========================================
+   MIRAGE ALERT COMPONENT - RTL PERSIAN OPTIMIZED
+   ======================================== */
+
+/* Alert Container */
+.mir-alert {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mir-space-3);
+    padding: var(--mir-space-4);
+    border-radius: 16px;
+    font-family: 'YekanBakh', sans-serif;
+    font-size: var(--mir-text-sm);
+    line-height: 1.75;
+    direction: rtl;
+    text-align: right;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s var(--mir-ease-standard);
+    margin-bottom: var(--mir-space-4);
+}
+
+.mir-alert:last-child {
+    margin-bottom: 0;
+}
+
+/* Alert Icon */
+.mir-alert-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: currentColor;
+}
+
+/* Alert Content */
+.mir-alert-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.mir-alert-title {
+    font-weight: 600;
+    font-size: var(--mir-text-base);
+    margin-bottom: var(--mir-space-2);
+    color: currentColor;
+}
+
+.mir-alert-message {
+    font-weight: 400;
+    line-height: 1.75;
+    color: currentColor;
+    opacity: 0.9;
+}
+
+/* Alert Close Button */
+.mir-alert-close {
+    position: absolute;
+    top: var(--mir-space-3);
+    left: var(--mir-space-3);
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: currentColor;
+    opacity: 0.7;
+    transition: all 0.2s var(--mir-ease-standard);
+}
+
+.mir-alert-close:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+}
+
+.mir-alert-close:active {
+    transform: scale(0.95);
+}
+
+.mir-alert-close svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Alert Actions */
+.mir-alert-actions {
+    display: flex;
+    gap: var(--mir-space-2);
+    margin-top: var(--mir-space-3);
+}
+
+.mir-alert-action {
+    padding: var(--mir-space-2) var(--mir-space-3);
+    border-radius: 8px;
+    border: none;
+    font-size: var(--mir-text-xs);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s var(--mir-ease-standard);
+    background: rgba(255, 255, 255, 0.2);
+    color: currentColor;
+}
+
+.mir-alert-action:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.mir-alert-action:active {
+    transform: translateY(0);
+}
+
+/* Alert Variants */
+
+/* Success Alert */
+.mir-alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--mir-success);
+}
+
+.mir-alert-success .mir-alert-close:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+/* Warning Alert */
+.mir-alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: var(--mir-warning);
+}
+
+.mir-alert-warning .mir-alert-close:hover {
+    background: rgba(245, 158, 11, 0.2);
+}
+
+/* Error Alert */
+.mir-alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--mir-error);
+}
+
+.mir-alert-error .mir-alert-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* Info Alert */
+.mir-alert-info {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: var(--mir-primary-solid);
+}
+
+.mir-alert-info .mir-alert-close:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+/* Alert Sizes */
+.mir-alert-sm {
+    padding: var(--mir-space-3);
+    font-size: var(--mir-text-xs);
+}
+
+.mir-alert-sm .mir-alert-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.mir-alert-sm .mir-alert-title {
+    font-size: var(--mir-text-sm);
+}
+
+.mir-alert-lg {
+    padding: var(--mir-space-5);
+    font-size: var(--mir-text-base);
+}
+
+.mir-alert-lg .mir-alert-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.mir-alert-lg .mir-alert-title {
+    font-size: var(--mir-text-lg);
+}
+
+/* Alert Container for Notifications */
+.mir-alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    max-width: 400px;
+    width: 100%;
+    direction: rtl;
+}
+
+.mir-alert-container.mir-alert-container-left {
+    left: 20px;
+    right: auto;
+}
+
+.mir-alert-container.mir-alert-container-center {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+}
+
+.mir-alert-container.mir-alert-container-bottom {
+    top: auto;
+    bottom: 20px;
+}
+
+/* Alert Animations */
+.mir-alert-enter {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.mir-alert-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s var(--mir-ease-spring);
+}
+
+.mir-alert-exit {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mir-alert-exit-active {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s var(--mir-ease-standard);
+}
+
+/* Progress Bar for Auto-dismiss */
+.mir-alert-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 0 0 16px 16px;
+    overflow: hidden;
+}
+
+.mir-alert-progress-bar {
+    height: 100%;
+    background: currentColor;
+    width: 100%;
+    transform-origin: right;
+    transition: transform linear;
+}
+
+/* Alert with Progress */
+.mir-alert-with-progress {
+    padding-bottom: var(--mir-space-4);
+}
+
+/* Inline Alert (for forms) */
+.mir-alert-inline {
+    margin-bottom: var(--mir-space-2);
+    padding: var(--mir-space-2) var(--mir-space-3);
+    font-size: var(--mir-text-xs);
+    border-radius: 8px;
+}
+
+.mir-alert-inline .mir-alert-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.mir-alert-inline .mir-alert-title {
+    font-size: var(--mir-text-xs);
+    margin-bottom: var(--mir-space-1);
+}
+
+/* Alert List */
+.mir-alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mir-space-2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .mir-alert-container {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+        width: auto;
+    }
+    
+    .mir-alert-container.mir-alert-container-left {
+        left: 10px;
+        right: 10px;
+    }
+    
+    .mir-alert-container.mir-alert-container-center {
+        left: 10px;
+        right: 10px;
+        transform: none;
+    }
+    
+    .mir-alert {
+        padding: var(--mir-space-3);
+        font-size: var(--mir-text-xs);
+    }
+    
+    .mir-alert-title {
+        font-size: var(--mir-text-sm);
+    }
+    
+    .mir-alert-actions {
+        flex-direction: column;
+        gap: var(--mir-space-1);
+    }
+    
+    .mir-alert-action {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Alert Fade Animation */
+.mir-alert-fade-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.mir-alert-fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s var(--mir-ease-spring);
+}
+
+.mir-alert-fade-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mir-alert-fade-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s var(--mir-ease-standard);
+}
+
+/* Alert Slide Animation */
+.mir-alert-slide-enter {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.mir-alert-slide-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s var(--mir-ease-spring);
+}
+
+.mir-alert-slide-exit {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mir-alert-slide-exit-active {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s var(--mir-ease-standard);
+}
+
+/* Persian Number Support */
+.mir-alert .mir-persian-numbers {
+    font-family: 'YekanBakh', sans-serif;
+    direction: ltr;
+    text-align: right;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .mir-alert {
+        border-width: 2px;
+        backdrop-filter: blur(24px);
+    }
+    
+    .mir-alert-success {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: var(--mir-success);
+    }
+    
+    .mir-alert-warning {
+        background: rgba(245, 158, 11, 0.2);
+        border-color: var(--mir-warning);
+    }
+    
+    .mir-alert-error {
+        background: rgba(239, 68, 68, 0.2);
+        border-color: var(--mir-error);
+    }
+    
+    .mir-alert-info {
+        background: rgba(99, 102, 241, 0.2);
+        border-color: var(--mir-primary-solid);
+    }
+}
+
+/* Accessibility */
+.mir-alert[role="alert"] {
+    /* Announced by screen readers */
+}
+
+.mir-alert[role="status"] {
+    /* Polite announcement */
+}
+
+/* Focus Management */
+.mir-alert-close:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .mir-alert {
+        transition: none;
+    }
+    
+    .mir-alert-enter-active,
+    .mir-alert-exit-active,
+    .mir-alert-fade-enter-active,
+    .mir-alert-fade-exit-active,
+    .mir-alert-slide-enter-active,
+    .mir-alert-slide-exit-active {
+        transition: none;
+    }
+    
+    .mir-alert-progress-bar {
+        transition: none;
+    }
+}

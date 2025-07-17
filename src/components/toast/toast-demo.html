@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سیستم تست میراژ - Mirage Toast System Demo</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Toast Component Styles -->
+    <link rel="stylesheet" href="toast.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-title {
+            font-family: 'YekanBakh', sans-serif;
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-gray-900);
+            margin-bottom: var(--mir-space-4);
+            text-align: right;
+        }
+        
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            color: var(--mir-gray-700);
+            margin-bottom: var(--mir-space-3);
+            text-align: right;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-5);
+        }
+        
+        .demo-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .demo-label {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-3);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .header {
+            text-align: center;
+            padding: var(--mir-space-8) var(--mir-space-4);
+            background: var(--mir-warning);
+            color: white;
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .header h1 {
+            font-family: 'YekanBakh', sans-serif;
+            font-size: var(--mir-text-3xl);
+            font-weight: 700;
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .header p {
+            font-size: var(--mir-text-lg);
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--mir-space-4);
+        }
+        
+        .code-preview {
+            background: var(--mir-gray-900);
+            color: var(--mir-gray-100);
+            padding: var(--mir-space-4);
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            direction: ltr;
+            text-align: left;
+            margin-top: var(--mir-space-3);
+            overflow-x: auto;
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: var(--mir-space-3);
+            justify-content: center;
+            margin-bottom: var(--mir-space-6);
+            flex-wrap: wrap;
+        }
+        
+        .demo-control-btn {
+            padding: var(--mir-space-2) var(--mir-space-4);
+            border: 1px solid var(--mir-warning);
+            border-radius: 8px;
+            background: white;
+            color: var(--mir-warning);
+            font-size: var(--mir-text-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .demo-control-btn:hover {
+            background: var(--mir-warning);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .demo-stat {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-stat-value {
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-warning);
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .demo-stat-label {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-4);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: var(--mir-space-4);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mir-warning);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--mir-space-3);
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-2);
+            color: var(--mir-gray-900);
+        }
+        
+        .feature-desc {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            line-height: 1.6;
+        }
+        
+        .demo-button {
+            width: 100%;
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .position-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--mir-space-2);
+            margin-bottom: var(--mir-space-4);
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .demo-control-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .position-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <div class="header">
+        <div class="container">
+            <h1>سیستم تست میراژ</h1>
+            <p>اعلان‌های پاپ‌آپ موقت با بهینه‌سازی RTL فارسی</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Features Overview -->
+        <section class="demo-section">
+            <h2 class="demo-title">ویژگی‌های سیستم تست - Toast Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="zap"></i>
+                    </div>
+                    <h3 class="feature-title">نمایش خودکار</h3>
+                    <p class="feature-desc">ظاهر و ناپدید شدن خودکار با تایمر</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="corner-right-down"></i>
+                    </div>
+                    <h3 class="feature-title">موقعیت‌های مختلف</h3>
+                    <p class="feature-desc">نمایش در گوشه‌های مختلف صفحه</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="layers"></i>
+                    </div>
+                    <h3 class="feature-title">پشته‌ای</h3>
+                    <p class="feature-desc">نمایش چندین تست به صورت پشته‌ای</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="pause"></i>
+                    </div>
+                    <h3 class="feature-title">توقف هنگام هاور</h3>
+                    <p class="feature-desc">توقف تایمر هنگام قرارگیری ماوس</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="activity"></i>
+                    </div>
+                    <h3 class="feature-title">نوار پیشرفت</h3>
+                    <p class="feature-desc">نمایش زمان باقی‌مانده</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="smartphone"></i>
+                    </div>
+                    <h3 class="feature-title">ریسپانسیو</h3>
+                    <p class="feature-desc">سازگار با موبایل و تبلت</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Statistics -->
+        <section class="demo-section">
+            <h2 class="demo-title">آمار تست‌ها - Toast Statistics</h2>
+            
+            <div class="demo-stats">
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="totalToasts">۰</div>
+                    <div class="demo-stat-label">کل تست‌ها</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="activeToasts">۰</div>
+                    <div class="demo-stat-label">تست‌های فعال</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="closedToasts">۰</div>
+                    <div class="demo-stat-label">تست‌های بسته شده</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="autoClosedToasts">۰</div>
+                    <div class="demo-stat-label">بسته شده خودکار</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Controls -->
+        <section class="demo-section">
+            <h2 class="demo-title">کنترل‌های تست - Toast Controls</h2>
+            
+            <div class="demo-controls">
+                <button class="demo-control-btn" onclick="clearAllToasts()">
+                    <i data-feather="x-circle"></i>
+                    پاک کردن همه
+                </button>
+                <button class="demo-control-btn" onclick="pauseAllToasts()">
+                    <i data-feather="pause"></i>
+                    توقف همه
+                </button>
+                <button class="demo-control-btn" onclick="resumeAllToasts()">
+                    <i data-feather="play"></i>
+                    ادامه همه
+                </button>
+                <button class="demo-control-btn" onclick="showMultipleToasts()">
+                    <i data-feather="layers"></i>
+                    نمایش چندتایی
+                </button>
+                <button class="demo-control-btn" onclick="showLongToast()">
+                    <i data-feather="clock"></i>
+                    نمایش طولانی
+                </button>
+            </div>
+        </section>
+
+        <!-- Toast Types -->
+        <section class="demo-section">
+            <h2 class="demo-title">انواع تست - Toast Types</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">تست موفقیت</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">اطلاع‌رسانی عملیات موفق</p>
+                    <button class="mir-btn mir-btn-success demo-button" onclick="showSuccessToast()">
+                        <i data-feather="check-circle"></i>
+                        نمایش موفقیت
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست خطا</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">اطلاع‌رسانی خطا و مشکل</p>
+                    <button class="mir-btn mir-btn-danger demo-button" onclick="showErrorToast()">
+                        <i data-feather="x-circle"></i>
+                        نمایش خطا
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست هشدار</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">اطلاع‌رسانی هشدار</p>
+                    <button class="mir-btn mir-btn-warning demo-button" onclick="showWarningToast()">
+                        <i data-feather="alert-triangle"></i>
+                        نمایش هشدار
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست اطلاعات</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">اطلاع‌رسانی عمومی</p>
+                    <button class="mir-btn mir-btn-primary demo-button" onclick="showInfoToast()">
+                        <i data-feather="info"></i>
+                        نمایش اطلاعات
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Toast Positions -->
+        <section class="demo-section">
+            <h2 class="demo-title">موقعیت‌های تست - Toast Positions</h2>
+            
+            <div class="position-demo">
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('top-left')">
+                    <i data-feather="arrow-up-left"></i>
+                    بالا چپ
+                </button>
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('top-center')">
+                    <i data-feather="arrow-up"></i>
+                    بالا وسط
+                </button>
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('top-right')">
+                    <i data-feather="arrow-up-right"></i>
+                    بالا راست
+                </button>
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('bottom-left')">
+                    <i data-feather="arrow-down-left"></i>
+                    پایین چپ
+                </button>
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('bottom-center')">
+                    <i data-feather="arrow-down"></i>
+                    پایین وسط
+                </button>
+                <button class="mir-btn mir-btn-secondary mir-btn-sm" onclick="showToastPosition('bottom-right')">
+                    <i data-feather="arrow-down-right"></i>
+                    پایین راست
+                </button>
+            </div>
+        </section>
+
+        <!-- Toast with Actions -->
+        <section class="demo-section">
+            <h2 class="demo-title">تست با عملیات - Toast with Actions</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">تست با دکمه</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">تست شامل دکمه‌های عملیات</p>
+                    <button class="mir-btn mir-btn-primary demo-button" onclick="showActionToast()">
+                        <i data-feather="settings"></i>
+                        نمایش با عملیات
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست تأیید</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">تست نیازمند تأیید کاربر</p>
+                    <button class="mir-btn mir-btn-warning demo-button" onclick="showConfirmToast()">
+                        <i data-feather="help-circle"></i>
+                        نمایش تأیید
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست بدون بستن</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">تست که خودکار بسته نمی‌شود</p>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showPersistentToast()">
+                        <i data-feather="lock"></i>
+                        نمایش دائمی
+                    </button>
+                </div>
+                
+                <div class="demo-item">
+                    <div class="demo-label">تست پیشرفته</div>
+                    <p style="font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-3);">تست با تمام ویژگی‌ها</p>
+                    <button class="mir-btn mir-btn-success demo-button" onclick="showAdvancedToast()">
+                        <i data-feather="star"></i>
+                        نمایش پیشرفته
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Guide -->
+        <section class="demo-section">
+            <h2 class="demo-title">راهنمای استفاده - Usage Guide</h2>
+            
+            <div class="demo-subtitle">نحوه استفاده</div>
+            <div class="code-preview">
+<!-- Import CSS -->
+&lt;link rel="stylesheet" href="components/toast/toast.css"&gt;
+
+<!-- Import JavaScript -->
+&lt;script src="components/toast/toast.js"&gt;&lt;/script&gt;
+
+<!-- Basic Toast Usage -->
+&lt;script&gt;
+// Simple toast
+MirageToast.info('پیام اطلاع‌رسانی');
+
+// Toast with options
+MirageToast.success('عملیات موفق بود!', {
+    duration: 5000,
+    position: 'top-right',
+    showProgress: true,
+    closable: true
+});
+
+// Toast with custom actions
+MirageToast.warning('آیا مطمئن هستید؟', {
+    autoClose: false,
+    actions: [
+        {
+            label: 'بله',
+            onClick: () => console.log('Confirmed'),
+            type: 'primary'
+        },
+        {
+            label: 'خیر',
+            onClick: () => console.log('Cancelled'),
+            type: 'secondary'
+        }
+    ]
+});
+
+// Advanced toast
+const toast = new MirageToast({
+    type: 'success',
+    title: 'موفقیت آمیز',
+    message: 'فایل با موفقیت آپلود شد',
+    position: 'bottom-right',
+    duration: 6000,
+    showProgress: true,
+    actions: [
+        {
+            label: 'مشاهده',
+            onClick: () => window.open('/uploads'),
+            type: 'primary'
+        }
+    ]
+});
+&lt;/script&gt;
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="toast.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Statistics
+        let stats = {
+            totalToasts: 0,
+            activeToasts: 0,
+            closedToasts: 0,
+            autoClosedToasts: 0
+        };
+
+        // Convert numbers to Persian
+        function convertToPersianNumbers(text) {
+            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return text.replace(/\d/g, (digit) => persianNumbers[parseInt(digit)]);
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalToasts').textContent = convertToPersianNumbers(stats.totalToasts.toString());
+            document.getElementById('activeToasts').textContent = convertToPersianNumbers(stats.activeToasts.toString());
+            document.getElementById('closedToasts').textContent = convertToPersianNumbers(stats.closedToasts.toString());
+            document.getElementById('autoClosedToasts').textContent = convertToPersianNumbers(stats.autoClosedToasts.toString());
+        }
+
+        // Toast event handlers
+        function onToastCreate() {
+            stats.totalToasts++;
+            stats.activeToasts++;
+            updateStats();
+        }
+
+        function onToastClose(isAutoClose = false) {
+            stats.activeToasts--;
+            stats.closedToasts++;
+            if (isAutoClose) {
+                stats.autoClosedToasts++;
+            }
+            updateStats();
+        }
+
+        // Demo functions
+        function showSuccessToast() {
+            onToastCreate();
+            const toast = MirageToast.success('عملیات با موفقیت انجام شد!', {
+                duration: 4000,
+                position: 'top-right',
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 4000);
+        }
+
+        function showErrorToast() {
+            onToastCreate();
+            const toast = MirageToast.error('خطا در انجام عملیات!', {
+                duration: 5000,
+                position: 'top-right',
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 5000);
+        }
+
+        function showWarningToast() {
+            onToastCreate();
+            const toast = MirageToast.warning('توجه: این عملیات قابل بازگشت نیست', {
+                duration: 6000,
+                position: 'top-right',
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 6000);
+        }
+
+        function showInfoToast() {
+            onToastCreate();
+            const toast = MirageToast.info('اطلاعات جدید در دسترس است', {
+                duration: 4000,
+                position: 'top-right',
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 4000);
+        }
+
+        function showToastPosition(position) {
+            onToastCreate();
+            const toast = MirageToast.info(`تست در موقعیت ${position}`, {
+                duration: 3000,
+                position: position,
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 3000);
+        }
+
+        function showActionToast() {
+            onToastCreate();
+            const toast = new MirageToast({
+                type: 'info',
+                title: 'عملیات مورد نیاز',
+                message: 'آیا می‌خواهید ادامه دهید؟',
+                autoClose: false,
+                position: 'top-right',
+                actions: [
+                    {
+                        label: 'بله',
+                        onClick: () => {
+                            toast.close();
+                            onToastClose(false);
+                        },
+                        type: 'primary'
+                    },
+                    {
+                        label: 'خیر',
+                        onClick: () => {
+                            toast.close();
+                            onToastClose(false);
+                        },
+                        type: 'secondary'
+                    }
+                ]
+            });
+        }
+
+        function showConfirmToast() {
+            onToastCreate();
+            const toast = new MirageToast({
+                type: 'warning',
+                title: 'تأیید حذف',
+                message: 'آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟',
+                autoClose: false,
+                position: 'top-center',
+                actions: [
+                    {
+                        label: 'حذف',
+                        onClick: () => {
+                            toast.close();
+                            onToastClose(false);
+                            showSuccessToast();
+                        },
+                        type: 'danger'
+                    },
+                    {
+                        label: 'انصراف',
+                        onClick: () => {
+                            toast.close();
+                            onToastClose(false);
+                        },
+                        type: 'secondary'
+                    }
+                ]
+            });
+        }
+
+        function showPersistentToast() {
+            onToastCreate();
+            const toast = new MirageToast({
+                type: 'info',
+                title: 'اطلاعیه مهم',
+                message: 'این پیام تا زمان بستن دستی باقی می‌ماند',
+                autoClose: false,
+                position: 'bottom-left',
+                closable: true
+            });
+        }
+
+        function showAdvancedToast() {
+            onToastCreate();
+            const toast = new MirageToast({
+                type: 'success',
+                title: 'آپلود کامل شد',
+                message: 'فایل شما با موفقیت آپلود شد و آماده استفاده است',
+                duration: 8000,
+                position: 'bottom-right',
+                showProgress: true,
+                actions: [
+                    {
+                        label: 'مشاهده',
+                        onClick: () => {
+                            alert('نمایش فایل...');
+                            toast.close();
+                            onToastClose(false);
+                        },
+                        type: 'primary'
+                    },
+                    {
+                        label: 'اشتراک‌گذاری',
+                        onClick: () => {
+                            alert('اشتراک‌گذاری...');
+                            toast.close();
+                            onToastClose(false);
+                        },
+                        type: 'secondary'
+                    }
+                ]
+            });
+            setTimeout(() => onToastClose(true), 8000);
+        }
+
+        function showMultipleToasts() {
+            const messages = [
+                'تست اول نمایش داده شد',
+                'تست دوم در حال نمایش',
+                'تست سوم آماده است',
+                'تست چهارم فعال شد'
+            ];
+            
+            messages.forEach((message, index) => {
+                setTimeout(() => {
+                    onToastCreate();
+                    const toast = MirageToast.info(message, {
+                        duration: 3000,
+                        position: 'top-right',
+                        showProgress: true
+                    });
+                    setTimeout(() => onToastClose(true), 3000);
+                }, index * 500);
+            });
+        }
+
+        function showLongToast() {
+            onToastCreate();
+            const toast = MirageToast.info('این یک پیام طولانی است که برای مدت زمان بیشتری نمایش داده می‌شود تا بتوانید تمام محتوا را بخوانید', {
+                duration: 10000,
+                position: 'top-center',
+                showProgress: true
+            });
+            setTimeout(() => onToastClose(true), 10000);
+        }
+
+        function clearAllToasts() {
+            // This would clear all active toasts
+            // Implementation depends on the toast system
+            console.log('Clearing all toasts');
+        }
+
+        function pauseAllToasts() {
+            // This would pause all active toasts
+            console.log('Pausing all toasts');
+        }
+
+        function resumeAllToasts() {
+            // This would resume all paused toasts
+            console.log('Resuming all toasts');
+        }
+
+        // Initialize statistics
+        updateStats();
+    </script>
+</body>
+</html>

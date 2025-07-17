@@ -1,0 +1,666 @@
+/**
+ * MIRAGE FORM VALIDATION COMPONENT - RTL PERSIAN OPTIMIZED
+ * ========================================================
+ * 
+ * Advanced form validation with Persian support and glass morphism design
+ * Features: Real-time validation, Persian error messages, RTL layout
+ * 
+ * @author Mirage Design System
+ * @version 1.0.0
+ */
+
+/* ===== FORM VALIDATION CONTAINER ===== */
+.mir-form-validation {
+    position: relative;
+    font-family: 'YekanBakh', 'Vazirmatn Variable', 'Tahoma', sans-serif;
+    direction: rtl;
+    text-align: right;
+}
+
+.mir-form-validation-container {
+    position: relative;
+    width: 100%;
+}
+
+/* ===== FORM FIELD WRAPPER ===== */
+.mir-form-field {
+    position: relative;
+    margin-bottom: var(--mir-space-4);
+    width: 100%;
+}
+
+.mir-form-field.mir-has-error {
+    margin-bottom: var(--mir-space-5);
+}
+
+.mir-form-field.mir-has-success {
+    margin-bottom: var(--mir-space-5);
+}
+
+.mir-form-field.mir-has-warning {
+    margin-bottom: var(--mir-space-5);
+}
+
+/* ===== INPUT FIELD STATES ===== */
+.mir-form-field .mir-input,
+.mir-form-field .mir-textarea,
+.mir-form-field .mir-select {
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+}
+
+.mir-form-field .mir-input:focus,
+.mir-form-field .mir-textarea:focus,
+.mir-form-field .mir-select:focus {
+    outline: none;
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Error state */
+.mir-form-field.mir-has-error .mir-input,
+.mir-form-field.mir-has-error .mir-textarea,
+.mir-form-field.mir-has-error .mir-select {
+    border-color: var(--mir-red-500);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.mir-form-field.mir-has-error .mir-input:focus,
+.mir-form-field.mir-has-error .mir-textarea:focus,
+.mir-form-field.mir-has-error .mir-select:focus {
+    border-color: var(--mir-red-500);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* Success state */
+.mir-form-field.mir-has-success .mir-input,
+.mir-form-field.mir-has-success .mir-textarea,
+.mir-form-field.mir-has-success .mir-select {
+    border-color: var(--mir-green-500);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.mir-form-field.mir-has-success .mir-input:focus,
+.mir-form-field.mir-has-success .mir-textarea:focus,
+.mir-form-field.mir-has-success .mir-select:focus {
+    border-color: var(--mir-green-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+/* Warning state */
+.mir-form-field.mir-has-warning .mir-input,
+.mir-form-field.mir-has-warning .mir-textarea,
+.mir-form-field.mir-has-warning .mir-select {
+    border-color: var(--mir-yellow-500);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.mir-form-field.mir-has-warning .mir-input:focus,
+.mir-form-field.mir-has-warning .mir-textarea:focus,
+.mir-form-field.mir-has-warning .mir-select:focus {
+    border-color: var(--mir-yellow-500);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+/* ===== VALIDATION ICONS ===== */
+.mir-form-field-icon {
+    position: absolute;
+    left: var(--mir-space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.mir-form-field.mir-has-error .mir-form-field-icon.mir-error-icon {
+    opacity: 1;
+    color: var(--mir-red-500);
+}
+
+.mir-form-field.mir-has-success .mir-form-field-icon.mir-success-icon {
+    opacity: 1;
+    color: var(--mir-green-500);
+}
+
+.mir-form-field.mir-has-warning .mir-form-field-icon.mir-warning-icon {
+    opacity: 1;
+    color: var(--mir-yellow-500);
+}
+
+/* Adjust input padding for icons */
+.mir-form-field.mir-has-error .mir-input,
+.mir-form-field.mir-has-success .mir-input,
+.mir-form-field.mir-has-warning .mir-input {
+    padding-left: var(--mir-space-10);
+}
+
+.mir-form-field.mir-has-error .mir-textarea,
+.mir-form-field.mir-has-success .mir-textarea,
+.mir-form-field.mir-has-warning .mir-textarea {
+    padding-left: var(--mir-space-10);
+}
+
+/* ===== VALIDATION MESSAGES ===== */
+.mir-form-message {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    margin-top: var(--mir-space-1);
+    padding: var(--mir-space-2) var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    line-height: 1.4;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.mir-form-message.mir-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Error message */
+.mir-form-message.mir-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--mir-red-700);
+}
+
+.mir-form-message.mir-error::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: var(--mir-space-3);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Success message */
+.mir-form-message.mir-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--mir-green-700);
+}
+
+.mir-form-message.mir-success::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: var(--mir-space-3);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Warning message */
+.mir-form-message.mir-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: var(--mir-yellow-700);
+}
+
+.mir-form-message.mir-warning::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: var(--mir-space-3);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Info message */
+.mir-form-message.mir-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: var(--mir-blue-700);
+}
+
+.mir-form-message.mir-info::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: var(--mir-space-3);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid rgba(59, 130, 246, 0.3);
+}
+
+/* ===== FORM LABEL STATES ===== */
+.mir-form-field .mir-label {
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--mir-gray-700);
+}
+
+.mir-form-field.mir-has-error .mir-label {
+    color: var(--mir-red-600);
+}
+
+.mir-form-field.mir-has-success .mir-label {
+    color: var(--mir-green-600);
+}
+
+.mir-form-field.mir-has-warning .mir-label {
+    color: var(--mir-yellow-600);
+}
+
+/* Required field indicator */
+.mir-form-field .mir-label.mir-required::after {
+    content: '*';
+    color: var(--mir-red-500);
+    margin-right: var(--mir-space-1);
+    font-weight: 600;
+}
+
+/* ===== VALIDATION PROGRESS ===== */
+.mir-form-progress {
+    position: relative;
+    margin-top: var(--mir-space-1);
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mir-form-progress-bar {
+    height: 100%;
+    background: var(--mir-primary);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.mir-form-progress-bar.mir-weak {
+    background: var(--mir-red-500);
+}
+
+.mir-form-progress-bar.mir-medium {
+    background: var(--mir-yellow-500);
+}
+
+.mir-form-progress-bar.mir-strong {
+    background: var(--mir-green-500);
+}
+
+/* ===== FORM VALIDATION SUMMARY ===== */
+.mir-form-summary {
+    padding: var(--mir-space-4);
+    margin-bottom: var(--mir-space-4);
+    border-radius: 12px;
+    backdrop-filter: blur(16px);
+    border: 1px solid;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.mir-form-summary.mir-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mir-form-summary.mir-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--mir-red-700);
+}
+
+.mir-form-summary.mir-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--mir-green-700);
+}
+
+.mir-form-summary-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    margin-bottom: var(--mir-space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-form-summary-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mir-form-summary-item {
+    padding: var(--mir-space-1) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-form-summary-item::before {
+    content: '•';
+    color: currentColor;
+    font-weight: bold;
+}
+
+/* ===== REAL-TIME VALIDATION INDICATORS ===== */
+.mir-form-field.mir-validating .mir-form-field-icon {
+    animation: mir-spin 1s linear infinite;
+}
+
+.mir-form-field.mir-validating .mir-form-field-icon.mir-loading-icon {
+    opacity: 1;
+    color: var(--mir-primary);
+}
+
+/* ===== FORM VALIDATION GROUPS ===== */
+.mir-form-group {
+    margin-bottom: var(--mir-space-6);
+}
+
+.mir-form-group-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    color: var(--mir-gray-900);
+    margin-bottom: var(--mir-space-4);
+    padding-bottom: var(--mir-space-2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.mir-form-group-description {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin-bottom: var(--mir-space-4);
+    line-height: 1.6;
+}
+
+/* ===== FORM VALIDATION BUTTONS ===== */
+.mir-form-actions {
+    display: flex;
+    gap: var(--mir-space-3);
+    justify-content: flex-end;
+    margin-top: var(--mir-space-6);
+    padding-top: var(--mir-space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mir-form-actions .mir-btn {
+    transition: all 0.3s ease;
+}
+
+.mir-form-actions .mir-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mir-form-actions .mir-btn:disabled:hover {
+    transform: none;
+}
+
+/* ===== TOOLTIP VALIDATION ===== */
+.mir-form-tooltip {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(20px);
+    color: white;
+    padding: var(--mir-space-2) var(--mir-space-3);
+    border-radius: 8px;
+    font-size: var(--mir-text-xs);
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mir-form-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: var(--mir-space-3);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(31, 41, 55, 0.95);
+}
+
+.mir-form-tooltip.mir-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== FORM VALIDATION ANIMATIONS ===== */
+@keyframes mir-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes mir-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.mir-form-field.mir-shake {
+    animation: mir-shake 0.5s ease-in-out;
+}
+
+@keyframes mir-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.mir-form-field.mir-pulse {
+    animation: mir-pulse 0.6s ease-in-out;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .mir-form-message {
+        font-size: var(--mir-text-xs);
+        padding: var(--mir-space-2);
+    }
+    
+    .mir-form-summary {
+        padding: var(--mir-space-3);
+    }
+    
+    .mir-form-actions {
+        flex-direction: column;
+        gap: var(--mir-space-2);
+    }
+    
+    .mir-form-actions .mir-btn {
+        width: 100%;
+    }
+    
+    .mir-form-tooltip {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-top: var(--mir-space-2);
+        white-space: normal;
+        opacity: 1;
+        transform: none;
+    }
+    
+    .mir-form-tooltip::after {
+        display: none;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .mir-form-field .mir-label {
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-form-field.mir-has-error .mir-label {
+        color: var(--mir-red-400);
+    }
+    
+    .mir-form-field.mir-has-success .mir-label {
+        color: var(--mir-green-400);
+    }
+    
+    .mir-form-field.mir-has-warning .mir-label {
+        color: var(--mir-yellow-400);
+    }
+    
+    .mir-form-message.mir-error {
+        background: rgba(239, 68, 68, 0.2);
+        color: var(--mir-red-300);
+    }
+    
+    .mir-form-message.mir-success {
+        background: rgba(16, 185, 129, 0.2);
+        color: var(--mir-green-300);
+    }
+    
+    .mir-form-message.mir-warning {
+        background: rgba(245, 158, 11, 0.2);
+        color: var(--mir-yellow-300);
+    }
+    
+    .mir-form-message.mir-info {
+        background: rgba(59, 130, 246, 0.2);
+        color: var(--mir-blue-300);
+    }
+    
+    .mir-form-summary.mir-error {
+        background: rgba(239, 68, 68, 0.2);
+        color: var(--mir-red-300);
+    }
+    
+    .mir-form-summary.mir-success {
+        background: rgba(16, 185, 129, 0.2);
+        color: var(--mir-green-300);
+    }
+    
+    .mir-form-group-title {
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-form-group-description {
+        color: var(--mir-gray-400);
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    .mir-form-field .mir-input,
+    .mir-form-field .mir-textarea,
+    .mir-form-field .mir-select,
+    .mir-form-field-icon,
+    .mir-form-message,
+    .mir-form-summary,
+    .mir-form-tooltip {
+        transition: none;
+    }
+    
+    .mir-form-field.mir-shake,
+    .mir-form-field.mir-pulse {
+        animation: none;
+    }
+    
+    .mir-form-field.mir-validating .mir-form-field-icon {
+        animation: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .mir-form-field .mir-input,
+    .mir-form-field .mir-textarea,
+    .mir-form-field .mir-select {
+        border-width: 3px;
+    }
+    
+    .mir-form-message,
+    .mir-form-summary {
+        border-width: 2px;
+    }
+    
+    .mir-form-field.mir-has-error .mir-input,
+    .mir-form-field.mir-has-error .mir-textarea,
+    .mir-form-field.mir-has-error .mir-select {
+        background: rgba(239, 68, 68, 0.1);
+    }
+    
+    .mir-form-field.mir-has-success .mir-input,
+    .mir-form-field.mir-has-success .mir-textarea,
+    .mir-form-field.mir-has-success .mir-select {
+        background: rgba(16, 185, 129, 0.1);
+    }
+    
+    .mir-form-field.mir-has-warning .mir-input,
+    .mir-form-field.mir-has-warning .mir-textarea,
+    .mir-form-field.mir-has-warning .mir-select {
+        background: rgba(245, 158, 11, 0.1);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .mir-form-message,
+    .mir-form-summary,
+    .mir-form-tooltip,
+    .mir-form-field-icon {
+        display: none;
+    }
+    
+    .mir-form-field .mir-input,
+    .mir-form-field .mir-textarea,
+    .mir-form-field .mir-select {
+        border: 1px solid #000;
+        background: white;
+        backdrop-filter: none;
+    }
+    
+    .mir-form-field .mir-label {
+        color: #000;
+    }
+}

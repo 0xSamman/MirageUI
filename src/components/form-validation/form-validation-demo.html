@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش اعتبارسنجی فرم میراژ - Mirage Form Validation Demo</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Form Validation Component Styles -->
+    <link rel="stylesheet" href="form-validation.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-title {
+            font-family: 'YekanBakh', sans-serif;
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-gray-900);
+            margin-bottom: var(--mir-space-4);
+            text-align: right;
+        }
+        
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            color: var(--mir-gray-700);
+            margin-bottom: var(--mir-space-3);
+            text-align: right;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-5);
+        }
+        
+        .demo-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-label {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-3);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .header {
+            text-align: center;
+            padding: var(--mir-space-8) var(--mir-space-4);
+            background: var(--mir-primary);
+            color: white;
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .header h1 {
+            font-family: 'YekanBakh', sans-serif;
+            font-size: var(--mir-text-3xl);
+            font-weight: 700;
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .header p {
+            font-size: var(--mir-text-lg);
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--mir-space-4);
+        }
+        
+        .code-preview {
+            background: var(--mir-gray-900);
+            color: var(--mir-gray-100);
+            padding: var(--mir-space-4);
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            direction: ltr;
+            text-align: left;
+            margin-top: var(--mir-space-3);
+            overflow-x: auto;
+        }
+        
+        .demo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .demo-stat {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-stat-value {
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-primary);
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .demo-stat-label {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: var(--mir-space-3);
+            justify-content: center;
+            margin-bottom: var(--mir-space-6);
+            flex-wrap: wrap;
+        }
+        
+        .demo-control-btn {
+            padding: var(--mir-space-2) var(--mir-space-4);
+            border: 1px solid var(--mir-primary);
+            border-radius: 8px;
+            background: white;
+            color: var(--mir-primary);
+            font-size: var(--mir-text-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .demo-control-btn:hover {
+            background: var(--mir-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .demo-log {
+            background: var(--mir-gray-900);
+            color: var(--mir-gray-100);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin-top: var(--mir-space-4);
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            max-height: 200px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .demo-log-item {
+            margin-bottom: var(--mir-space-1);
+            padding: var(--mir-space-1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .demo-log-timestamp {
+            color: #888;
+            font-size: var(--mir-text-xs);
+            margin-left: var(--mir-space-2);
+        }
+        
+        .demo-form {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-4);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: var(--mir-space-4);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mir-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--mir-space-3);
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-2);
+            color: var(--mir-gray-900);
+        }
+        
+        .feature-desc {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .demo-control-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <div class="header">
+        <div class="container">
+            <h1>سیستم اعتبارسنجی فرم میراژ</h1>
+            <p>اعتبارسنجی پیشرفته فرم‌ها با پشتیبانی کامل از زبان فارسی</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Features Overview -->
+        <section class="demo-section">
+            <h2 class="demo-title">ویژگی‌های اعتبارسنجی فرم - Form Validation Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="zap"></i>
+                    </div>
+                    <h3 class="feature-title">اعتبارسنجی بی‌درنگ</h3>
+                    <p class="feature-desc">بررسی فوری هنگام تایپ با تأخیر مناسب</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="message-circle"></i>
+                    </div>
+                    <h3 class="feature-title">پیام‌های فارسی</h3>
+                    <p class="feature-desc">خطاها و هشدارها به زبان فارسی</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="eye"></i>
+                    </div>
+                    <h3 class="feature-title">آیکون‌های وضعیت</h3>
+                    <p class="feature-desc">نمایش بصری وضعیت اعتبارسنجی</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="list"></i>
+                    </div>
+                    <h3 class="feature-title">خلاصه خطاها</h3>
+                    <p class="feature-desc">نمایش کلی خطاهای فرم</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="activity"></i>
+                    </div>
+                    <h3 class="feature-title">نوار پیشرفت</h3>
+                    <p class="feature-desc">نمایش قدرت رمز عبور</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="smartphone"></i>
+                    </div>
+                    <h3 class="feature-title">طراحی RTL</h3>
+                    <p class="feature-desc">بهینه‌سازی شده برای خواندن راست به چپ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Statistics -->
+        <section class="demo-section">
+            <h2 class="demo-title">آمار نمایش - Demo Statistics</h2>
+            
+            <div class="demo-stats">
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="validationCount">۰</div>
+                    <div class="demo-stat-label">اعتبارسنجی انجام شده</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="errorCount">۰</div>
+                    <div class="demo-stat-label">خطاهای یافت شده</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="successCount">۰</div>
+                    <div class="demo-stat-label">اعتبارسنجی موفق</div>
+                </div>
+                <div class="demo-stat">
+                    <div class="demo-stat-value" id="formSubmits">۰</div>
+                    <div class="demo-stat-label">ارسال فرم</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Controls -->
+        <section class="demo-section">
+            <h2 class="demo-title">کنترل‌های نمایش - Demo Controls</h2>
+            
+            <div class="demo-controls">
+                <button class="demo-control-btn" onclick="fillSampleData()">
+                    <i data-feather="edit-3"></i>
+                    پر کردن نمونه
+                </button>
+                <button class="demo-control-btn" onclick="clearAllForms()">
+                    <i data-feather="x-circle"></i>
+                    پاک کردن همه
+                </button>
+                <button class="demo-control-btn" onclick="validateAllForms()">
+                    <i data-feather="check-circle"></i>
+                    اعتبارسنجی همه
+                </button>
+                <button class="demo-control-btn" onclick="toggleAnimations()">
+                    <i data-feather="zap"></i>
+                    انیمیشن‌ها
+                </button>
+                <button class="demo-control-btn" onclick="clearLog()">
+                    <i data-feather="trash-2"></i>
+                    پاک کردن لاگ
+                </button>
+            </div>
+        </section>
+
+        <!-- Demo Forms -->
+        <section class="demo-section">
+            <h2 class="demo-title">فرم‌های نمایشی - Demo Forms</h2>
+            
+            <div class="demo-grid">
+                <!-- Registration Form -->
+                <div class="demo-item">
+                    <div class="demo-label">فرم ثبت‌نام</div>
+                    <p style="text-align: center; font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-4);">فرم کاملی با تمام انواع اعتبارسنج و نوار پیشرفت رمز عبور</p>
+                    
+                    <form id="register-form" class="demo-form">
+                        <div class="mir-form-field">
+                            <label for="firstName" class="mir-label">نام</label>
+                            <input type="text" id="firstName" name="firstName" class="mir-input" placeholder="نام خود را وارد کنید">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="lastName" class="mir-label">نام خانوادگی</label>
+                            <input type="text" id="lastName" name="lastName" class="mir-input" placeholder="نام خانوادگی خود را وارد کنید">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="email" class="mir-label">ایمیل</label>
+                            <input type="email" id="email" name="email" class="mir-input" placeholder="example@domain.com">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="phone" class="mir-label">شماره تلفن</label>
+                            <input type="tel" id="phone" name="phone" class="mir-input" placeholder="09123456789">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="password" class="mir-label">رمز عبور</label>
+                            <input type="password" id="password" name="password" class="mir-input" placeholder="رمز عبور قوی">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="confirmPassword" class="mir-label">تأیید رمز عبور</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="mir-input" placeholder="تکرار رمز عبور">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label class="mir-checkbox">
+                                <input type="checkbox" id="terms" name="terms">
+                                <span class="mir-checkbox-mark"></span>
+                                قوانین و مقررات را می‌پذیرم
+                            </label>
+                        </div>
+                        
+                        <div class="mir-form-actions">
+                            <button type="reset" class="mir-btn mir-btn-secondary">پاک کردن</button>
+                            <button type="submit" class="mir-btn mir-btn-primary">ثبت‌نام</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="demo-item">
+                    <div class="demo-label">فرم ورود</div>
+                    <p style="text-align: center; font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-4);">فرم ساده ورود با اعتبارسنجی بدون خلاصه خطاها</p>
+                    
+                    <form id="login-form" class="demo-form">
+                        <div class="mir-form-field">
+                            <label for="username" class="mir-label">نام کاربری</label>
+                            <input type="text" id="username" name="username" class="mir-input" placeholder="نام کاربری یا ایمیل">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="loginPassword" class="mir-label">رمز عبور</label>
+                            <input type="password" id="loginPassword" name="loginPassword" class="mir-input" placeholder="رمز عبور">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label class="mir-checkbox">
+                                <input type="checkbox" id="remember" name="remember">
+                                <span class="mir-checkbox-mark"></span>
+                                مرا به خاطر بسپار
+                            </label>
+                        </div>
+                        
+                        <div class="mir-form-actions">
+                            <button type="button" class="mir-btn mir-btn-ghost">فراموشی رمز عبور</button>
+                            <button type="submit" class="mir-btn mir-btn-primary">ورود</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Profile Form -->
+                <div class="demo-item">
+                    <div class="demo-label">فرم پروفایل</div>
+                    <p style="text-align: center; font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-4);">فرم ویرایش پروفایل با فیلدهای اختیاری و اعتبارسنج URL</p>
+                    
+                    <form id="profile-form" class="demo-form">
+                        <div class="mir-form-field">
+                            <label for="displayName" class="mir-label">نام نمایشی</label>
+                            <input type="text" id="displayName" name="displayName" class="mir-input" placeholder="نام نمایشی خود را وارد کنید">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="bio" class="mir-label">بیوگرافی</label>
+                            <textarea id="bio" name="bio" class="mir-textarea" rows="3" placeholder="درباره خود بنویسید..."></textarea>
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="website" class="mir-label">وب‌سایت</label>
+                            <input type="url" id="website" name="website" class="mir-input" placeholder="https://example.com">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="birthDate" class="mir-label">تاریخ تولد</label>
+                            <input type="date" id="birthDate" name="birthDate" class="mir-input">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="gender" class="mir-label">جنسیت</label>
+                            <select id="gender" name="gender" class="mir-select">
+                                <option value="">انتخاب کنید</option>
+                                <option value="male">آقا</option>
+                                <option value="female">خانم</option>
+                                <option value="other">سایر</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mir-form-actions">
+                            <button type="reset" class="mir-btn mir-btn-secondary">بازنشانی</button>
+                            <button type="submit" class="mir-btn mir-btn-primary">ذخیره تغییرات</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="demo-item">
+                    <div class="demo-label">فرم تماس</div>
+                    <p style="text-align: center; font-size: var(--mir-text-sm); color: var(--mir-gray-600); margin-bottom: var(--mir-space-4);">فرم تماس با اعتبارسنج سفارشی و پیام‌های خطای سفارشی</p>
+                    
+                    <form id="contact-form" class="demo-form">
+                        <div class="mir-form-field">
+                            <label for="contactName" class="mir-label">نام کامل</label>
+                            <input type="text" id="contactName" name="contactName" class="mir-input" placeholder="نام کامل خود را وارد کنید">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="contactEmail" class="mir-label">ایمیل</label>
+                            <input type="email" id="contactEmail" name="contactEmail" class="mir-input" placeholder="ایمیل خود را وارد کنید">
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="subject" class="mir-label">موضوع</label>
+                            <select id="subject" name="subject" class="mir-select">
+                                <option value="">انتخاب موضوع</option>
+                                <option value="support">پشتیبانی</option>
+                                <option value="sales">فروش</option>
+                                <option value="feedback">بازخورد</option>
+                                <option value="other">سایر</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mir-form-field">
+                            <label for="message" class="mir-label">پیام</label>
+                            <textarea id="message" name="message" class="mir-textarea" rows="5" placeholder="پیام خود را بنویسید..."></textarea>
+                        </div>
+                        
+                        <div class="mir-form-actions">
+                            <button type="reset" class="mir-btn mir-btn-secondary">پاک کردن</button>
+                            <button type="submit" class="mir-btn mir-btn-primary">ارسال پیام</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Log -->
+        <section class="demo-section">
+            <h2 class="demo-title">لاگ رویدادها - Event Log</h2>
+            <p style="color: var(--mir-gray-600); margin-bottom: var(--mir-space-4); text-align: right;">مشاهده رویدادهای اعتبارسنجی در زمان واقعی</p>
+            
+            <div id="demo-log" class="demo-log"></div>
+        </section>
+
+        <!-- Usage Guide -->
+        <section class="demo-section">
+            <h2 class="demo-title">راهنمای استفاده - Usage Guide</h2>
+            
+            <div class="demo-subtitle">نحوه استفاده</div>
+            <div class="code-preview">
+<!-- Import CSS -->
+&lt;link rel="stylesheet" href="components/form-validation/form-validation.css"&gt;
+
+<!-- Import JavaScript -->
+&lt;script src="components/form-validation/form-validation.js"&gt;&lt;/script&gt;
+
+<!-- Basic Form Setup -->
+&lt;form id="my-form"&gt;
+  &lt;div class="mir-form-field"&gt;
+    &lt;label for="username" class="mir-label"&gt;نام کاربری&lt;/label&gt;
+    &lt;input type="text" id="username" name="username" class="mir-input"&gt;
+  &lt;/div&gt;
+  &lt;button type="submit" class="mir-btn mir-btn-primary"&gt;ارسال&lt;/button&gt;
+&lt;/form&gt;
+
+<!-- JavaScript Initialization -->
+&lt;script&gt;
+const validator = new MirageFormValidation({
+    form: '#my-form',
+    fields: {
+        username: {
+            validators: ['required', 'minLength:3'],
+            required: true
+        },
+        email: {
+            validators: ['required', 'email'],
+            required: true
+        }
+    },
+    onSubmit: (data) => {
+        console.log('Form submitted:', data);
+    }
+});
+&lt;/script&gt;
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="form-validation.js"></script>
+    <script>
+        // Initialize icons
+        feather.replace();
+        
+        // Statistics
+        let stats = {
+            validationCount: 0,
+            errorCount: 0,
+            successCount: 0,
+            formSubmits: 0
+        };
+        
+        // Demo settings
+        let animationsEnabled = true;
+        
+        // Log functionality
+        function logEvent(message, type = 'info') {
+            const logContainer = document.getElementById('demo-log');
+            const logItem = document.createElement('div');
+            logItem.className = 'demo-log-item';
+            
+            const timestamp = new Date().toLocaleTimeString('fa-IR');
+            const typeColor = {
+                'info': '#00ff00',
+                'error': '#ff4444',
+                'success': '#44ff44',
+                'warning': '#ffaa00'
+            }[type] || '#00ff00';
+            
+            logItem.innerHTML = `
+                <span style="color: ${typeColor};">[${type.toUpperCase()}]</span>
+                <span class="demo-log-timestamp">${timestamp}</span>
+                ${message}
+            `;
+            
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // Keep only last 50 items
+            if (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('validationCount').textContent = convertToPersianNumbers(stats.validationCount.toString());
+            document.getElementById('errorCount').textContent = convertToPersianNumbers(stats.errorCount.toString());
+            document.getElementById('successCount').textContent = convertToPersianNumbers(stats.successCount.toString());
+            document.getElementById('formSubmits').textContent = convertToPersianNumbers(stats.formSubmits.toString());
+        }
+        
+        // Convert numbers to Persian
+        function convertToPersianNumbers(text) {
+            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return text.replace(/\d/g, (digit) => persianNumbers[parseInt(digit)]);
+        }
+        
+        // Sample data
+        const sampleData = {
+            register: {
+                firstName: 'علی',
+                lastName: 'احمدی',
+                email: 'ali@example.com',
+                phone: '09123456789',
+                password: 'MyPassword123',
+                confirmPassword: 'MyPassword123',
+                terms: true
+            },
+            login: {
+                username: 'ali.ahmadi',
+                loginPassword: 'MyPassword123',
+                remember: true
+            },
+            profile: {
+                displayName: 'علی احمدی',
+                bio: 'توسعه‌دهنده وب و علاقه‌مند به فناوری‌های نوین',
+                website: 'https://ali-ahmadi.com',
+                birthDate: '1990-01-01',
+                gender: 'male'
+            },
+            contact: {
+                contactName: 'علی احمدی',
+                contactEmail: 'ali@example.com',
+                subject: 'feedback',
+                message: 'سلام، از سیستم طراحی شما بسیار راضی هستم. عالی است!'
+            }
+        };
+        
+        // Initialize form validators
+        const validators = {};
+        
+        // Register form
+        validators.register = new MirageFormValidation({
+            form: '#register-form',
+            fields: {
+                firstName: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 2 } },
+                        { type: 'maxLength', options: { max: 50 } },
+                        'persian'
+                    ],
+                    required: true,
+                    tooltip: 'نام خود را با حروف فارسی وارد کنید'
+                },
+                lastName: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 2 } },
+                        { type: 'maxLength', options: { max: 50 } },
+                        'persian'
+                    ],
+                    required: true,
+                    tooltip: 'نام خانوادگی خود را با حروف فارسی وارد کنید'
+                },
+                email: {
+                    validators: ['required', 'email'],
+                    required: true,
+                    tooltip: 'آدرس ایمیل معتبر وارد کنید'
+                },
+                phone: {
+                    validators: ['required', 'phone'],
+                    required: true,
+                    tooltip: 'شماره تلفن همراه ۱۱ رقمی'
+                },
+                password: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 8 } },
+                        {
+                            type: 'pattern',
+                            options: {
+                                pattern: '(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)',
+                                message: 'رمز عبور باید شامل حروف کوچک، بزرگ و عدد باشد'
+                            }
+                        }
+                    ],
+                    required: true,
+                    showProgress: true,
+                    tooltip: 'رمز عبور قوی با حداقل ۸ کاراکتر'
+                },
+                confirmPassword: {
+                    validators: [
+                        'required',
+                        { type: 'confirm', options: { field: 'password' } }
+                    ],
+                    required: true,
+                    tooltip: 'تکرار رمز عبور'
+                },
+                terms: {
+                    validators: ['required'],
+                    required: true
+                }
+            },
+            validateOnInput: true,
+            validateOnBlur: true,
+            showSummary: true,
+            showTooltips: true,
+            showProgress: true,
+            animateErrors: animationsEnabled,
+            onValidate: (fieldName, result) => {
+                stats.validationCount++;
+                if (result.isValid) {
+                    stats.successCount++;
+                    logEvent(`فیلد ${fieldName} معتبر است`, 'success');
+                } else {
+                    stats.errorCount++;
+                    logEvent(`فیلد ${fieldName}: ${result.message}`, 'error');
+                }
+                updateStats();
+            },
+            onSubmit: (data) => {
+                stats.formSubmits++;
+                logEvent('فرم ثبت‌نام با موفقیت ارسال شد', 'success');
+                console.log('Register data:', data);
+                updateStats();
+            },
+            onError: (errors) => {
+                logEvent(`فرم ثبت‌نام دارای ${Object.keys(errors).length} خطا است`, 'error');
+            }
+        });
+        
+        // Login form
+        validators.login = new MirageFormValidation({
+            form: '#login-form',
+            fields: {
+                username: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 3 } }
+                    ],
+                    required: true
+                },
+                loginPassword: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 6 } }
+                    ],
+                    required: true
+                }
+            },
+            showSummary: false,
+            showTooltips: false,
+            animateErrors: animationsEnabled,
+            onValidate: (fieldName, result) => {
+                stats.validationCount++;
+                if (result.isValid) {
+                    stats.successCount++;
+                } else {
+                    stats.errorCount++;
+                }
+                updateStats();
+            },
+            onSubmit: (data) => {
+                stats.formSubmits++;
+                logEvent('فرم ورود با موفقیت ارسال شد', 'success');
+                console.log('Login data:', data);
+                updateStats();
+            }
+        });
+        
+        // Profile form
+        validators.profile = new MirageFormValidation({
+            form: '#profile-form',
+            fields: {
+                displayName: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 2 } },
+                        { type: 'maxLength', options: { max: 50 } },
+                        'persian'
+                    ],
+                    required: true
+                },
+                bio: {
+                    validators: [
+                        { type: 'maxLength', options: { max: 500 } }
+                    ],
+                    required: false
+                },
+                website: {
+                    validators: ['url'],
+                    required: false
+                },
+                birthDate: {
+                    validators: ['date'],
+                    required: false
+                },
+                gender: {
+                    validators: ['required'],
+                    required: true
+                }
+            },
+            validateOnInput: true,
+            showTooltips: true,
+            animateErrors: animationsEnabled,
+            onValidate: (fieldName, result) => {
+                stats.validationCount++;
+                if (result.isValid) {
+                    stats.successCount++;
+                } else {
+                    stats.errorCount++;
+                }
+                updateStats();
+            },
+            onSubmit: (data) => {
+                stats.formSubmits++;
+                logEvent('فرم پروفایل با موفقیت ارسال شد', 'success');
+                console.log('Profile data:', data);
+                updateStats();
+            }
+        });
+        
+        // Contact form
+        validators.contact = new MirageFormValidation({
+            form: '#contact-form',
+            fields: {
+                contactName: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 2 } },
+                        'persian'
+                    ],
+                    required: true
+                },
+                contactEmail: {
+                    validators: ['required', 'email'],
+                    required: true
+                },
+                subject: {
+                    validators: ['required'],
+                    required: true
+                },
+                message: {
+                    validators: [
+                        'required',
+                        { type: 'minLength', options: { min: 10 } },
+                        { type: 'maxLength', options: { max: 1000 } }
+                    ],
+                    required: true
+                }
+            },
+            customValidators: {
+                persianContent: (value) => {
+                    const persianRegex = /[\u0600-\u06FF]/;
+                    return {
+                        isValid: persianRegex.test(value),
+                        message: 'پیام باید شامل حروف فارسی باشد'
+                    };
+                }
+            },
+            animateErrors: animationsEnabled,
+            onValidate: (fieldName, result) => {
+                stats.validationCount++;
+                if (result.isValid) {
+                    stats.successCount++;
+                } else {
+                    stats.errorCount++;
+                }
+                updateStats();
+            },
+            onSubmit: (data) => {
+                stats.formSubmits++;
+                logEvent('فرم تماس با موفقیت ارسال شد', 'success');
+                console.log('Contact data:', data);
+                updateStats();
+            }
+        });
+        
+        // Demo control functions
+        function fillSampleData() {
+            // Fill register form
+            Object.keys(sampleData.register).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = sampleData.register[key];
+                    } else {
+                        element.value = sampleData.register[key];
+                    }
+                    element.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+            
+            // Fill login form
+            Object.keys(sampleData.login).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    if (element.type === 'checkbox') {
+                        element.checked = sampleData.login[key];
+                    } else {
+                        element.value = sampleData.login[key];
+                    }
+                    element.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+            
+            // Fill profile form
+            Object.keys(sampleData.profile).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    element.value = sampleData.profile[key];
+                    element.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+            
+            // Fill contact form
+            Object.keys(sampleData.contact).forEach(key => {
+                const element = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+                if (element) {
+                    element.value = sampleData.contact[key];
+                    element.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+            
+            logEvent('داده‌های نمونه پر شد', 'info');
+        }
+        
+        function clearAllForms() {
+            Object.values(validators).forEach(validator => {
+                validator.resetValidation();
+            });
+            
+            // Reset form elements
+            document.querySelectorAll('form').forEach(form => {
+                form.reset();
+            });
+            
+            logEvent('همه فرم‌ها پاک شدند', 'info');
+        }
+        
+        function validateAllForms() {
+            Object.keys(validators).forEach(async (key) => {
+                const isValid = await validators[key].validateForm();
+                logEvent(`فرم ${key}: ${isValid ? 'معتبر' : 'نامعتبر'}`, isValid ? 'success' : 'error');
+            });
+        }
+        
+        function toggleAnimations() {
+            animationsEnabled = !animationsEnabled;
+            Object.values(validators).forEach(validator => {
+                validator.options.animateErrors = animationsEnabled;
+            });
+            logEvent(`انیمیشن‌ها ${animationsEnabled ? 'فعال' : 'غیرفعال'} شدند`, 'info');
+        }
+        
+        function clearLog() {
+            document.getElementById('demo-log').innerHTML = '';
+            logEvent('لاگ پاک شد', 'info');
+        }
+        
+        // Initialize
+        setTimeout(() => {
+            feather.replace();
+            updateStats();
+            logEvent('سیستم اعتبارسنجی فرم میراژ آماده است', 'success');
+        }, 100);
+        
+        // Re-initialize icons periodically
+        setInterval(() => {
+            feather.replace();
+        }, 1000);
+        
+        console.log('سیستم اعتبارسنجی فرم میراژ بارگیری شد');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سیستم تب - MirageUI</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Tabs Component Styles -->
+    <link rel="stylesheet" href="tabs.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .demo-section {
+            margin-bottom: 3rem;
+        }
+        
+        .demo-section h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        }
+        
+        .demo-controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-controls h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .demo-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-card p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        .sample-content {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        
+        .sample-content h4 {
+            color: var(--mir-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .sample-content p {
+            color: var(--mir-gray-700);
+            line-height: 1.6;
+        }
+        
+        .sample-form {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .sample-form .mir-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sample-form label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--mir-gray-800);
+        }
+        
+        .sample-form input {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--mir-gray-800);
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .sample-form input:focus {
+            outline: none;
+            border-color: var(--mir-primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        
+        .sample-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .sample-table th,
+        .sample-table td {
+            padding: 0.75rem;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sample-table th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: var(--mir-gray-900);
+        }
+        
+        .sample-table td {
+            color: var(--mir-gray-700);
+        }
+        
+        .sample-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .sample-metric {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .sample-metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--mir-primary);
+        }
+        
+        .sample-metric-label {
+            color: var(--mir-gray-600);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+            }
+            
+            .sample-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Header -->
+        <div class="demo-header">
+            <h1>🗂️ سیستم تب میراژ</h1>
+            <p>کتابخانه جامع تب‌های RTL با طراحی Glass Morphism</p>
+        </div>
+        
+        <!-- Interactive Controls -->
+        <div class="demo-controls">
+            <h3>🎮 کنترل‌های تعاملی</h3>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="showBasicTabs()">تب‌های پایه</button>
+                <button class="demo-btn" onclick="showPillsTabs()">تب‌های قرصی</button>
+                <button class="demo-btn" onclick="showBorderedTabs()">تب‌های حاشیه‌دار</button>
+                <button class="demo-btn" onclick="showVerticalTabs()">تب‌های عمودی</button>
+                <button class="demo-btn" onclick="showClosableTabs()">تب‌های قابل بسته شدن</button>
+                <button class="demo-btn" onclick="showDynamicTabs()">تب‌های دینامیک</button>
+                <button class="demo-btn" onclick="clearDynamicTabs()">پاک کردن نمونه‌ها</button>
+            </div>
+        </div>
+        
+        <!-- Dynamic Tabs Container -->
+        <div id="dynamicTabs"></div>
+        
+        <!-- Default Tabs -->
+        <div class="demo-section">
+            <h2>🎯 تب‌های پیش‌فرض</h2>
+            <div class="demo-grid">
+                <div class="mir-tabs" id="defaultTabs">
+                    <ul class="mir-tabs-nav">
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link active" data-tab="home">
+                                <i class="mir-tabs-nav-icon" data-feather="home"></i>
+                                <span>خانه</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="profile">
+                                <i class="mir-tabs-nav-icon" data-feather="user"></i>
+                                <span>پروفایل</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="messages">
+                                <i class="mir-tabs-nav-icon" data-feather="message-square"></i>
+                                <span>پیام‌ها</span>
+                                <span class="mir-tabs-nav-badge">۵</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="settings">
+                                <i class="mir-tabs-nav-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="mir-tabs-content">
+                        <div class="mir-tabs-pane active" id="home">
+                            <div class="sample-content">
+                                <h4>صفحه اصلی</h4>
+                                <p>خوش آمدید به پنل مدیریت میراژ. این صفحه اصلی سیستم است که شامل اطلاعات کلی و آمار مهم می‌باشد.</p>
+                                <div class="sample-dashboard">
+                                    <div class="sample-metric">
+                                        <div class="sample-metric-value">۱,۲۳۴</div>
+                                        <div class="sample-metric-label">کاربران</div>
+                                    </div>
+                                    <div class="sample-metric">
+                                        <div class="sample-metric-value">۵۶۷</div>
+                                        <div class="sample-metric-label">سفارشات</div>
+                                    </div>
+                                    <div class="sample-metric">
+                                        <div class="sample-metric-value">۸۹۰</div>
+                                        <div class="sample-metric-label">محصولات</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="profile">
+                            <div class="sample-content">
+                                <h4>پروفایل کاربری</h4>
+                                <p>اطلاعات شخصی و تنظیمات حساب کاربری شما.</p>
+                                <div class="sample-form">
+                                    <div class="mir-input-group">
+                                        <label>نام</label>
+                                        <input type="text" value="علی احمدی" dir="rtl">
+                                    </div>
+                                    <div class="mir-input-group">
+                                        <label>ایمیل</label>
+                                        <input type="email" value="ali@example.com" dir="ltr">
+                                    </div>
+                                    <div class="mir-input-group">
+                                        <label>شماره تلفن</label>
+                                        <input type="tel" value="۰۹۱۲۳۴۵۶۷۸۹" dir="rtl">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="messages">
+                            <div class="sample-content">
+                                <h4>پیام‌ها</h4>
+                                <p>پیام‌های دریافتی و ارسالی شما.</p>
+                                <table class="sample-table">
+                                    <thead>
+                                        <tr>
+                                            <th>فرستنده</th>
+                                            <th>موضوع</th>
+                                            <th>تاریخ</th>
+                                            <th>وضعیت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>سارا کریمی</td>
+                                            <td>درباره پروژه جدید</td>
+                                            <td>۱۴۰۳/۰۴/۲۵</td>
+                                            <td>جدید</td>
+                                        </tr>
+                                        <tr>
+                                            <td>محمد رضایی</td>
+                                            <td>گزارش ماهانه</td>
+                                            <td>۱۴۰۳/۰۴/۲۴</td>
+                                            <td>خوانده شده</td>
+                                        </tr>
+                                        <tr>
+                                            <td>فاطمه موسوی</td>
+                                            <td>تغییرات سیستم</td>
+                                            <td>۱۴۰۳/۰۴/۲۳</td>
+                                            <td>پاسخ داده شده</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="settings">
+                            <div class="sample-content">
+                                <h4>تنظیمات سیستم</h4>
+                                <p>تنظیمات عمومی و شخصی‌سازی سیستم.</p>
+                                <div class="sample-form">
+                                    <div class="mir-input-group">
+                                        <label>زبان رابط</label>
+                                        <select style="padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: var(--mir-gray-800);">
+                                            <option>فارسی</option>
+                                            <option>انگلیسی</option>
+                                            <option>عربی</option>
+                                        </select>
+                                    </div>
+                                    <div class="mir-input-group">
+                                        <label>منطقه زمانی</label>
+                                        <select style="padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: var(--mir-gray-800);">
+                                            <option>آسیا/تهران</option>
+                                            <option>آسیا/دبی</option>
+                                            <option>اروپا/لندن</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pills Tabs -->
+        <div class="demo-section">
+            <h2>💊 تب‌های قرصی</h2>
+            <div class="demo-grid">
+                <div class="mir-tabs mir-tabs-pills" id="pillsTabs">
+                    <ul class="mir-tabs-nav">
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link active" data-tab="dashboard">
+                                <i class="mir-tabs-nav-icon" data-feather="bar-chart-2"></i>
+                                <span>داشبورد</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="analytics">
+                                <i class="mir-tabs-nav-icon" data-feather="trending-up"></i>
+                                <span>آنالیتیکس</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="reports">
+                                <i class="mir-tabs-nav-icon" data-feather="file-text"></i>
+                                <span>گزارشات</span>
+                                <span class="mir-tabs-nav-badge">۳</span>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="mir-tabs-content">
+                        <div class="mir-tabs-pane active" id="dashboard">
+                            <div class="sample-content">
+                                <h4>داشبورد</h4>
+                                <p>نمای کلی از عملکرد سیستم و آمار مهم.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="analytics">
+                            <div class="sample-content">
+                                <h4>آنالیتیکس</h4>
+                                <p>تجزیه و تحلیل دقیق داده‌ها و روند‌ها.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="reports">
+                            <div class="sample-content">
+                                <h4>گزارشات</h4>
+                                <p>گزارش‌های تفصیلی از فعالیت‌های سیستم.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bordered Tabs -->
+        <div class="demo-section">
+            <h2>🔲 تب‌های حاشیه‌دار</h2>
+            <div class="demo-grid">
+                <div class="mir-tabs mir-tabs-bordered" id="borderedTabs">
+                    <ul class="mir-tabs-nav">
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link active" data-tab="orders">
+                                <i class="mir-tabs-nav-icon" data-feather="shopping-bag"></i>
+                                <span>سفارشات</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="products">
+                                <i class="mir-tabs-nav-icon" data-feather="package"></i>
+                                <span>محصولات</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="customers">
+                                <i class="mir-tabs-nav-icon" data-feather="users"></i>
+                                <span>مشتریان</span>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="mir-tabs-content">
+                        <div class="mir-tabs-pane active" id="orders">
+                            <div class="sample-content">
+                                <h4>مدیریت سفارشات</h4>
+                                <p>مشاهده و پردازش سفارشات مشتریان.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="products">
+                            <div class="sample-content">
+                                <h4>مدیریت محصولات</h4>
+                                <p>افزودن، ویرایش و حذف محصولات.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="customers">
+                            <div class="sample-content">
+                                <h4>مدیریت مشتریان</h4>
+                                <p>اطلاعات و تاریخچه مشتریان.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vertical Tabs -->
+        <div class="demo-section">
+            <h2>📍 تب‌های عمودی</h2>
+            <div class="demo-grid">
+                <div class="mir-tabs mir-tabs-vertical" id="verticalTabs">
+                    <ul class="mir-tabs-nav">
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link active" data-tab="general">
+                                <i class="mir-tabs-nav-icon" data-feather="settings"></i>
+                                <span>عمومی</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="security">
+                                <i class="mir-tabs-nav-icon" data-feather="shield"></i>
+                                <span>امنیت</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="notifications">
+                                <i class="mir-tabs-nav-icon" data-feather="bell"></i>
+                                <span>اعلان‌ها</span>
+                                <span class="mir-tabs-nav-badge">۷</span>
+                            </button>
+                        </li>
+                        <li class="mir-tabs-nav-item">
+                            <button class="mir-tabs-nav-link" data-tab="advanced">
+                                <i class="mir-tabs-nav-icon" data-feather="tool"></i>
+                                <span>پیشرفته</span>
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="mir-tabs-content">
+                        <div class="mir-tabs-pane active" id="general">
+                            <div class="sample-content">
+                                <h4>تنظیمات عمومی</h4>
+                                <p>تنظیمات پایه و عمومی سیستم.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="security">
+                            <div class="sample-content">
+                                <h4>تنظیمات امنیتی</h4>
+                                <p>تنظیمات مربوط به امنیت حساب کاربری.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="notifications">
+                            <div class="sample-content">
+                                <h4>تنظیمات اعلان‌ها</h4>
+                                <p>تنظیمات اعلان‌ها و پیام‌های سیستم.</p>
+                            </div>
+                        </div>
+                        <div class="mir-tabs-pane" id="advanced">
+                            <div class="sample-content">
+                                <h4>تنظیمات پیشرفته</h4>
+                                <p>تنظیمات پیشرفته برای کاربران حرفه‌ای.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Size Variants -->
+        <div class="demo-section">
+            <h2>📏 اندازه‌های مختلف</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3>تب کوچک</h3>
+                    <div class="mir-tabs mir-tabs-pills mir-tabs-sm">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="small1">
+                                    <span>تب ۱</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="small2">
+                                    <span>تب ۲</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="small3">
+                                    <span>تب ۳</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="small1">
+                                <p>محتوای تب کوچک ۱</p>
+                            </div>
+                            <div class="mir-tabs-pane" id="small2">
+                                <p>محتوای تب کوچک ۲</p>
+                            </div>
+                            <div class="mir-tabs-pane" id="small3">
+                                <p>محتوای تب کوچک ۳</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3>تب بزرگ</h3>
+                    <div class="mir-tabs mir-tabs-pills mir-tabs-lg">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="large1">
+                                    <i class="mir-tabs-nav-icon" data-feather="star"></i>
+                                    <span>تب ۱</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="large2">
+                                    <i class="mir-tabs-nav-icon" data-feather="heart"></i>
+                                    <span>تب ۲</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="large1">
+                                <p>محتوای تب بزرگ ۱</p>
+                            </div>
+                            <div class="mir-tabs-pane" id="large2">
+                                <p>محتوای تب بزرگ ۲</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Code Examples -->
+        <div class="demo-section">
+            <h2>💻 نمونه کد</h2>
+            <div class="demo-card">
+                <h3>نحوه استفاده</h3>
+                <p>برای ایجاد تب پایه:</p>
+                <div class="code-snippet">
+&lt;div class="mir-tabs"&gt;
+    &lt;ul class="mir-tabs-nav"&gt;
+        &lt;li class="mir-tabs-nav-item"&gt;
+            &lt;button class="mir-tabs-nav-link active" data-tab="tab1"&gt;
+                &lt;i class="mir-tabs-nav-icon" data-feather="home"&gt;&lt;/i&gt;
+                &lt;span&gt;خانه&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+    
+    &lt;div class="mir-tabs-content"&gt;
+        &lt;div class="mir-tabs-pane active" id="tab1"&gt;
+            محتوای تب
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </div>
+                
+                <p>برای مقداردهی اولیه با JavaScript:</p>
+                <div class="code-snippet">
+// مقداردهی ساده
+const tabs = new MirageTabs('#myTabs');
+
+// مقداردهی با گزینه‌ها
+const tabs = new MirageTabs('#myTabs', {
+    variant: 'pills',
+    size: 'lg',
+    closable: true,
+    onTabChange: function(index, tab) {
+        console.log('تب تغییر کرد:', tab.id);
+    }
+});
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="tabs.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Initialize existing tabs
+        const defaultTabs = new MirageTabs('#defaultTabs');
+        const pillsTabs = new MirageTabs('#pillsTabs');
+        const borderedTabs = new MirageTabs('#borderedTabs');
+        const verticalTabs = new MirageTabs('#verticalTabs');
+        
+        // Initialize size variant tabs
+        const smallTabs = document.querySelectorAll('.mir-tabs-sm');
+        const largeTabs = document.querySelectorAll('.mir-tabs-lg');
+        
+        smallTabs.forEach(tab => new MirageTabs(tab));
+        largeTabs.forEach(tab => new MirageTabs(tab));
+        
+        let dynamicTabsInstance = null;
+        
+        // Demo Functions
+        function showBasicTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های پایه دینامیک</h3>
+                    <div class="mir-tabs" id="dynamicBasic">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="basic1">
+                                    <i class="mir-tabs-nav-icon" data-feather="home"></i>
+                                    <span>خانه</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="basic2">
+                                    <i class="mir-tabs-nav-icon" data-feather="info"></i>
+                                    <span>درباره</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="basic3">
+                                    <i class="mir-tabs-nav-icon" data-feather="phone"></i>
+                                    <span>تماس</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="basic1">
+                                <div class="sample-content">
+                                    <h4>صفحه اصلی</h4>
+                                    <p>این صفحه اصلی تب‌های پایه است.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="basic2">
+                                <div class="sample-content">
+                                    <h4>درباره ما</h4>
+                                    <p>اطلاعات درباره شرکت و تیم.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="basic3">
+                                <div class="sample-content">
+                                    <h4>تماس با ما</h4>
+                                    <p>راه‌های تماس و آدرس.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicBasic');
+            feather.replace();
+        }
+        
+        function showPillsTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های قرصی دینامیک</h3>
+                    <div class="mir-tabs mir-tabs-pills" id="dynamicPills">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="pills1">
+                                    <i class="mir-tabs-nav-icon" data-feather="zap"></i>
+                                    <span>سریع</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="pills2">
+                                    <i class="mir-tabs-nav-icon" data-feather="shield"></i>
+                                    <span>امن</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="pills3">
+                                    <i class="mir-tabs-nav-icon" data-feather="star"></i>
+                                    <span>محبوب</span>
+                                    <span class="mir-tabs-nav-badge">جدید</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="pills1">
+                                <div class="sample-content">
+                                    <h4>عملکرد سریع</h4>
+                                    <p>سیستم با سرعت بالا کار می‌کند.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="pills2">
+                                <div class="sample-content">
+                                    <h4>امنیت بالا</h4>
+                                    <p>محافظت کامل از داده‌ها.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="pills3">
+                                <div class="sample-content">
+                                    <h4>محبوب کاربران</h4>
+                                    <p>انتخاب اول کاربران.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicPills');
+            feather.replace();
+        }
+        
+        function showBorderedTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های حاشیه‌دار دینامیک</h3>
+                    <div class="mir-tabs mir-tabs-bordered" id="dynamicBordered">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="bordered1">
+                                    <i class="mir-tabs-nav-icon" data-feather="grid"></i>
+                                    <span>داشبورد</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="bordered2">
+                                    <i class="mir-tabs-nav-icon" data-feather="layers"></i>
+                                    <span>پروژه‌ها</span>
+                                    <span class="mir-tabs-nav-badge">۱۲</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="bordered3">
+                                    <i class="mir-tabs-nav-icon" data-feather="calendar"></i>
+                                    <span>تقویم</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="bordered1">
+                                <div class="sample-content">
+                                    <h4>داشبورد مدیریت</h4>
+                                    <p>نمای کلی از وضعیت سیستم.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="bordered2">
+                                <div class="sample-content">
+                                    <h4>مدیریت پروژه‌ها</h4>
+                                    <p>پروژه‌های فعال و تکمیل شده.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="bordered3">
+                                <div class="sample-content">
+                                    <h4>تقویم رویدادها</h4>
+                                    <p>برنامه‌ریزی و رویدادهای آینده.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicBordered');
+            feather.replace();
+        }
+        
+        function showVerticalTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های عمودی دینامیک</h3>
+                    <div class="mir-tabs mir-tabs-vertical" id="dynamicVertical">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="vertical1">
+                                    <i class="mir-tabs-nav-icon" data-feather="database"></i>
+                                    <span>داده‌ها</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="vertical2">
+                                    <i class="mir-tabs-nav-icon" data-feather="bar-chart"></i>
+                                    <span>نمودارها</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="vertical3">
+                                    <i class="mir-tabs-nav-icon" data-feather="pie-chart"></i>
+                                    <span>آمار</span>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="vertical4">
+                                    <i class="mir-tabs-nav-icon" data-feather="download"></i>
+                                    <span>گزارشات</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="vertical1">
+                                <div class="sample-content">
+                                    <h4>مدیریت داده‌ها</h4>
+                                    <p>وارد کردن، ویرایش و حذف داده‌ها.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="vertical2">
+                                <div class="sample-content">
+                                    <h4>نمودارهای تحلیلی</h4>
+                                    <p>نمایش بصری داده‌ها.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="vertical3">
+                                <div class="sample-content">
+                                    <h4>آمار و ارقام</h4>
+                                    <p>آمار تفصیلی عملکرد.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="vertical4">
+                                <div class="sample-content">
+                                    <h4>گزارشات</h4>
+                                    <p>دانلود گزارشات در فرمت‌های مختلف.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicVertical');
+            feather.replace();
+        }
+        
+        function showClosableTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های قابل بسته شدن</h3>
+                    <div class="mir-tabs mir-tabs-pills" id="dynamicClosable">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="closable1">
+                                    <i class="mir-tabs-nav-icon" data-feather="file-text"></i>
+                                    <span>سند ۱</span>
+                                    <button class="mir-tabs-nav-close">
+                                        <i class="mir-tabs-nav-close-icon" data-feather="x"></i>
+                                    </button>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="closable2">
+                                    <i class="mir-tabs-nav-icon" data-feather="file-text"></i>
+                                    <span>سند ۲</span>
+                                    <button class="mir-tabs-nav-close">
+                                        <i class="mir-tabs-nav-close-icon" data-feather="x"></i>
+                                    </button>
+                                </button>
+                            </li>
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link" data-tab="closable3">
+                                    <i class="mir-tabs-nav-icon" data-feather="file-text"></i>
+                                    <span>سند ۳</span>
+                                    <button class="mir-tabs-nav-close">
+                                        <i class="mir-tabs-nav-close-icon" data-feather="x"></i>
+                                    </button>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="closable1">
+                                <div class="sample-content">
+                                    <h4>سند شماره ۱</h4>
+                                    <p>محتوای سند اول که قابل بسته شدن است.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="closable2">
+                                <div class="sample-content">
+                                    <h4>سند شماره ۲</h4>
+                                    <p>محتوای سند دوم که قابل بسته شدن است.</p>
+                                </div>
+                            </div>
+                            <div class="mir-tabs-pane" id="closable3">
+                                <div class="sample-content">
+                                    <h4>سند شماره ۳</h4>
+                                    <p>محتوای سند سوم که قابل بسته شدن است.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicClosable', {
+                closable: true,
+                onTabClose: function(index, tab) {
+                    console.log('تب بسته شد:', tab.id);
+                }
+            });
+            feather.replace();
+        }
+        
+        function showDynamicTabs() {
+            clearDynamicTabs();
+            
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = `
+                <div class="demo-card">
+                    <h3>تب‌های دینامیک</h3>
+                    <div class="demo-buttons" style="margin-bottom: 1rem;">
+                        <button class="demo-btn" onclick="addDynamicTab()">افزودن تب جدید</button>
+                        <button class="demo-btn" onclick="removeDynamicTab()">حذف تب آخر</button>
+                    </div>
+                    <div class="mir-tabs mir-tabs-pills" id="dynamicManual">
+                        <ul class="mir-tabs-nav">
+                            <li class="mir-tabs-nav-item">
+                                <button class="mir-tabs-nav-link active" data-tab="manual1">
+                                    <i class="mir-tabs-nav-icon" data-feather="home"></i>
+                                    <span>تب اول</span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="mir-tabs-content">
+                            <div class="mir-tabs-pane active" id="manual1">
+                                <div class="sample-content">
+                                    <h4>تب اول</h4>
+                                    <p>این تب اول است. می‌توانید تب‌های جدید اضافه کنید.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            dynamicTabsInstance = new MirageTabs('#dynamicManual', {
+                closable: true,
+                onTabChange: function(index, tab) {
+                    console.log('تب تغییر کرد:', tab.id);
+                },
+                onTabClose: function(index, tab) {
+                    console.log('تب بسته شد:', tab.id);
+                }
+            });
+            feather.replace();
+        }
+        
+        let tabCounter = 1;
+        function addDynamicTab() {
+            if (dynamicTabsInstance) {
+                tabCounter++;
+                const icons = ['star', 'heart', 'bookmark', 'flag', 'award', 'gift'];
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                
+                dynamicTabsInstance.addTab({
+                    id: `dynamic-${tabCounter}`,
+                    title: `تب ${tabCounter}`,
+                    content: `
+                        <div class="sample-content">
+                            <h4>تب شماره ${tabCounter}</h4>
+                            <p>این تب به صورت دینامیک اضافه شده است.</p>
+                        </div>
+                    `,
+                    icon: randomIcon,
+                    closable: true,
+                    active: true
+                });
+            }
+        }
+        
+        function removeDynamicTab() {
+            if (dynamicTabsInstance) {
+                const tabs = dynamicTabsInstance.getTabs();
+                if (tabs.length > 1) {
+                    dynamicTabsInstance.closeTab(tabs.length - 1);
+                }
+            }
+        }
+        
+        function clearDynamicTabs() {
+            const container = document.getElementById('dynamicTabs');
+            container.innerHTML = '';
+            dynamicTabsInstance = null;
+        }
+        
+        // Convert numbers to Persian on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            function convertToPersianNumbers(element) {
+                const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                const walker = document.createTreeWalker(
+                    element,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+                
+                let node;
+                while (node = walker.nextNode()) {
+                    let text = node.textContent;
+                    text = text.replace(/[0-9]/g, function(match) {
+                        return persianNumbers[parseInt(match)];
+                    });
+                    node.textContent = text;
+                }
+            }
+            
+            convertToPersianNumbers(document.body);
+        });
+    </script>
+</body>
+</html>

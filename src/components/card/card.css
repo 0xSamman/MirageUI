@@ -1,0 +1,524 @@
+/*
+ * MirageUI Card Component
+ * Persian RTL Card System with Glass Morphism
+ * Version: 1.0.0
+ */
+
+/* Card Loading Animations */
+@keyframes mirCardLoadIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes mirCardShimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+@keyframes mirCardPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes mirCardGlow {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+    }
+}
+
+/* Loading State */
+.mir-card.loading {
+    animation: mirCardLoadIn 0.6s ease forwards, mirCardPulse 1.5s ease-in-out infinite;
+}
+
+.mir-card.loading::before {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 20%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: mirCardShimmer 2s infinite;
+}
+
+/* Staggered Animation for Multiple Cards */
+.mir-card:nth-child(1) { animation-delay: 0s; }
+.mir-card:nth-child(2) { animation-delay: 0.1s; }
+.mir-card:nth-child(3) { animation-delay: 0.2s; }
+.mir-card:nth-child(4) { animation-delay: 0.3s; }
+.mir-card:nth-child(5) { animation-delay: 0.4s; }
+.mir-card:nth-child(6) { animation-delay: 0.5s; }
+.mir-card:nth-child(7) { animation-delay: 0.6s; }
+.mir-card:nth-child(8) { animation-delay: 0.7s; }
+.mir-card:nth-child(9) { animation-delay: 0.8s; }
+.mir-card:nth-child(10) { animation-delay: 0.9s; }
+
+/* Skeleton Loading Content */
+.mir-card-skeleton {
+    animation: mirCardPulse 1.5s ease-in-out infinite;
+}
+
+.mir-card-skeleton .mir-card-title {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: mirCardShimmer 1.5s infinite;
+    color: transparent;
+    border-radius: 4px;
+    height: 20px;
+    width: 70%;
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-card-skeleton .mir-card-subtitle {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: mirCardShimmer 1.5s infinite;
+    color: transparent;
+    border-radius: 4px;
+    height: 16px;
+    width: 50%;
+    margin-bottom: var(--mir-space-3);
+}
+
+.mir-card-skeleton .mir-card-body {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: mirCardShimmer 1.5s infinite;
+    color: transparent;
+    border-radius: 4px;
+    height: 60px;
+    width: 100%;
+}
+
+/* Base Card Styles */
+.mir-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: var(--mir-space-6);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    direction: rtl;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: mirCardLoadIn 0.6s ease forwards;
+}
+
+.mir-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+.mir-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Card Header */
+.mir-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--mir-space-4);
+    padding-bottom: var(--mir-space-3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mir-card-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    color: var(--mir-gray-900);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.mir-card-subtitle {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin: var(--mir-space-1) 0 0 0;
+    line-height: 1.5;
+}
+
+.mir-card-actions {
+    display: flex;
+    gap: var(--mir-space-2);
+    flex-shrink: 0;
+}
+
+/* Card Body */
+.mir-card-body {
+    color: var(--mir-gray-700);
+    line-height: 1.6;
+}
+
+/* Card Footer */
+.mir-card-footer {
+    margin-top: var(--mir-space-4);
+    padding-top: var(--mir-space-3);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Card Sizes */
+.mir-card-sm {
+    padding: var(--mir-space-4);
+    border-radius: 12px;
+}
+
+.mir-card-sm .mir-card-title {
+    font-size: var(--mir-text-base);
+}
+
+.mir-card-lg {
+    padding: var(--mir-space-8);
+    border-radius: 20px;
+}
+
+.mir-card-lg .mir-card-title {
+    font-size: var(--mir-text-xl);
+}
+
+/* Card Variants */
+.mir-card-elevated {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.mir-card-elevated:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+}
+
+.mir-card-outlined {
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(99, 102, 241, 0.2);
+    backdrop-filter: blur(8px);
+}
+
+.mir-card-outlined:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.mir-card-filled {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.mir-card-filled .mir-card-title {
+    color: var(--mir-primary);
+}
+
+/* Card with Image */
+.mir-card-image {
+    padding: 0;
+    overflow: hidden;
+}
+
+.mir-card-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.mir-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.mir-card-image:hover img {
+    transform: scale(1.05);
+}
+
+.mir-card-image .mir-card-content {
+    padding: var(--mir-space-6);
+}
+
+/* Card with Icon */
+.mir-card-icon {
+    position: relative;
+    padding-top: calc(var(--mir-space-6) + 24px);
+}
+
+.mir-card-icon-container {
+    position: absolute;
+    top: var(--mir-space-4);
+    right: var(--mir-space-6);
+    width: 48px;
+    height: 48px;
+    background: var(--mir-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+/* Status Cards */
+.mir-card-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.mir-card-success .mir-card-icon-container {
+    background: var(--mir-success);
+}
+
+.mir-card-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.mir-card-warning .mir-card-icon-container {
+    background: var(--mir-warning);
+}
+
+.mir-card-error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.mir-card-error .mir-card-icon-container {
+    background: var(--mir-error);
+}
+
+.mir-card-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.mir-card-info .mir-card-icon-container {
+    background: var(--mir-info);
+}
+
+/* Stat Cards */
+.mir-card-stat {
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.mir-card-stat-value {
+    font-size: var(--mir-text-3xl);
+    font-weight: 700;
+    color: var(--mir-primary);
+    margin-bottom: var(--mir-space-2);
+    font-family: 'YekanBakh', sans-serif;
+}
+
+.mir-card-stat-label {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin-bottom: var(--mir-space-3);
+}
+
+.mir-card-stat-change {
+    font-size: var(--mir-text-xs);
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border-radius: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+}
+
+.mir-card-stat-change.positive {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--mir-success);
+}
+
+.mir-card-stat-change.negative {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--mir-error);
+}
+
+.mir-card-stat-change.neutral {
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--mir-gray-600);
+}
+
+/* User Cards */
+.mir-card-user {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-4);
+    padding: var(--mir-space-4);
+}
+
+.mir-card-user-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    flex-shrink: 0;
+}
+
+.mir-card-user-info {
+    flex: 1;
+}
+
+.mir-card-user-name {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    color: var(--mir-gray-900);
+    margin-bottom: var(--mir-space-1);
+}
+
+.mir-card-user-role {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-card-user-stats {
+    display: flex;
+    gap: var(--mir-space-4);
+}
+
+.mir-card-user-stat {
+    text-align: center;
+}
+
+.mir-card-user-stat-value {
+    font-size: var(--mir-text-base);
+    font-weight: 600;
+    color: var(--mir-gray-900);
+}
+
+.mir-card-user-stat-label {
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-600);
+}
+
+/* Product Cards */
+.mir-card-product {
+    position: relative;
+    overflow: hidden;
+}
+
+.mir-card-product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: var(--mir-space-4);
+    border-radius: 12px;
+}
+
+.mir-card-product-badge {
+    position: absolute;
+    top: var(--mir-space-3);
+    right: var(--mir-space-3);
+    background: var(--mir-primary);
+    color: white;
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border-radius: 6px;
+    font-size: var(--mir-text-xs);
+    font-weight: 500;
+}
+
+.mir-card-product-price {
+    font-size: var(--mir-text-lg);
+    font-weight: 700;
+    color: var(--mir-primary);
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-card-product-description {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin-bottom: var(--mir-space-3);
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mir-card {
+        padding: var(--mir-space-4);
+        border-radius: 12px;
+    }
+    
+    .mir-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--mir-space-2);
+    }
+    
+    .mir-card-user {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .mir-card-user-stats {
+        justify-content: center;
+    }
+    
+    .mir-card-lg {
+        padding: var(--mir-space-6);
+        border-radius: 16px;
+    }
+}
+
+/* Force Light Mode for Cards */
+.mir-card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.mir-card-title {
+    color: var(--mir-gray-900) !important;
+}
+
+.mir-card-body {
+    color: var(--mir-gray-700) !important;
+}
+
+.mir-card-subtitle {
+    color: var(--mir-gray-600) !important;
+}
+
+.mir-card-outlined {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+.mir-card-filled {
+    background: rgba(99, 102, 241, 0.1) !important;
+}
+
+.mir-card-elevated {
+    background: rgba(255, 255, 255, 0.9) !important;
+}

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش منوی کشویی - سیستم طراحی میراژ</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Dropdown Component Styles -->
+    <link rel="stylesheet" href="dropdown.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        /* Demo specific styles */
+        .demo-container {
+            min-height: 100vh;
+            padding: var(--mir-space-6);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--mir-space-8);
+            color: white;
+        }
+        
+        .demo-title {
+            font-size: var(--mir-text-4xl);
+            font-weight: 700;
+            margin-bottom: var(--mir-space-2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-subtitle {
+            font-size: var(--mir-text-xl);
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-section-title {
+            font-size: var(--mir-text-2xl);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-4);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .demo-section-title i {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-4);
+        }
+        
+        .demo-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .demo-item-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-3);
+            color: var(--mir-gray-800);
+        }
+        
+        .demo-item-description {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-3);
+        }
+        
+        .demo-code {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-700);
+            text-align: right;
+            white-space: pre-wrap;
+            margin-top: var(--mir-space-3);
+        }
+        
+        .demo-back-button {
+            position: fixed;
+            top: var(--mir-space-4);
+            right: var(--mir-space-4);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: var(--mir-space-2) var(--mir-space-4);
+            text-decoration: none;
+            color: var(--mir-gray-800);
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .demo-back-button:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .demo-back-button i {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .demo-special-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--mir-space-4);
+        }
+        
+        .demo-user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .demo-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .demo-notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--mir-space-3);
+            padding: var(--mir-space-3);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-notification-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--mir-primary);
+            flex-shrink: 0;
+        }
+        
+        .demo-notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .demo-notification-title {
+            font-size: var(--mir-text-sm);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+            margin-bottom: var(--mir-space-1);
+        }
+        
+        .demo-notification-text {
+            font-size: var(--mir-text-xs);
+            color: var(--mir-gray-600);
+            line-height: 1.4;
+        }
+        
+        .demo-notification-time {
+            font-size: var(--mir-text-xs);
+            color: var(--mir-gray-500);
+            margin-top: var(--mir-space-1);
+        }
+        
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--mir-space-4);
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-special-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Back Button -->
+        <a href="../../index.html" class="demo-back-button">
+            <i data-feather="arrow-right"></i>
+            <span>بازگشت به داشبورد</span>
+        </a>
+        
+        <!-- Demo Header -->
+        <header class="demo-header">
+            <h1 class="demo-title">منوی کشویی میراژ</h1>
+            <p class="demo-subtitle">مجموعه کاملی از منوهای کشویی با طراحی Glass Morphism و پشتیبانی RTL</p>
+        </header>
+        
+        <!-- Basic Variants -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">
+                <i data-feather="layers"></i>
+                انواع مختلف منو
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی پیش‌فرض</h3>
+                    <p class="demo-item-description">منوی استاندارد با طراحی شفاف</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>پروفایل</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="help-circle"></i>
+                                <span>راهنما</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی اصلی</h3>
+                    <p class="demo-item-description">منوی با رنگ اصلی سیستم</p>
+                    <div class="mir-dropdown mir-dropdown-primary">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="home"></i>
+                                <span>خانه</span>
+                            </button>
+                            <button class="mir-dropdown-item active">
+                                <i class="mir-dropdown-item-icon" data-feather="star"></i>
+                                <span>مورد علاقه</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="archive"></i>
+                                <span>آرشیو</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی ثانویه</h3>
+                    <p class="demo-item-description">منوی با رنگ ثانویه</p>
+                    <div class="mir-dropdown mir-dropdown-secondary">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="file"></i>
+                                <span>فایل</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="folder"></i>
+                                <span>پوشه</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="image"></i>
+                                <span>تصویر</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی موفقیت</h3>
+                    <p class="demo-item-description">منوی با رنگ موفقیت</p>
+                    <div class="mir-dropdown mir-dropdown-success">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="check"></i>
+                                <span>تأیید</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="thumbs-up"></i>
+                                <span>پسندیدن</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="heart"></i>
+                                <span>دوست داشتن</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی هشدار</h3>
+                    <p class="demo-item-description">منوی با رنگ هشدار</p>
+                    <div class="mir-dropdown mir-dropdown-warning">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="alert-triangle"></i>
+                                <span>هشدار</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="info"></i>
+                                <span>اطلاعات</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="clock"></i>
+                                <span>انتظار</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی خطا</h3>
+                    <p class="demo-item-description">منوی با رنگ خطا</p>
+                    <div class="mir-dropdown mir-dropdown-error">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="x"></i>
+                                <span>لغو</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="trash"></i>
+                                <span>حذف</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="ban"></i>
+                                <span>مسدود</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی مینیمال</h3>
+                    <p class="demo-item-description">منوی شفاف و مینیمال</p>
+                    <div class="mir-dropdown mir-dropdown-ghost">
+                        <button class="mir-dropdown-toggle">
+                            <span>انتخاب کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="eye"></i>
+                                <span>مشاهده</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="edit"></i>
+                                <span>ویرایش</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="share"></i>
+                                <span>اشتراک</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی سفارشی</h3>
+                    <p class="demo-item-description">منوی بدون طراحی پیش‌فرض</p>
+                    <div class="mir-dropdown mir-dropdown-custom">
+                        <button class="mir-dropdown-toggle">
+                            <i data-feather="more-horizontal"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="copy"></i>
+                                <span>کپی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="download"></i>
+                                <span>دانلود</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="external-link"></i>
+                                <span>لینک خارجی</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sizes -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">
+                <i data-feather="maximize"></i>
+                اندازه‌های مختلف
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3 class="demo-item-title">اندازه کوچک</h3>
+                    <p class="demo-item-description">منوی با اندازه کوچک</p>
+                    <div class="mir-dropdown mir-dropdown-sm">
+                        <button class="mir-dropdown-toggle">
+                            <span>کوچک</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>کاربر</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">اندازه متوسط</h3>
+                    <p class="demo-item-description">منوی با اندازه پیش‌فرض</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>متوسط</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>کاربر</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">اندازه بزرگ</h3>
+                    <p class="demo-item-description">منوی با اندازه بزرگ</p>
+                    <div class="mir-dropdown mir-dropdown-lg">
+                        <button class="mir-dropdown-toggle">
+                            <span>بزرگ</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>کاربر</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Advanced Features -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">
+                <i data-feather="zap"></i>
+                ویژگی‌های پیشرفته
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منو با جستجو</h3>
+                    <p class="demo-item-description">منوی قابل جستجو</p>
+                    <div class="mir-dropdown" id="searchableDropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>جستجو کنید</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <div class="mir-dropdown-search">
+                                <input type="text" class="mir-dropdown-search-input" placeholder="جستجو..." dir="rtl">
+                            </div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>علی احمدی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>مریم کریمی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>حسن محمدی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>فاطمه نوری</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منو با نشان‌ها</h3>
+                    <p class="demo-item-description">منوی حاوی نشان‌ها</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>اعلان‌ها</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="message-circle"></i>
+                                <span>پیام‌ها</span>
+                                <span class="mir-dropdown-item-badge">۵</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="bell"></i>
+                                <span>اعلان‌ها</span>
+                                <span class="mir-dropdown-item-badge">۱۲</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="mail"></i>
+                                <span>ایمیل‌ها</span>
+                                <span class="mir-dropdown-item-badge">۳</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منو با جداکننده</h3>
+                    <p class="demo-item-description">منوی با گروه‌بندی</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>عملیات</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <div class="mir-dropdown-header">ویرایش</div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="edit"></i>
+                                <span>ویرایش</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="copy"></i>
+                                <span>کپی</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <div class="mir-dropdown-header">عملیات</div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="share"></i>
+                                <span>اشتراک</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="download"></i>
+                                <span>دانلود</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="trash"></i>
+                                <span>حذف</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منو با آیتم غیرفعال</h3>
+                    <p class="demo-item-description">منوی با آیتم‌های غیرفعال</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <span>دسترسی‌ها</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="eye"></i>
+                                <span>مشاهده</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="edit"></i>
+                                <span>ویرایش</span>
+                            </button>
+                            <button class="mir-dropdown-item disabled">
+                                <i class="mir-dropdown-item-icon" data-feather="trash"></i>
+                                <span>حذف (غیرفعال)</span>
+                            </button>
+                            <button class="mir-dropdown-item disabled">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات (غیرفعال)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Special Examples -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">
+                <i data-feather="star"></i>
+                نمونه‌های ویژه
+            </h2>
+            
+            <div class="demo-special-examples">
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی کاربر</h3>
+                    <p class="demo-item-description">منوی پروفایل کاربر</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <div class="demo-user-menu">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="آواتار" class="demo-user-avatar">
+                                <span>علی احمدی</span>
+                            </div>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <div class="mir-dropdown-header">حساب کاربری</div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="user"></i>
+                                <span>پروفایل</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="settings"></i>
+                                <span>تنظیمات</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="credit-card"></i>
+                                <span>صورتحساب</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <div class="mir-dropdown-header">سایر</div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="help-circle"></i>
+                                <span>راهنما</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="message-circle"></i>
+                                <span>پشتیبانی</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="log-out"></i>
+                                <span>خروج</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی اعلان‌ها</h3>
+                    <p class="demo-item-description">منوی نمایش اعلان‌ها</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <i data-feather="bell"></i>
+                            <span class="mir-dropdown-item-badge">۳</span>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <div class="mir-dropdown-header">اعلان‌های جدید</div>
+                            <div class="demo-notification-item">
+                                <i class="demo-notification-icon" data-feather="user-plus"></i>
+                                <div class="demo-notification-content">
+                                    <div class="demo-notification-title">کاربر جدید</div>
+                                    <div class="demo-notification-text">مریم کریمی به سیستم اضافه شد</div>
+                                    <div class="demo-notification-time">۵ دقیقه پیش</div>
+                                </div>
+                            </div>
+                            <div class="demo-notification-item">
+                                <i class="demo-notification-icon" data-feather="file-text"></i>
+                                <div class="demo-notification-content">
+                                    <div class="demo-notification-title">گزارش جدید</div>
+                                    <div class="demo-notification-text">گزارش فروش ماهانه آماده شد</div>
+                                    <div class="demo-notification-time">۱۰ دقیقه پیش</div>
+                                </div>
+                            </div>
+                            <div class="demo-notification-item">
+                                <i class="demo-notification-icon" data-feather="alert-triangle"></i>
+                                <div class="demo-notification-content">
+                                    <div class="demo-notification-title">هشدار سیستم</div>
+                                    <div class="demo-notification-text">حافظه سرور در حال اتمام است</div>
+                                    <div class="demo-notification-time">۱۵ دقیقه پیش</div>
+                                </div>
+                            </div>
+                            <div class="mir-dropdown-divider"></div>
+                            <div class="mir-dropdown-footer">
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">مشاهده همه</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی اقدامات</h3>
+                    <p class="demo-item-description">منوی سه نقطه برای اقدامات</p>
+                    <div class="mir-dropdown mir-dropdown-custom">
+                        <button class="mir-dropdown-toggle">
+                            <i data-feather="more-horizontal"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="eye"></i>
+                                <span>مشاهده</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="edit"></i>
+                                <span>ویرایش</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="copy"></i>
+                                <span>کپی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="share"></i>
+                                <span>اشتراک‌گذاری</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="download"></i>
+                                <span>دانلود</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="archive"></i>
+                                <span>آرشیو</span>
+                            </button>
+                            <div class="mir-dropdown-divider"></div>
+                            <button class="mir-dropdown-item">
+                                <i class="mir-dropdown-item-icon" data-feather="trash"></i>
+                                <span>حذف</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">منوی زبان</h3>
+                    <p class="demo-item-description">منوی انتخاب زبان</p>
+                    <div class="mir-dropdown">
+                        <button class="mir-dropdown-toggle">
+                            <i data-feather="globe"></i>
+                            <span>فارسی</span>
+                            <i class="mir-dropdown-toggle-icon" data-feather="chevron-down"></i>
+                        </button>
+                        <div class="mir-dropdown-menu">
+                            <button class="mir-dropdown-item active">
+                                <span>🇮🇷 فارسی</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <span>🇺🇸 English</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <span>🇫🇷 Français</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <span>🇩🇪 Deutsch</span>
+                            </button>
+                            <button class="mir-dropdown-item">
+                                <span>🇪🇸 Español</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Code Examples -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">
+                <i data-feather="code"></i>
+                نمونه کدها
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h3 class="demo-item-title">HTML پایه</h3>
+                    <div class="demo-code">&lt;div class="mir-dropdown"&gt;
+    &lt;button class="mir-dropdown-toggle"&gt;
+        &lt;span&gt;انتخاب کنید&lt;/span&gt;
+        &lt;i class="mir-dropdown-toggle-icon" data-feather="chevron-down"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="mir-dropdown-menu"&gt;
+        &lt;button class="mir-dropdown-item"&gt;
+            &lt;span&gt;گزینه اول&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button class="mir-dropdown-item"&gt;
+            &lt;span&gt;گزینه دوم&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">JavaScript پایه</h3>
+                    <div class="demo-code">// مقداردهی خودکار
+const dropdowns = MirageDropdown.init();
+
+// مقداردهی دستی
+const dropdown = new MirageDropdown('#myDropdown', {
+    onSelect: function(data) {
+        console.log('انتخاب شد:', data.text);
+    }
+});</div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">ایجاد برنامه‌ای</h3>
+                    <div class="demo-code">const dropdown = MirageDropdown.create('#container', {
+    text: 'انتخاب کنید',
+    variant: 'primary',
+    items: [
+        { text: 'گزینه اول', value: 'option1' },
+        { text: 'گزینه دوم', value: 'option2' },
+        { text: 'گزینه سوم', value: 'option3' }
+    ]
+});</div>
+                </div>
+                
+                <div class="demo-item">
+                    <h3 class="demo-item-title">افزودن آیتم</h3>
+                    <div class="demo-code">dropdown.addItem({
+    text: 'آیتم جدید',
+    icon: 'plus',
+    value: 'new-item',
+    badge: 'جدید'
+});</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="dropdown.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Initialize all dropdowns
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-initialize dropdowns
+            const dropdowns = MirageDropdown.init();
+            
+            // Special searchable dropdown
+            const searchableDropdown = new MirageDropdown('#searchableDropdown', {
+                searchable: true,
+                onSelect: function(data) {
+                    console.log('انتخاب شد:', data.text);
+                }
+            });
+            
+            // Add some interactive demos
+            console.log('منوهای کشویی میراژ آماده شدند!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سیستم کارت - MirageUI</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Card Component Styles -->
+    <link rel="stylesheet" href="card.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .demo-section {
+            margin-bottom: 3rem;
+        }
+        
+        .demo-section h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        .demo-grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        
+        .demo-controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-controls h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .demo-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Header -->
+        <div class="demo-header">
+            <h1>🎴 سیستم کارت میراژ</h1>
+            <p>کتابخانه جامع کارت‌های RTL با طراحی Glass Morphism</p>
+        </div>
+        
+        <!-- Interactive Controls -->
+        <div class="demo-controls">
+            <h3>🎮 کنترل‌های تعاملی</h3>
+            <div class="demo-buttons">
+                <button class="demo-btn" onclick="showStatCards()">نمایش کارت‌های آماری</button>
+                <button class="demo-btn" onclick="showUserCards()">نمایش کارت‌های کاربری</button>
+                <button class="demo-btn" onclick="showProductCards()">نمایش کارت‌های محصول</button>
+                <button class="demo-btn" onclick="showImageCards()">نمایش کارت‌های تصویری</button>
+                <button class="demo-btn" onclick="showIconCards()">نمایش کارت‌های آیکون</button>
+                <button class="demo-btn" onclick="showLoadingDemo()">نمایش انیمیشن بارگیری</button>
+                <button class="demo-btn" onclick="clearDynamicCards()">پاک کردن همه</button>
+            </div>
+        </div>
+        
+        <!-- Dynamic Cards Container -->
+        <div id="dynamicCards" class="demo-grid"></div>
+        
+        <!-- Basic Cards -->
+        <div class="demo-section">
+            <h2>🎯 کارت‌های پایه</h2>
+            <div class="demo-grid">
+                <div class="mir-card">
+                    <div class="mir-card-header">
+                        <div>
+                            <h3 class="mir-card-title">کارت ساده</h3>
+                            <p class="mir-card-subtitle">کارت پایه بدون ویژگی خاص</p>
+                        </div>
+                    </div>
+                    <div class="mir-card-body">
+                        این یک کارت ساده با محتوای متنی است. از آن برای نمایش اطلاعات کلی استفاده کنید.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-elevated">
+                    <div class="mir-card-header">
+                        <div>
+                            <h3 class="mir-card-title">کارت برجسته</h3>
+                            <p class="mir-card-subtitle">کارت با سایه بیشتر</p>
+                        </div>
+                    </div>
+                    <div class="mir-card-body">
+                        کارت برجسته با سایه بیشتر برای جلب توجه بیشتر استفاده می‌شود.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-outlined">
+                    <div class="mir-card-header">
+                        <div>
+                            <h3 class="mir-card-title">کارت حاشیه‌دار</h3>
+                            <p class="mir-card-subtitle">کارت با حاشیه رنگی</p>
+                        </div>
+                    </div>
+                    <div class="mir-card-body">
+                        کارت حاشیه‌دار برای تأکید بر محتوای مهم استفاده می‌شود.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Size Variants -->
+        <div class="demo-section">
+            <h2>📏 اندازه‌های مختلف</h2>
+            <div class="demo-grid demo-grid-3">
+                <div class="mir-card mir-card-sm">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">کارت کوچک</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        کارت کوچک برای فضاهای محدود.
+                    </div>
+                </div>
+                
+                <div class="mir-card">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">کارت متوسط</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        کارت متوسط - اندازه پیش‌فرض.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-lg">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">کارت بزرگ</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        کارت بزرگ برای محتوای بیشتر.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status Cards -->
+        <div class="demo-section">
+            <h2>🎨 وضعیت‌های رنگی</h2>
+            <div class="demo-grid demo-grid-2">
+                <div class="mir-card mir-card-success">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">موفقیت</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        عملیات با موفقیت انجام شد.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-error">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">خطا</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        خطایی در عملیات رخ داده است.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-warning">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">هشدار</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        توجه: این عملیات قابل بازگشت نیست.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-info">
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">اطلاعیه</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        اطلاعیه مهم برای کاربران.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stat Cards -->
+        <div class="demo-section">
+            <h2>📊 کارت‌های آماری</h2>
+            <div class="demo-grid demo-grid-2">
+                <div class="mir-card mir-card-stat mir-card-success">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="trending-up"></i>
+                    </div>
+                    <div class="mir-card-stat-value">۱۲۵,۰۰۰</div>
+                    <div class="mir-card-stat-label">کل فروش</div>
+                    <div class="mir-card-stat-change positive">
+                        <i data-feather="arrow-up"></i>
+                        +۱۵٪
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-stat mir-card-info">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="users"></i>
+                    </div>
+                    <div class="mir-card-stat-value">۱,۲۳۴</div>
+                    <div class="mir-card-stat-label">کاربران فعال</div>
+                    <div class="mir-card-stat-change positive">
+                        <i data-feather="arrow-up"></i>
+                        +۸٪
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-stat mir-card-warning">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="shopping-cart"></i>
+                    </div>
+                    <div class="mir-card-stat-value">۳۴۵</div>
+                    <div class="mir-card-stat-label">سفارشات</div>
+                    <div class="mir-card-stat-change negative">
+                        <i data-feather="arrow-down"></i>
+                        -۳٪
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-stat mir-card-error">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="alert-triangle"></i>
+                    </div>
+                    <div class="mir-card-stat-value">۱۲</div>
+                    <div class="mir-card-stat-label">خطاها</div>
+                    <div class="mir-card-stat-change neutral">
+                        <i data-feather="minus"></i>
+                        ۰٪
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- User Cards -->
+        <div class="demo-section">
+            <h2>👥 کارت‌های کاربری</h2>
+            <div class="demo-grid demo-grid-2">
+                <div class="mir-card mir-card-user">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b332c000?w=64&h=64&fit=crop&crop=face" alt="User" class="mir-card-user-avatar">
+                    <div class="mir-card-user-info">
+                        <div class="mir-card-user-name">سوفیا کلارک</div>
+                        <div class="mir-card-user-role">طراح رابط کاربری</div>
+                        <div class="mir-card-user-stats">
+                            <div class="mir-card-user-stat">
+                                <div class="mir-card-user-stat-value">۴۲</div>
+                                <div class="mir-card-user-stat-label">پروژه</div>
+                            </div>
+                            <div class="mir-card-user-stat">
+                                <div class="mir-card-user-stat-value">۹۸</div>
+                                <div class="mir-card-user-stat-label">امتیاز</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-user">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face" alt="User" class="mir-card-user-avatar">
+                    <div class="mir-card-user-info">
+                        <div class="mir-card-user-name">لیام کارتر</div>
+                        <div class="mir-card-user-role">توسعه‌دهنده فرانت‌اند</div>
+                        <div class="mir-card-user-stats">
+                            <div class="mir-card-user-stat">
+                                <div class="mir-card-user-stat-value">۲۸</div>
+                                <div class="mir-card-user-stat-label">پروژه</div>
+                            </div>
+                            <div class="mir-card-user-stat">
+                                <div class="mir-card-user-stat-value">۸۵</div>
+                                <div class="mir-card-user-stat-label">امتیاز</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Cards -->
+        <div class="demo-section">
+            <h2>🛍️ کارت‌های محصول</h2>
+            <div class="demo-grid demo-grid-3">
+                <div class="mir-card mir-card-product">
+                    <div class="mir-card-product-badge">جدید</div>
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=180&fit=crop" alt="Product" class="mir-card-product-image">
+                    <h3 class="mir-card-title">کتانی ورزشی</h3>
+                    <div class="mir-card-product-price">۱۵۰,۰۰۰</div>
+                    <div class="mir-card-product-description">
+                        کتانی ورزشی با کیفیت بالا و طراحی مدرن برای ورزشکاران.
+                    </div>
+                    <div class="mir-card-actions">
+                        <button class="mir-btn mir-btn-primary mir-btn-sm">خرید</button>
+                        <button class="mir-btn mir-btn-secondary mir-btn-sm">مشاهده</button>
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-product">
+                    <div class="mir-card-product-badge">محبوب</div>
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=180&fit=crop" alt="Product" class="mir-card-product-image">
+                    <h3 class="mir-card-title">ساعت هوشمند</h3>
+                    <div class="mir-card-product-price">۴۵۰,۰۰۰</div>
+                    <div class="mir-card-product-description">
+                        ساعت هوشمند با قابلیت‌های پیشرفته و طراحی شیک.
+                    </div>
+                    <div class="mir-card-actions">
+                        <button class="mir-btn mir-btn-primary mir-btn-sm">خرید</button>
+                        <button class="mir-btn mir-btn-secondary mir-btn-sm">مشاهده</button>
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-product">
+                    <div class="mir-card-product-badge">تخفیف</div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=180&fit=crop" alt="Product" class="mir-card-product-image">
+                    <h3 class="mir-card-title">هدفون بی‌سیم</h3>
+                    <div class="mir-card-product-price">۲۰۰,۰۰۰</div>
+                    <div class="mir-card-product-description">
+                        هدفون بی‌سیم با کیفیت صدای عالی و باتری طولانی مدت.
+                    </div>
+                    <div class="mir-card-actions">
+                        <button class="mir-btn mir-btn-primary mir-btn-sm">خرید</button>
+                        <button class="mir-btn mir-btn-secondary mir-btn-sm">مشاهده</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Image Cards -->
+        <div class="demo-section">
+            <h2>🖼️ کارت‌های تصویری</h2>
+            <div class="demo-grid demo-grid-2">
+                <div class="mir-card mir-card-image">
+                    <div class="mir-card-image-container">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop" alt="Landscape">
+                    </div>
+                    <div class="mir-card-content">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">منظره طبیعی</h3>
+                        </div>
+                        <div class="mir-card-body">
+                            تصویری زیبا از طبیعت بکر و دست‌نخورده.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-image">
+                    <div class="mir-card-image-container">
+                        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=200&fit=crop" alt="City">
+                    </div>
+                    <div class="mir-card-content">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">شهر مدرن</h3>
+                        </div>
+                        <div class="mir-card-body">
+                            نمایی از شهر مدرن با آسمان‌خراش‌های بلند.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Icon Cards -->
+        <div class="demo-section">
+            <h2>🎯 کارت‌های آیکون</h2>
+            <div class="demo-grid demo-grid-2">
+                <div class="mir-card mir-card-icon mir-card-success">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="check-circle"></i>
+                    </div>
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">تأیید شده</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        حساب شما با موفقیت تأیید شد.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-icon mir-card-warning">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="alert-circle"></i>
+                    </div>
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">نیاز به توجه</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        برخی اطلاعات نیاز به به‌روزرسانی دارند.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-icon mir-card-info">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="info"></i>
+                    </div>
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">اطلاعیه</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        اطلاعیه مهم برای تمام کاربران.
+                    </div>
+                </div>
+                
+                <div class="mir-card mir-card-icon mir-card-error">
+                    <div class="mir-card-icon-container">
+                        <i data-feather="x-circle"></i>
+                    </div>
+                    <div class="mir-card-header">
+                        <h3 class="mir-card-title">خطا</h3>
+                    </div>
+                    <div class="mir-card-body">
+                        خطایی در پردازش درخواست رخ داده است.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Code Examples -->
+        <div class="demo-section">
+            <h2>💻 نمونه کد</h2>
+            <div class="mir-card">
+                <div class="mir-card-header">
+                    <h3 class="mir-card-title">نحوه استفاده</h3>
+                </div>
+                <div class="mir-card-body">
+                    <p>برای ایجاد کارت آماری:</p>
+                    <div class="code-snippet">
+const statCard = MirageCard.createStatCard(
+    'کل فروش',           // عنوان
+    '۱۲۵,۰۰۰',         // مقدار
+    15,                 // درصد تغییر
+    'dollar-sign',      // آیکون
+    'success'           // وضعیت
+);
+
+document.getElementById('container').appendChild(statCard);
+                    </div>
+                    
+                    <p>برای ایجاد کارت کاربری:</p>
+                    <div class="code-snippet">
+const userCard = MirageCard.createUserCard(
+    'علی احمدی',        // نام
+    'مدیر سیستم',       // نقش
+    'avatar.jpg',       // تصویر
+    [                   // آمار
+        { value: '۱۲۳', label: 'پست' },
+        { value: '۴۵۶', label: 'دنبال‌کننده' }
+    ]
+);
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="card.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Demo Functions
+        function showStatCards() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            const stats = [
+                { title: 'درآمد روزانه', value: '۲۵,۰۰۰', change: 12, icon: 'dollar-sign', status: 'success' },
+                { title: 'بازدیدکنندگان', value: '۱,۲۳۴', change: -5, icon: 'eye', status: 'info' },
+                { title: 'فروش', value: '۵۶۷', change: 8, icon: 'shopping-cart', status: 'warning' },
+                { title: 'کاربران جدید', value: '۸۹', change: 0, icon: 'user-plus', status: 'error' }
+            ];
+            
+            stats.forEach(stat => {
+                const card = MirageCard.createStatCard(
+                    stat.title,
+                    stat.value,
+                    stat.change,
+                    stat.icon,
+                    stat.status
+                );
+                container.appendChild(card);
+            });
+            
+            feather.replace();
+        }
+        
+        function showUserCards() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            const users = [
+                {
+                    name: 'سارا کریمی',
+                    role: 'طراح رابط کاربری',
+                    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c000?w=64&h=64&fit=crop&crop=face',
+                    stats: [
+                        { value: '۳۲', label: 'پروژه' },
+                        { value: '۹۵', label: 'امتیاز' }
+                    ]
+                },
+                {
+                    name: 'محمد رضایی',
+                    role: 'توسعه‌دهنده بک‌اند',
+                    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face',
+                    stats: [
+                        { value: '۴۸', label: 'پروژه' },
+                        { value: '۸۸', label: 'امتیاز' }
+                    ]
+                }
+            ];
+            
+            users.forEach(user => {
+                const card = MirageCard.createUserCard(
+                    user.name,
+                    user.role,
+                    user.avatar,
+                    user.stats
+                );
+                container.appendChild(card);
+            });
+            
+            feather.replace();
+        }
+        
+        function showProductCards() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            const products = [
+                {
+                    title: 'لپ‌تاپ گیمینگ',
+                    price: '۱۵,۰۰۰,۰۰۰',
+                    description: 'لپ‌تاپ قدرتمند برای بازی و کار.',
+                    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=180&fit=crop',
+                    badge: 'پیشنهاد ویژه'
+                },
+                {
+                    title: 'گوشی هوشمند',
+                    price: '۸,۰۰۰,۰۰۰',
+                    description: 'گوشی با دوربین حرفه‌ای و عملکرد بالا.',
+                    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=180&fit=crop',
+                    badge: 'محبوب'
+                }
+            ];
+            
+            products.forEach(product => {
+                const card = MirageCard.createProductCard(
+                    product.title,
+                    product.price,
+                    product.description,
+                    product.image,
+                    product.badge,
+                    [
+                        { id: 'buy', text: 'خرید', onClick: () => alert('خرید!') },
+                        { id: 'view', text: 'مشاهده', onClick: () => alert('مشاهده!') }
+                    ]
+                );
+                container.appendChild(card);
+            });
+            
+            feather.replace();
+        }
+        
+        function showImageCards() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            const images = [
+                {
+                    title: 'غروب زیبا',
+                    content: 'تصویری دیدنی از غروب آفتاب.',
+                    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop'
+                },
+                {
+                    title: 'کوه‌های برفی',
+                    content: 'منظره‌ای خیره‌کننده از کوه‌های برفی.',
+                    image: 'https://images.unsplash.com/photo-1464822759844-d150baec0494?w=400&h=200&fit=crop'
+                }
+            ];
+            
+            images.forEach(img => {
+                const card = new MirageCard({
+                    type: 'image',
+                    title: img.title,
+                    content: img.content,
+                    image: img.image
+                });
+                container.appendChild(card.getElement());
+            });
+            
+            feather.replace();
+        }
+        
+        function showIconCards() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            const icons = [
+                { icon: 'shield', title: 'امنیت', content: 'داده‌های شما محفوظ است.', status: 'success' },
+                { icon: 'zap', title: 'سرعت', content: 'عملکرد بسیار سریع.', status: 'warning' },
+                { icon: 'heart', title: 'محبوبیت', content: 'محبوب کاربران.', status: 'error' },
+                { icon: 'star', title: 'کیفیت', content: 'کیفیت بی‌نظیر.', status: 'info' }
+            ];
+            
+            icons.forEach(iconData => {
+                const card = new MirageCard({
+                    type: 'icon',
+                    icon: iconData.icon,
+                    title: iconData.title,
+                    content: iconData.content,
+                    status: iconData.status
+                });
+                container.appendChild(card.getElement());
+            });
+            
+            feather.replace();
+        }
+        
+        function showLoadingDemo() {
+            const container = document.getElementById('dynamicCards');
+            container.innerHTML = '';
+            
+            // Create cards with different loading durations
+            const loadingCards = [
+                { title: 'بارگیری سریع', duration: 600 },
+                { title: 'بارگیری متوسط', duration: 1200 },
+                { title: 'بارگیری کند', duration: 1800 },
+                { title: 'بارگیری خیلی کند', duration: 2400 }
+            ];
+            
+            loadingCards.forEach((cardData, index) => {
+                const card = new MirageCard({
+                    type: 'default',
+                    title: cardData.title,
+                    content: `این کارت در ${cardData.duration}ms بارگیری می‌شود.`,
+                    loadingDuration: cardData.duration,
+                    showLoading: true
+                });
+                container.appendChild(card.getElement());
+            });
+            
+            // Add stat cards with loading
+            setTimeout(() => {
+                const statCard = MirageCard.createStatCard(
+                    'آمار بارگیری شده',
+                    '۱۰۰٪',
+                    25,
+                    'check-circle',
+                    'success',
+                    { loadingDuration: 1000 }
+                );
+                container.appendChild(statCard);
+            }, 500);
+            
+            feather.replace();
+        }
+        
+        function clearDynamicCards() {
+            document.getElementById('dynamicCards').innerHTML = '';
+        }
+        
+        // Convert numbers to Persian on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple Persian number converter
+            function convertToPersianNumbers(element) {
+                const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                const walker = document.createTreeWalker(
+                    element,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+                
+                let node;
+                while (node = walker.nextNode()) {
+                    let text = node.textContent;
+                    text = text.replace(/[0-9]/g, function(match) {
+                        return persianNumbers[parseInt(match)];
+                    });
+                    node.textContent = text;
+                }
+            }
+            
+            convertToPersianNumbers(document.body);
+        });
+    </script>
+</body>
+</html>

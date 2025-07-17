@@ -1,0 +1,460 @@
+/*
+ * MirageUI Tabs Component
+ * Persian RTL Tabs System with Glass Morphism
+ * Version: 1.0.0
+ */
+
+/* Tab Container */
+.mir-tabs {
+    direction: rtl;
+    text-align: right;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mir-tabs:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Tab Navigation */
+.mir-tabs-nav {
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.mir-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+/* Tab Navigation Item */
+.mir-tabs-nav-item {
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Tab Navigation Link */
+.mir-tabs-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+    padding: var(--mir-space-4) var(--mir-space-6);
+    color: var(--mir-gray-600);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--mir-text-sm);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    min-height: 48px;
+}
+
+.mir-tabs-nav-link:hover {
+    color: var(--mir-primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.mir-tabs-nav-link:focus {
+    color: var(--mir-primary);
+    background: rgba(99, 102, 241, 0.1);
+    box-shadow: inset 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Active Tab */
+.mir-tabs-nav-link.active {
+    color: var(--mir-primary);
+    background: rgba(99, 102, 241, 0.1);
+    font-weight: 600;
+}
+
+.mir-tabs-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: var(--mir-primary);
+}
+
+/* Tab Icon */
+.mir-tabs-nav-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* Tab Badge */
+.mir-tabs-nav-badge {
+    background: var(--mir-primary);
+    color: white;
+    font-size: var(--mir-text-xs);
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border-radius: 10px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1;
+}
+
+.mir-tabs-nav-link:not(.active) .mir-tabs-nav-badge {
+    background: var(--mir-gray-500);
+}
+
+/* Tab Content Container */
+.mir-tabs-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: var(--mir-space-6);
+    min-height: 200px;
+}
+
+/* Tab Pane */
+.mir-tabs-pane {
+    display: none;
+    animation: mirTabsFadeIn 0.3s ease;
+}
+
+.mir-tabs-pane.active {
+    display: block;
+}
+
+@keyframes mirTabsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab Variants */
+
+/* Bordered Tabs */
+.mir-tabs-bordered {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+}
+
+.mir-tabs-bordered .mir-tabs-nav {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mir-tabs-bordered .mir-tabs-nav-link {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mir-tabs-bordered .mir-tabs-nav-item:first-child .mir-tabs-nav-link {
+    border-left: none;
+}
+
+/* Pills Tabs */
+.mir-tabs-pills .mir-tabs-nav {
+    background: transparent;
+    border: none;
+    padding: var(--mir-space-2);
+    gap: var(--mir-space-2);
+}
+
+.mir-tabs-pills .mir-tabs-nav-link {
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mir-tabs-pills .mir-tabs-nav-link:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.mir-tabs-pills .mir-tabs-nav-link.active {
+    background: var(--mir-primary);
+    color: white;
+}
+
+.mir-tabs-pills .mir-tabs-nav-link.active::after {
+    display: none;
+}
+
+.mir-tabs-pills .mir-tabs-nav-link.active .mir-tabs-nav-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Underlined Tabs */
+.mir-tabs-underlined {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.mir-tabs-underlined .mir-tabs-nav {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mir-tabs-underlined .mir-tabs-content {
+    background: transparent;
+    padding-top: var(--mir-space-4);
+}
+
+/* Vertical Tabs */
+.mir-tabs-vertical {
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.mir-tabs-vertical .mir-tabs-nav {
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    width: 200px;
+    flex-shrink: 0;
+}
+
+.mir-tabs-vertical .mir-tabs-nav-link {
+    justify-content: flex-start;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: right;
+}
+
+.mir-tabs-vertical .mir-tabs-nav-link.active::after {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 2px;
+    height: auto;
+}
+
+.mir-tabs-vertical .mir-tabs-content {
+    flex: 1;
+    background: transparent;
+}
+
+/* Tab Sizes */
+
+/* Small Tabs */
+.mir-tabs-sm .mir-tabs-nav-link {
+    padding: var(--mir-space-2) var(--mir-space-4);
+    font-size: var(--mir-text-xs);
+    min-height: 36px;
+}
+
+.mir-tabs-sm .mir-tabs-nav-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.mir-tabs-sm .mir-tabs-content {
+    padding: var(--mir-space-4);
+}
+
+/* Large Tabs */
+.mir-tabs-lg .mir-tabs-nav-link {
+    padding: var(--mir-space-5) var(--mir-space-8);
+    font-size: var(--mir-text-base);
+    min-height: 56px;
+}
+
+.mir-tabs-lg .mir-tabs-nav-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.mir-tabs-lg .mir-tabs-content {
+    padding: var(--mir-space-8);
+}
+
+/* Disabled Tab */
+.mir-tabs-nav-link:disabled,
+.mir-tabs-nav-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Tab with Close Button */
+.mir-tabs-nav-close {
+    margin-right: var(--mir-space-2);
+    padding: var(--mir-space-1);
+    background: transparent;
+    border: none;
+    color: var(--mir-gray-500);
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+}
+
+.mir-tabs-nav-close:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--mir-error);
+}
+
+.mir-tabs-nav-close-icon {
+    width: 12px;
+    height: 12px;
+}
+
+/* Tab Scroll Buttons */
+.mir-tabs-scroll-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.mir-tabs-scroll-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.1), transparent);
+    backdrop-filter: blur(10px);
+    border: none;
+    color: var(--mir-gray-600);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.mir-tabs-scroll-btn:hover {
+    background: linear-gradient(to left, rgba(99, 102, 241, 0.1), transparent);
+    color: var(--mir-primary);
+}
+
+.mir-tabs-scroll-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mir-tabs-scroll-btn-left {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.mir-tabs-scroll-btn-right {
+    right: 0;
+}
+
+/* Status Tabs */
+.mir-tabs-success .mir-tabs-nav-link.active {
+    color: var(--mir-success);
+}
+
+.mir-tabs-success .mir-tabs-nav-link.active::after {
+    background: var(--mir-success);
+}
+
+.mir-tabs-warning .mir-tabs-nav-link.active {
+    color: var(--mir-warning);
+}
+
+.mir-tabs-warning .mir-tabs-nav-link.active::after {
+    background: var(--mir-warning);
+}
+
+.mir-tabs-error .mir-tabs-nav-link.active {
+    color: var(--mir-error);
+}
+
+.mir-tabs-error .mir-tabs-nav-link.active::after {
+    background: var(--mir-error);
+}
+
+.mir-tabs-info .mir-tabs-nav-link.active {
+    color: var(--mir-info);
+}
+
+.mir-tabs-info .mir-tabs-nav-link.active::after {
+    background: var(--mir-info);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mir-tabs-nav {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+    
+    .mir-tabs-nav-link {
+        flex-shrink: 0;
+        min-width: auto;
+    }
+    
+    .mir-tabs-vertical {
+        flex-direction: column;
+    }
+    
+    .mir-tabs-vertical .mir-tabs-nav {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        border-left: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .mir-tabs-vertical .mir-tabs-nav-link.active::after {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 2px;
+    }
+}
+
+/* Force Light Mode */
+.mir-tabs {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.mir-tabs-nav {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mir-tabs-nav-link {
+    color: var(--mir-gray-600) !important;
+}
+
+.mir-tabs-nav-link:hover {
+    color: var(--mir-primary) !important;
+}
+
+.mir-tabs-nav-link.active {
+    color: var(--mir-primary) !important;
+}
+
+.mir-tabs-content {
+    background: rgba(255, 255, 255, 0.05) !important;
+}

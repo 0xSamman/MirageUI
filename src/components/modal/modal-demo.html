@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش سیستم مودال میراژ - Mirage Modal System Demo</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Modal Component Styles -->
+    <link rel="stylesheet" href="modal.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--mir-space-6);
+            font-family: 'YekanBakh', 'Vazirmatn Variable', sans-serif;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--mir-space-8);
+            background: linear-gradient(135deg, var(--mir-primary), var(--mir-purple-500));
+            color: white;
+            padding: var(--mir-space-8);
+            border-radius: var(--mir-radius-2xl);
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-title {
+            font-size: var(--mir-text-4xl);
+            font-weight: 700;
+            margin-bottom: var(--mir-space-2);
+        }
+
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            opacity: 0.9;
+            margin-bottom: var(--mir-space-4);
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--mir-radius-xl);
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            font-size: var(--mir-text-2xl);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-4);
+            color: var(--mir-gray-900);
+            text-align: right;
+            border-bottom: 2px solid var(--mir-primary);
+            padding-bottom: var(--mir-space-2);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--mir-space-4);
+            margin-bottom: var(--mir-space-4);
+        }
+
+        .demo-item {
+            background: rgba(255, 255, 255, 0.6);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .demo-label {
+            font-size: var(--mir-text-sm);
+            font-weight: 600;
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-3);
+            text-align: center;
+        }
+
+        .demo-button {
+            width: 100%;
+            margin-bottom: var(--mir-space-2);
+        }
+
+        .code-preview {
+            background: var(--mir-gray-900);
+            color: var(--mir-gray-100);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            overflow-x: auto;
+            margin-top: var(--mir-space-4);
+            direction: ltr;
+            text-align: left;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--mir-space-4);
+            margin-top: var(--mir-space-6);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: var(--mir-space-4);
+            border-radius: var(--mir-radius-lg);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mir-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--mir-space-3);
+            color: white;
+        }
+
+        .feature-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            margin-bottom: var(--mir-space-2);
+            color: var(--mir-gray-900);
+        }
+
+        .feature-description {
+            font-size: var(--mir-text-sm);
+            color: var(--mir-gray-600);
+            line-height: 1.6;
+        }
+
+        .nav-link {
+            position: fixed;
+            top: var(--mir-space-4);
+            right: var(--mir-space-4);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: var(--mir-space-2) var(--mir-space-4);
+            border-radius: var(--mir-radius-full);
+            text-decoration: none;
+            color: var(--mir-gray-700);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--mir-space-4);
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="nav-link">
+        <i data-feather="arrow-right" style="width: 16px; height: 16px; margin-left: 8px;"></i>
+        بازگشت به داشبورد
+    </a>
+
+    <div class="demo-container">
+        <!-- Header -->
+        <header class="demo-header">
+            <h1 class="demo-title">سیستم مودال میراژ</h1>
+            <p class="demo-subtitle">پنجره‌های بازشو بهینه‌شده برای رابط‌های کاربری فارسی</p>
+            <div style="display: flex; gap: var(--mir-space-3); justify-content: center; margin-top: var(--mir-space-4);">
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">RTL بهینه‌شده</span>
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">انیمیشن زیبا</span>
+                <span style="background: rgba(255,255,255,0.2); padding: var(--mir-space-1) var(--mir-space-3); border-radius: var(--mir-radius-full); font-size: var(--mir-text-sm);">قابل دسترس</span>
+            </div>
+        </header>
+
+        <!-- Basic Modal Types -->
+        <section class="demo-section">
+            <h2>انواع اصلی مودال - Basic Modal Types</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Alert Modal</div>
+                    <button class="mir-btn mir-btn-primary demo-button" onclick="showAlert()">
+                        <i data-feather="info" class="mir-btn-icon"></i>
+                        نمایش اطلاعیه
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Confirm Modal</div>
+                    <button class="mir-btn mir-btn-warning demo-button" onclick="showConfirm()">
+                        <i data-feather="help-circle" class="mir-btn-icon"></i>
+                        تأیید حذف
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Success Modal</div>
+                    <button class="mir-btn mir-btn-success demo-button" onclick="showSuccess()">
+                        <i data-feather="check-circle" class="mir-btn-icon"></i>
+                        پیام موفقیت
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Error Modal</div>
+                    <button class="mir-btn mir-btn-danger demo-button" onclick="showError()">
+                        <i data-feather="alert-circle" class="mir-btn-icon"></i>
+                        پیام خطا
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Loading Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showLoading()">
+                        <i data-feather="loader" class="mir-btn-icon"></i>
+                        نمایش بارگیری
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Form Modal</div>
+                    <button class="mir-btn mir-btn-primary demo-button" onclick="showFormModal()">
+                        <i data-feather="edit" class="mir-btn-icon"></i>
+                        فرم کاربر
+                    </button>
+                </div>
+            </div>
+
+            <div class="code-preview">
+<strong>JavaScript Usage:</strong><br><br>
+// Alert Modal
+MirageModal.alert('اطلاعیه', 'عملیات با موفقیت انجام شد!');<br><br>
+// Confirm Modal
+MirageModal.confirm('تأیید', 'آیا مطمئن هستید؟').then(result => {
+    if (result) console.log('تأیید شد');
+});<br><br>
+// Success Modal
+MirageModal.success('موفقیت', 'اطلاعات ذخیره شد!');<br><br>
+// Error Modal
+MirageModal.error('خطا', 'مشکلی رخ داده است.');
+            </div>
+        </section>
+
+        <!-- Modal Sizes -->
+        <section class="demo-section">
+            <h2>اندازه‌های مودال - Modal Sizes</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Small Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSizeModal('sm')">
+                        <i data-feather="minimize-2" class="mir-btn-icon"></i>
+                        مودال کوچک
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Medium Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSizeModal('md')">
+                        <i data-feather="square" class="mir-btn-icon"></i>
+                        مودال متوسط
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Large Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSizeModal('lg')">
+                        <i data-feather="maximize-2" class="mir-btn-icon"></i>
+                        مودال بزرگ
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Extra Large Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSizeModal('xl')">
+                        <i data-feather="maximize" class="mir-btn-icon"></i>
+                        مودال خیلی بزرگ
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Full Screen Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSizeModal('full')">
+                        <i data-feather="monitor" class="mir-btn-icon"></i>
+                        تمام صفحه
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Examples -->
+        <section class="demo-section">
+            <h2>نمونه‌های پیشرفته - Advanced Examples</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">User Profile Modal</div>
+                    <button class="mir-btn mir-btn-primary demo-button" onclick="showUserProfileModal()">
+                        <i data-feather="user" class="mir-btn-icon"></i>
+                        پروفایل کاربر
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Settings Modal</div>
+                    <button class="mir-btn mir-btn-secondary demo-button" onclick="showSettingsModal()">
+                        <i data-feather="settings" class="mir-btn-icon"></i>
+                        تنظیمات
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Image Gallery Modal</div>
+                    <button class="mir-btn mir-btn-success demo-button" onclick="showGalleryModal()">
+                        <i data-feather="image" class="mir-btn-icon"></i>
+                        گالری تصاویر
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Data Table Modal</div>
+                    <button class="mir-btn mir-btn-info demo-button" onclick="showTableModal()">
+                        <i data-feather="table" class="mir-btn-icon"></i>
+                        جدول اطلاعات
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Multi-Step Modal</div>
+                    <button class="mir-btn mir-btn-warning demo-button" onclick="showMultiStepModal()">
+                        <i data-feather="layers" class="mir-btn-icon"></i>
+                        چند مرحله‌ای
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Nested Modal</div>
+                    <button class="mir-btn mir-btn-danger demo-button" onclick="showNestedModal()">
+                        <i data-feather="copy" class="mir-btn-icon"></i>
+                        مودال تو در تو
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Attributes -->
+        <section class="demo-section">
+            <h2>استفاده با Data Attributes</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-label">Data Alert</div>
+                    <button class="mir-btn mir-btn-primary demo-button" 
+                            data-mir-modal="alert" 
+                            data-mir-modal-title="اطلاعیه" 
+                            data-mir-modal-message="این یک پیام تست است.">
+                        <i data-feather="info" class="mir-btn-icon"></i>
+                        اطلاعیه خودکار
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <div class="demo-label">Data Confirm</div>
+                    <button class="mir-btn mir-btn-warning demo-button" 
+                            data-mir-modal="confirm" 
+                            data-mir-modal-title="تأیید عملیات" 
+                            data-mir-modal-message="آیا مطمئن هستید؟">
+                        <i data-feather="help-circle" class="mir-btn-icon"></i>
+                        تأیید خودکار
+                    </button>
+                </div>
+            </div>
+
+            <div class="code-preview">
+<strong>HTML Data Attributes:</strong><br><br>
+&lt;button data-mir-modal="alert" 
+        data-mir-modal-title="اطلاعیه" 
+        data-mir-modal-message="پیام شما"&gt;
+    نمایش اطلاعیه
+&lt;/button&gt;<br><br>
+&lt;button data-mir-modal="confirm" 
+        data-mir-modal-title="تأیید" 
+        data-mir-modal-message="آیا مطمئن هستید؟"&gt;
+    تأیید عملیات
+&lt;/button&gt;
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="demo-section">
+            <h2>ویژگی‌های کلیدی</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="globe"></i>
+                    </div>
+                    <h3 class="feature-title">پشتیبانی RTL</h3>
+                    <p class="feature-description">طراحی شده برای زبان‌های راست به چپ با فونت یکان باخ</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="zap"></i>
+                    </div>
+                    <h3 class="feature-title">انیمیشن‌های زیبا</h3>
+                    <p class="feature-description">انیمیشن‌های نرم و طبیعی با استفاده از CSS transitions</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="shield"></i>
+                    </div>
+                    <h3 class="feature-title">قابل دسترس</h3>
+                    <p class="feature-description">سازگار با screen readers و keyboard navigation</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="smartphone"></i>
+                    </div>
+                    <h3 class="feature-title">واکنش‌گرا</h3>
+                    <p class="feature-description">سازگار با تمام اندازه‌های صفحه و دستگاه‌های موبایل</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="layers"></i>
+                    </div>
+                    <h3 class="feature-title">انواع مختلف</h3>
+                    <p class="feature-description">Alert، Confirm، Success، Error، Loading، Form</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="settings"></i>
+                    </div>
+                    <h3 class="feature-title">قابل سفارشی‌سازی</h3>
+                    <p class="feature-description">اندازه‌ها، رنگ‌ها و تنظیمات مختلف قابل تغییر</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Guide -->
+        <section class="demo-section">
+            <h2>راهنمای نصب</h2>
+            
+            <div class="code-preview">
+<strong>1. Import CSS and JavaScript:</strong><br><br>
+&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet" href="components/modal/modal.css"&gt;<br><br>
+&lt;!-- JavaScript --&gt;
+&lt;script src="components/modal/modal.js"&gt;&lt;/script&gt;<br><br>
+&lt;!-- Feather Icons --&gt;
+&lt;script src="https://unpkg.com/feather-icons"&gt;&lt;/script&gt;<br><br>
+<strong>2. Basic Usage:</strong><br><br>
+// Create modal
+const modal = new MirageModal({
+    size: 'md',
+    variant: 'info'
+});<br><br>
+// Set content
+modal.setHeader('عنوان مودال', true);
+modal.setBody('&lt;p&gt;محتوای مودال&lt;/p&gt;');
+modal.setFooter([
+    { text: 'بستن', class: 'mir-btn-secondary', onclick: () => modal.close() }
+]);<br><br>
+// Open modal
+modal.open();
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="modal.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Demo Functions
+        function showAlert() {
+            MirageModal.alert('اطلاعیه', 'عملیات با موفقیت انجام شد! این یک پیام تست برای نمایش قابلیت مودال اطلاعیه است.');
+        }
+
+        function showConfirm() {
+            MirageModal.confirm('تأیید حذف', 'آیا مطمئن هستید که می‌خواهید این آیتم را حذف کنید؟ این عمل قابل برگشت نیست.')
+                .then(result => {
+                    if (result) {
+                        MirageModal.success('موفقیت', 'آیتم با موفقیت حذف شد!');
+                    } else {
+                        MirageModal.alert('لغو شد', 'عملیات حذف لغو شد.');
+                    }
+                });
+        }
+
+        function showSuccess() {
+            MirageModal.success('موفقیت', 'اطلاعات شما با موفقیت ذخیره شد!');
+        }
+
+        function showError() {
+            MirageModal.error('خطا', 'خطایی در سیستم رخ داده است. لطفاً دوباره تلاش کنید.');
+        }
+
+        function showLoading() {
+            const loadingModal = MirageModal.loading('در حال پردازش اطلاعات...');
+            
+            setTimeout(() => {
+                loadingModal.close();
+                MirageModal.success('تمام شد', 'پردازش با موفقیت انجام شد!');
+            }, 3000);
+        }
+
+        function showFormModal() {
+            const formContent = `
+                <form class="mir-form" id="userForm">
+                    <div class="mir-form-grid">
+                        <div class="mir-input-group">
+                            <input type="text" class="mir-input" placeholder=" " id="firstName" required>
+                            <label class="mir-label" for="firstName">نام</label>
+                        </div>
+                        <div class="mir-input-group">
+                            <input type="text" class="mir-input" placeholder=" " id="lastName" required>
+                            <label class="mir-label" for="lastName">نام خانوادگی</label>
+                        </div>
+                        <div class="mir-input-group">
+                            <input type="email" class="mir-input" placeholder=" " id="email" required>
+                            <label class="mir-label" for="email">ایمیل</label>
+                        </div>
+                        <div class="mir-input-group">
+                            <select class="mir-select" id="role" required>
+                                <option value="">انتخاب نقش</option>
+                                <option value="admin">مدیر</option>
+                                <option value="user">کاربر</option>
+                                <option value="editor">ویرایشگر</option>
+                            </select>
+                            <label class="mir-label" for="role">نقش</label>
+                        </div>
+                    </div>
+                </form>
+            `;
+
+            const modal = new MirageModal({
+                size: 'md',
+                variant: 'info'
+            });
+
+            modal.setHeader('اطلاعات کاربر', true);
+            modal.setBody(formContent);
+            modal.setFooter([
+                {
+                    text: 'لغو',
+                    class: 'mir-btn-secondary',
+                    onclick: () => modal.close()
+                },
+                {
+                    text: 'ذخیره',
+                    class: 'mir-btn-primary',
+                    onclick: () => {
+                        const form = document.getElementById('userForm');
+                        if (form.checkValidity()) {
+                            modal.close();
+                            MirageModal.success('موفقیت', 'اطلاعات کاربر ذخیره شد!');
+                        } else {
+                            form.reportValidity();
+                        }
+                    }
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showSizeModal(size) {
+            const modal = new MirageModal({
+                size: size,
+                variant: 'info'
+            });
+
+            modal.setHeader(`مودال ${size === 'sm' ? 'کوچک' : size === 'md' ? 'متوسط' : size === 'lg' ? 'بزرگ' : size === 'xl' ? 'خیلی بزرگ' : 'تمام صفحه'}`, true);
+            modal.setBody(`
+                <p>این یک مودال با اندازه <strong>${size}</strong> است.</p>
+                <p>محتوای این مودال برای نمایش اندازه مختلف طراحی شده است.</p>
+                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+            `);
+            modal.setFooter([
+                {
+                    text: 'بستن',
+                    class: 'mir-btn-primary',
+                    onclick: () => modal.close()
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showUserProfileModal() {
+            const profileContent = `
+                <div style="text-align: center; margin-bottom: var(--mir-space-4);">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" 
+                         alt="User Avatar" 
+                         style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: var(--mir-space-3);">
+                    <h3 style="margin: 0; color: var(--mir-gray-900);">علی احمدی</h3>
+                    <p style="margin: var(--mir-space-2) 0; color: var(--mir-gray-600);">توسعه‌دهنده فرانت‌اند</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--mir-space-3); margin-bottom: var(--mir-space-4);">
+                    <div style="text-align: center;">
+                        <div style="font-size: var(--mir-text-xl); font-weight: 600; color: var(--mir-primary);">۱۵</div>
+                        <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-600);">پروژه</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: var(--mir-text-xl); font-weight: 600; color: var(--mir-success);">۹۸٪</div>
+                        <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-600);">رضایت</div>
+                    </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.05); padding: var(--mir-space-3); border-radius: var(--mir-radius-lg);">
+                    <p style="margin: 0; font-size: var(--mir-text-sm); color: var(--mir-gray-600);">
+                        توسعه‌دهنده با تجربه در زمینه طراحی رابط کاربری و تجربه کاربری با تخصص در React و Vue.js
+                    </p>
+                </div>
+            `;
+
+            const modal = new MirageModal({
+                size: 'md',
+                variant: 'info'
+            });
+
+            modal.setHeader('پروفایل کاربر', true);
+            modal.setBody(profileContent);
+            modal.setFooter([
+                {
+                    text: 'ویرایش',
+                    class: 'mir-btn-primary',
+                    onclick: () => {
+                        modal.close();
+                        showFormModal();
+                    }
+                },
+                {
+                    text: 'بستن',
+                    class: 'mir-btn-secondary',
+                    onclick: () => modal.close()
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showSettingsModal() {
+            const settingsContent = `
+                <div style="display: grid; gap: var(--mir-space-4);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-3); background: rgba(0,0,0,0.05); border-radius: var(--mir-radius-lg);">
+                        <span>اطلاع‌رسانی ایمیل</span>
+                        <label class="mir-toggle" style="margin: 0;">
+                            <input type="checkbox" checked>
+                            <span class="mir-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-3); background: rgba(0,0,0,0.05); border-radius: var(--mir-radius-lg);">
+                        <span>حالت تاریک</span>
+                        <label class="mir-toggle" style="margin: 0;">
+                            <input type="checkbox">
+                            <span class="mir-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-3); background: rgba(0,0,0,0.05); border-radius: var(--mir-radius-lg);">
+                        <span>صدای اعلان</span>
+                        <label class="mir-toggle" style="margin: 0;">
+                            <input type="checkbox" checked>
+                            <span class="mir-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div style="padding: var(--mir-space-3); background: rgba(0,0,0,0.05); border-radius: var(--mir-radius-lg);">
+                        <label style="display: block; margin-bottom: var(--mir-space-2);">زبان رابط کاربری</label>
+                        <select class="mir-select" style="width: 100%;">
+                            <option value="fa">فارسی</option>
+                            <option value="en">English</option>
+                            <option value="ar">العربية</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+
+            const modal = new MirageModal({
+                size: 'md',
+                variant: 'info'
+            });
+
+            modal.setHeader('تنظیمات', true);
+            modal.setBody(settingsContent);
+            modal.setFooter([
+                {
+                    text: 'ذخیره',
+                    class: 'mir-btn-primary',
+                    onclick: () => {
+                        modal.close();
+                        MirageModal.success('موفقیت', 'تنظیمات ذخیره شد!');
+                    }
+                },
+                {
+                    text: 'لغو',
+                    class: 'mir-btn-secondary',
+                    onclick: () => modal.close()
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showGalleryModal() {
+            const galleryContent = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--mir-space-2);">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                    <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=150&h=150&fit=crop" style="width: 100%; height: 150px; object-fit: cover; border-radius: var(--mir-radius-lg);">
+                </div>
+            `;
+
+            const modal = new MirageModal({
+                size: 'lg',
+                variant: 'info'
+            });
+
+            modal.setHeader('گالری تصاویر', true);
+            modal.setBody(galleryContent);
+            modal.setFooter([
+                {
+                    text: 'بستن',
+                    class: 'mir-btn-primary',
+                    onclick: () => modal.close()
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showTableModal() {
+            const tableContent = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: rgba(0,0,0,0.05);">
+                                <th style="padding: var(--mir-space-3); text-align: right; border-bottom: 1px solid rgba(0,0,0,0.1);">نام</th>
+                                <th style="padding: var(--mir-space-3); text-align: right; border-bottom: 1px solid rgba(0,0,0,0.1);">ایمیل</th>
+                                <th style="padding: var(--mir-space-3); text-align: right; border-bottom: 1px solid rgba(0,0,0,0.1);">نقش</th>
+                                <th style="padding: var(--mir-space-3); text-align: right; border-bottom: 1px solid rgba(0,0,0,0.1);">وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">علی احمدی</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">ali@example.com</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">مدیر</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);"><span style="background: var(--mir-success); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">فعال</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">سارا محمدی</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">sara@example.com</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">کاربر</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);"><span style="background: var(--mir-warning); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">در انتظار</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">محمد رضایی</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">mohammad@example.com</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);">ویرایشگر</td>
+                                <td style="padding: var(--mir-space-3); border-bottom: 1px solid rgba(0,0,0,0.1);"><span style="background: var(--mir-success); color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">فعال</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            const modal = new MirageModal({
+                size: 'lg',
+                variant: 'info'
+            });
+
+            modal.setHeader('جدول کاربران', true);
+            modal.setBody(tableContent);
+            modal.setFooter([
+                {
+                    text: 'بستن',
+                    class: 'mir-btn-primary',
+                    onclick: () => modal.close()
+                }
+            ]);
+
+            modal.open();
+        }
+
+        function showMultiStepModal() {
+            let currentStep = 1;
+            const totalSteps = 3;
+
+            const modal = new MirageModal({
+                size: 'md',
+                variant: 'info'
+            });
+
+            function updateStep() {
+                const stepContent = {
+                    1: `
+                        <div style="text-align: center; margin-bottom: var(--mir-space-4);">
+                            <h4>مرحله ۱: اطلاعات شخصی</h4>
+                            <div style="display: flex; gap: var(--mir-space-2); justify-content: center; margin: var(--mir-space-3) 0;">
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px;"></div>
+                            </div>
+                        </div>
+                        <div class="mir-form-grid">
+                            <div class="mir-input-group">
+                                <input type="text" class="mir-input" placeholder=" " id="stepName">
+                                <label class="mir-label" for="stepName">نام</label>
+                            </div>
+                            <div class="mir-input-group">
+                                <input type="email" class="mir-input" placeholder=" " id="stepEmail">
+                                <label class="mir-label" for="stepEmail">ایمیل</label>
+                            </div>
+                        </div>
+                    `,
+                    2: `
+                        <div style="text-align: center; margin-bottom: var(--mir-space-4);">
+                            <h4>مرحله ۲: اطلاعات کاری</h4>
+                            <div style="display: flex; gap: var(--mir-space-2); justify-content: center; margin: var(--mir-space-3) 0;">
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: rgba(0,0,0,0.1); border-radius: 2px;"></div>
+                            </div>
+                        </div>
+                        <div class="mir-form-grid">
+                            <div class="mir-input-group">
+                                <input type="text" class="mir-input" placeholder=" " id="stepCompany">
+                                <label class="mir-label" for="stepCompany">شرکت</label>
+                            </div>
+                            <div class="mir-input-group">
+                                <select class="mir-select" id="stepPosition">
+                                    <option value="">انتخاب موقعیت</option>
+                                    <option value="developer">توسعه‌دهنده</option>
+                                    <option value="designer">طراح</option>
+                                    <option value="manager">مدیر</option>
+                                </select>
+                                <label class="mir-label" for="stepPosition">موقعیت</label>
+                            </div>
+                        </div>
+                    `,
+                    3: `
+                        <div style="text-align: center; margin-bottom: var(--mir-space-4);">
+                            <h4>مرحله ۳: تأیید نهایی</h4>
+                            <div style="display: flex; gap: var(--mir-space-2); justify-content: center; margin: var(--mir-space-3) 0;">
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                                <div style="width: 30px; height: 4px; background: var(--mir-primary); border-radius: 2px;"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 60px; height: 60px; background: var(--mir-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--mir-space-3); color: white;">
+                                <i data-feather="check"></i>
+                            </div>
+                            <p>اطلاعات شما آماده ثبت است.</p>
+                        </div>
+                    `
+                };
+
+                modal.setBody(stepContent[currentStep]);
+                
+                const footerButtons = [];
+                
+                if (currentStep > 1) {
+                    footerButtons.push({
+                        text: 'قبلی',
+                        class: 'mir-btn-secondary',
+                        onclick: () => {
+                            currentStep--;
+                            updateStep();
+                        }
+                    });
+                }
+
+                if (currentStep < totalSteps) {
+                    footerButtons.push({
+                        text: 'بعدی',
+                        class: 'mir-btn-primary',
+                        onclick: () => {
+                            currentStep++;
+                            updateStep();
+                        }
+                    });
+                } else {
+                    footerButtons.push({
+                        text: 'تمام',
+                        class: 'mir-btn-success',
+                        onclick: () => {
+                            modal.close();
+                            MirageModal.success('موفقیت', 'فرم با موفقیت ثبت شد!');
+                        }
+                    });
+                }
+
+                modal.setFooter(footerButtons);
+                
+                // Replace feather icons
+                feather.replace();
+            }
+
+            modal.setHeader('فرم چند مرحله‌ای', true);
+            updateStep();
+            modal.open();
+        }
+
+        function showNestedModal() {
+            const modal1 = new MirageModal({
+                size: 'md',
+                variant: 'info'
+            });
+
+            modal1.setHeader('مودال اول', true);
+            modal1.setBody(`
+                <p>این اولین مودال است.</p>
+                <p>می‌توانید مودال دوم را از اینجا باز کنید.</p>
+            `);
+            modal1.setFooter([
+                {
+                    text: 'باز کردن مودال دوم',
+                    class: 'mir-btn-primary',
+                    onclick: () => {
+                        const modal2 = new MirageModal({
+                            size: 'sm',
+                            variant: 'warning'
+                        });
+
+                        modal2.setHeader('مودال دوم', true);
+                        modal2.setBody(`
+                            <p>این مودال دوم است که روی مودال اول باز شده.</p>
+                            <p>Z-index به صورت خودکار مدیریت می‌شود.</p>
+                        `);
+                        modal2.setFooter([
+                            {
+                                text: 'بستن',
+                                class: 'mir-btn-secondary',
+                                onclick: () => modal2.close()
+                            }
+                        ]);
+
+                        modal2.open();
+                    }
+                },
+                {
+                    text: 'بستن',
+                    class: 'mir-btn-secondary',
+                    onclick: () => modal1.close()
+                }
+            ]);
+
+            modal1.open();
+        }
+
+        // Initialize Persian numbers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert numbers to Persian if needed
+            const persianNumbers = document.querySelectorAll('.mir-persian-numbers');
+            persianNumbers.forEach(element => {
+                const text = element.textContent;
+                const persianText = text.replace(/[0-9]/g, function(match) {
+                    const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+                    return persianDigits[match];
+                });
+                element.textContent = persianText;
+            });
+        });
+    </script>
+</body>
+</html>

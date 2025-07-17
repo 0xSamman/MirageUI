@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Alert System</title>
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="src/assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="src/assets/css/mirage-styles.css">
+    
+    <!-- Alert Component Styles -->
+    <link rel="stylesheet" href="src/components/alert/alert.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        body {
+            padding: 40px;
+            font-family: 'YekanBakh', sans-serif;
+            background: #f8fafc;
+        }
+        
+        .debug-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .test-button {
+            margin: 5px;
+            padding: 12px 24px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'YekanBakh', sans-serif;
+            font-size: 14px;
+        }
+        
+        .test-button:hover {
+            background: #4f46e5;
+        }
+        
+        .test-button.success { background: #10b981; }
+        .test-button.error { background: #ef4444; }
+        .test-button.warning { background: #f59e0b; }
+        .test-button.info { background: #3b82f6; }
+        
+        .debug-log {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        
+        .status.ok { background: #10b981; color: white; }
+        .status.error { background: #ef4444; color: white; }
+        .status.warning { background: #f59e0b; color: white; }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <h1>🔧 Debug Alert System</h1>
+        
+        <div id="systemStatus">
+            <strong>System Status:</strong>
+            <span id="mirageAlertStatus" class="status">Loading...</span>
+            <span id="featherStatus" class="status">Loading...</span>
+            <span id="cssStatus" class="status">Loading...</span>
+        </div>
+        
+        <div id="debugLog" class="debug-log"></div>
+    </div>
+    
+    <div class="debug-panel">
+        <h2>🧪 Test Alert Functions</h2>
+        <div>
+            <button class="test-button success" onclick="testSuccess()">Success Alert</button>
+            <button class="test-button error" onclick="testError()">Error Alert</button>
+            <button class="test-button warning" onclick="testWarning()">Warning Alert</button>
+            <button class="test-button info" onclick="testInfo()">Info Alert</button>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <button class="test-button" onclick="testWithActions()">Alert with Actions</button>
+            <button class="test-button" onclick="testPositions()">Test Positions</button>
+            <button class="test-button" onclick="testSizes()">Test Sizes</button>
+            <button class="test-button" onclick="testProgress()">Test Progress</button>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <button class="test-button" onclick="testInline()">Test Inline</button>
+            <button class="test-button" onclick="testMultiple()">Multiple Alerts</button>
+            <button class="test-button" style="background: #6b7280;" onclick="clearAll()">Clear All</button>
+        </div>
+    </div>
+    
+    <div class="debug-panel">
+        <h2>📊 Statistics</h2>
+        <div>
+            <strong>Active Alerts:</strong> <span id="activeCount">0</span><br>
+            <strong>Total Created:</strong> <span id="totalCount">0</span><br>
+            <strong>Errors:</strong> <span id="errorCount">0</span>
+        </div>
+    </div>
+    
+    <script src="src/components/alert/alert.js"></script>
+    <script>
+        // Debug variables
+        let totalAlerts = 0;
+        let errorCount = 0;
+        
+        // Logging function
+        function log(message, type = 'info') {
+            const logElement = document.getElementById('debugLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}\\n`;
+            logElement.textContent += logEntry;
+            logElement.scrollTop = logElement.scrollHeight;
+            
+            if (type === 'error') {
+                errorCount++;
+                updateStats();
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalCount').textContent = totalAlerts;
+            document.getElementById('errorCount').textContent = errorCount;
+            
+            // Count active alerts
+            const activeAlerts = document.querySelectorAll('[id^=\"mir-alert-container-\"] .mir-alert');
+            document.getElementById('activeCount').textContent = activeAlerts.length;
+        }
+        
+        // Status check
+        function checkStatus() {
+            // Check MirageAlert
+            const mirageStatus = document.getElementById('mirageAlertStatus');
+            if (typeof MirageAlert !== 'undefined') {
+                mirageStatus.textContent = 'MirageAlert OK';
+                mirageStatus.className = 'status ok';
+                log('MirageAlert class loaded successfully');
+            } else {
+                mirageStatus.textContent = 'MirageAlert Error';
+                mirageStatus.className = 'status error';
+                log('MirageAlert class not found!', 'error');
+            }
+            
+            // Check Feather
+            const featherStatus = document.getElementById('featherStatus');
+            if (typeof feather !== 'undefined') {
+                featherStatus.textContent = 'Feather OK';
+                featherStatus.className = 'status ok';
+                log('Feather icons loaded successfully');
+            } else {
+                featherStatus.textContent = 'Feather Error';
+                featherStatus.className = 'status error';
+                log('Feather icons not found!', 'error');
+            }
+            
+            // Check CSS
+            const cssStatus = document.getElementById('cssStatus');
+            const alertElements = document.querySelectorAll('.mir-alert');
+            if (getComputedStyle(document.documentElement).getPropertyValue('--mir-primary')) {
+                cssStatus.textContent = 'CSS OK';
+                cssStatus.className = 'status ok';
+                log('CSS styles loaded successfully');
+            } else {
+                cssStatus.textContent = 'CSS Warning';
+                cssStatus.className = 'status warning';
+                log('CSS styles may not be fully loaded', 'warning');
+            }
+        }
+        
+        // Test functions
+        function testSuccess() {
+            try {
+                log('Testing success alert...');
+                MirageAlert.success('تست موفقیت', 'این یک پیام موفقیت آمیز تست است!');
+                totalAlerts++;
+                updateStats();
+                log('Success alert created successfully');
+            } catch (error) {
+                log(`Error creating success alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testError() {
+            try {
+                log('Testing error alert...');
+                MirageAlert.error('تست خطا', 'این یک پیام خطای تست است!');
+                totalAlerts++;
+                updateStats();
+                log('Error alert created successfully');
+            } catch (error) {
+                log(`Error creating error alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testWarning() {
+            try {
+                log('Testing warning alert...');
+                MirageAlert.warning('تست هشدار', 'این یک پیام هشدار تست است!');
+                totalAlerts++;
+                updateStats();
+                log('Warning alert created successfully');
+            } catch (error) {
+                log(`Error creating warning alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testInfo() {
+            try {
+                log('Testing info alert...');
+                MirageAlert.info('تست اطلاعیه', 'این یک پیام اطلاعیه تست است!');
+                totalAlerts++;
+                updateStats();
+                log('Info alert created successfully');
+            } catch (error) {
+                log(`Error creating info alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testWithActions() {
+            try {
+                log('Testing alert with actions...');
+                const alert = new MirageAlert({
+                    type: 'warning',
+                    title: 'تست عمل',
+                    message: 'این یک تست برای دکمه های عمل است. آیا موافقید؟',
+                    inline: false,
+                    autoClose: false,
+                    actions: [
+                        {
+                            text: 'لغو',
+                            onClick: (e, alert) => {
+                                log('Cancel button clicked');
+                                alert.close();
+                            }
+                        },
+                        {
+                            text: 'تأیید',
+                            onClick: (e, alert) => {
+                                log('Confirm button clicked');
+                                alert.close();
+                                testSuccess();
+                            }
+                        }
+                    ]
+                });
+                alert.show();
+                totalAlerts++;
+                updateStats();
+                log('Alert with actions created successfully');
+            } catch (error) {
+                log(`Error creating alert with actions: ${error.message}`, 'error');
+            }
+        }
+        
+        function testPositions() {
+            const positions = ['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center'];
+            positions.forEach((position, index) => {
+                setTimeout(() => {
+                    try {
+                        MirageAlert.info(`موقعیت ${position}`, `تست موقعیت ${position}`, {
+                            position: position,
+                            duration: 3000
+                        });
+                        totalAlerts++;
+                        updateStats();
+                        log(`Position ${position} alert created`);
+                    } catch (error) {
+                        log(`Error creating ${position} alert: ${error.message}`, 'error');
+                    }
+                }, index * 200);
+            });
+        }
+        
+        function testSizes() {
+            const sizes = ['sm', 'md', 'lg'];
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    try {
+                        MirageAlert.info(`اندازه ${size}`, `تست اندازه ${size}`, {
+                            size: size,
+                            duration: 4000
+                        });
+                        totalAlerts++;
+                        updateStats();
+                        log(`Size ${size} alert created`);
+                    } catch (error) {
+                        log(`Error creating ${size} alert: ${error.message}`, 'error');
+                    }
+                }, index * 500);
+            });
+        }
+        
+        function testProgress() {
+            try {
+                log('Testing progress alert...');
+                MirageAlert.info('تست پیشرفت', 'این تست نوار پیشرفت است', {
+                    showProgress: true,
+                    duration: 5000
+                });
+                totalAlerts++;
+                updateStats();
+                log('Progress alert created successfully');
+            } catch (error) {
+                log(`Error creating progress alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testInline() {
+            try {
+                log('Testing inline alert...');
+                const alert = new MirageAlert({
+                    type: 'success',
+                    title: 'تست درون خطی',
+                    message: 'این یک تست درون خطی است',
+                    inline: true
+                });
+                alert.show();
+                totalAlerts++;
+                updateStats();
+                log('Inline alert created successfully');
+            } catch (error) {
+                log(`Error creating inline alert: ${error.message}`, 'error');
+            }
+        }
+        
+        function testMultiple() {
+            for (let i = 1; i <= 3; i++) {
+                setTimeout(() => {
+                    try {
+                        MirageAlert.info(`پیام ${i}`, `این پیام شماره ${i} است`);
+                        totalAlerts++;
+                        updateStats();
+                        log(`Multiple alert ${i} created`);
+                    } catch (error) {
+                        log(`Error creating multiple alert ${i}: ${error.message}`, 'error');
+                    }
+                }, i * 300);
+            }
+        }
+        
+        function clearAll() {
+            try {
+                log('Clearing all alerts...');
+                MirageAlert.clearAll();
+                setTimeout(updateStats, 500);
+                log('All alerts cleared');
+            } catch (error) {
+                log(`Error clearing alerts: ${error.message}`, 'error');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOM loaded, initializing debug system...');
+            
+            // Initialize feather icons
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+            
+            // Check system status
+            setTimeout(checkStatus, 100);
+            
+            // Auto-update stats every 2 seconds
+            setInterval(updateStats, 2000);
+            
+            // Welcome message
+            setTimeout(() => {
+                log('Debug system ready! Click buttons to test alerts.');
+                testInfo();
+            }, 1000);
+        });
+        
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            log(`Global error: ${e.message} at ${e.filename}:${e.lineno}`, 'error');
+        });
+    </script>
+</body>
+</html>

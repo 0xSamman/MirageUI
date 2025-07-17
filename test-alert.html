@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Alert System</title>
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="src/assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="src/assets/css/mirage-styles.css">
+    
+    <!-- Alert Component Styles -->
+    <link rel="stylesheet" href="src/components/alert/alert.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        body {
+            padding: 40px;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .test-button {
+            margin: 10px;
+            padding: 10px 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'YekanBakh', sans-serif;
+        }
+        
+        .test-button:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Alert System</h1>
+    
+    <div>
+        <button class="test-button" onclick="testSuccess()">Test Success Alert</button>
+        <button class="test-button" onclick="testError()">Test Error Alert</button>
+        <button class="test-button" onclick="testWarning()">Test Warning Alert</button>
+        <button class="test-button" onclick="testInfo()">Test Info Alert</button>
+        <button class="test-button" onclick="testWithActions()">Test With Actions</button>
+        <button class="test-button" onclick="MirageAlert.clearAll()">Clear All</button>
+    </div>
+    
+    <script src="src/components/alert/alert.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        function testSuccess() {
+            console.log('Testing success alert...');
+            MirageAlert.success('موفقیت', 'این یک پیام موفقیت آمیز است!');
+        }
+        
+        function testError() {
+            console.log('Testing error alert...');
+            MirageAlert.error('خطا', 'خطایی رخ داده است!');
+        }
+        
+        function testWarning() {
+            console.log('Testing warning alert...');
+            MirageAlert.warning('هشدار', 'این یک پیام هشدار است!');
+        }
+        
+        function testInfo() {
+            console.log('Testing info alert...');
+            MirageAlert.info('اطلاعیه', 'این یک پیام اطلاعیه است!');
+        }
+        
+        function testWithActions() {
+            console.log('Testing alert with actions...');
+            const alert = new MirageAlert({
+                type: 'warning',
+                title: 'تأیید عملیات',
+                message: 'آیا مطمئن هستید؟',
+                inline: false,
+                autoClose: false,
+                actions: [
+                    {
+                        text: 'لغو',
+                        onClick: (e, alert) => alert.close()
+                    },
+                    {
+                        text: 'تأیید',
+                        onClick: (e, alert) => {
+                            alert.close();
+                            MirageAlert.success('انجام شد', 'عملیات با موفقیت انجام شد');
+                        }
+                    }
+                ]
+            });
+            alert.show();
+        }
+        
+        // Test on page load
+        setTimeout(() => {
+            console.log('Auto-testing alert system...');
+            MirageAlert.info('خوش آمدید', 'سیستم Alert آماده است!');
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,811 @@
+/**
+ * MIRAGE ADVANCED TABLES COMPONENT - RTL PERSIAN OPTIMIZED
+ * ========================================================
+ * 
+ * Advanced data tables with sorting, filtering, selection, and Persian support
+ * Features: Glass morphism design, RTL layout, Persian numbers, responsive design
+ * 
+ * @author Mirage Design System
+ * @version 1.0.0
+ */
+
+/* ===== TABLE CONTAINER ===== */
+.mir-table-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    font-family: 'YekanBakh', 'Vazirmatn Variable', 'Tahoma', sans-serif;
+    direction: rtl;
+}
+
+.mir-table-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-height: 600px;
+    position: relative;
+}
+
+.mir-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    direction: rtl;
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-900);
+}
+
+/* ===== TABLE HEADER ===== */
+.mir-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--mir-space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mir-table-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    color: var(--mir-gray-900);
+    margin: 0;
+}
+
+.mir-table-actions {
+    display: flex;
+    gap: var(--mir-space-2);
+    align-items: center;
+}
+
+.mir-table-search {
+    position: relative;
+    min-width: 200px;
+}
+
+.mir-table-search-input {
+    width: 100%;
+    padding: var(--mir-space-2) var(--mir-space-8) var(--mir-space-2) var(--mir-space-3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--mir-gray-900);
+    font-size: var(--mir-text-sm);
+    transition: all 0.2s ease;
+    direction: rtl;
+}
+
+.mir-table-search-input:focus {
+    outline: none;
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.mir-table-search-icon {
+    position: absolute;
+    right: var(--mir-space-2);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mir-gray-500);
+    width: 16px;
+    height: 16px;
+}
+
+/* ===== TABLE HEAD ===== */
+.mir-table thead {
+    background: rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.mir-table th {
+    padding: var(--mir-space-3) var(--mir-space-4);
+    text-align: right;
+    font-weight: 600;
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    user-select: none;
+    position: relative;
+}
+
+.mir-table th:first-child {
+    border-top-right-radius: 8px;
+}
+
+.mir-table th:last-child {
+    border-top-left-radius: 8px;
+}
+
+/* Sortable columns */
+.mir-table th.mir-sortable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    padding-left: var(--mir-space-6);
+}
+
+.mir-table th.mir-sortable:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--mir-gray-900);
+}
+
+.mir-table th.mir-sortable::after {
+    content: '';
+    position: absolute;
+    left: var(--mir-space-2);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid var(--mir-gray-400);
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.mir-table th.mir-sortable.mir-sort-asc::after {
+    border-bottom: 4px solid var(--mir-primary);
+    opacity: 1;
+}
+
+.mir-table th.mir-sortable.mir-sort-desc::after {
+    border-bottom: none;
+    border-top: 4px solid var(--mir-primary);
+    opacity: 1;
+}
+
+/* Checkbox column */
+.mir-table th.mir-checkbox-column,
+.mir-table td.mir-checkbox-column {
+    width: 48px;
+    padding: var(--mir-space-2);
+    text-align: center;
+}
+
+/* Actions column */
+.mir-table th.mir-actions-column,
+.mir-table td.mir-actions-column {
+    width: 120px;
+    text-align: center;
+}
+
+/* ===== TABLE BODY ===== */
+.mir-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mir-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mir-table tbody tr.mir-selected {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+.mir-table tbody tr.mir-selected:hover {
+    background: rgba(99, 102, 241, 0.15);
+}
+
+.mir-table td {
+    padding: var(--mir-space-3) var(--mir-space-4);
+    vertical-align: middle;
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-800);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ===== TABLE CELL TYPES ===== */
+.mir-table-user {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-3);
+}
+
+.mir-table-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.mir-table-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.mir-table-user-name {
+    font-weight: 500;
+    color: var(--mir-gray-900);
+    font-size: var(--mir-text-sm);
+}
+
+.mir-table-user-email {
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-600);
+}
+
+/* Status badges */
+.mir-table-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border-radius: 6px;
+    font-size: var(--mir-text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mir-table-status.mir-status-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--mir-green-700);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.mir-table-status.mir-status-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--mir-yellow-700);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.mir-table-status.mir-status-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--mir-red-700);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.mir-table-status.mir-status-info {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--mir-blue-700);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.mir-table-status.mir-status-default {
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--mir-gray-700);
+    border: 1px solid rgba(107, 114, 128, 0.2);
+}
+
+/* Action buttons */
+.mir-table-actions-cell {
+    display: flex;
+    gap: var(--mir-space-1);
+    justify-content: center;
+    align-items: center;
+}
+
+.mir-table-action-btn {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--mir-gray-700);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+}
+
+.mir-table-action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--mir-gray-900);
+    transform: translateY(-1px);
+}
+
+.mir-table-action-btn.mir-action-edit {
+    color: var(--mir-blue-600);
+}
+
+.mir-table-action-btn.mir-action-edit:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.mir-table-action-btn.mir-action-delete {
+    color: var(--mir-red-600);
+}
+
+.mir-table-action-btn.mir-action-delete:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.mir-table-action-btn.mir-action-view {
+    color: var(--mir-green-600);
+}
+
+.mir-table-action-btn.mir-action-view:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* ===== CHECKBOXES ===== */
+.mir-table-checkbox {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.mir-table-checkbox input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.mir-table-checkbox-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--mir-gray-400);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mir-table-checkbox input[type="checkbox"]:checked + .mir-table-checkbox-mark {
+    background: var(--mir-primary);
+    border-color: var(--mir-primary);
+}
+
+.mir-table-checkbox input[type="checkbox"]:checked + .mir-table-checkbox-mark::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.mir-table-checkbox input[type="checkbox"]:indeterminate + .mir-table-checkbox-mark {
+    background: var(--mir-primary);
+    border-color: var(--mir-primary);
+}
+
+.mir-table-checkbox input[type="checkbox"]:indeterminate + .mir-table-checkbox-mark::after {
+    content: '−';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ===== FILTERS ===== */
+.mir-table-filters {
+    display: flex;
+    gap: var(--mir-space-3);
+    align-items: center;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.mir-table-filter {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-table-filter-label {
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-600);
+    font-weight: 500;
+}
+
+.mir-table-filter-select {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--mir-gray-900);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    direction: rtl;
+}
+
+.mir-table-filter-select:focus {
+    outline: none;
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.mir-table-filter-clear {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 6px;
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--mir-red-700);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: auto;
+}
+
+.mir-table-filter-clear:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* ===== PAGINATION ===== */
+.mir-table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mir-table-info {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+}
+
+.mir-table-per-page {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-table-per-page-select {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--mir-gray-900);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    direction: rtl;
+}
+
+.mir-table-pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-table-pagination-btn {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: var(--mir-gray-700);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+    min-width: 32px;
+    justify-content: center;
+}
+
+.mir-table-pagination-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--mir-gray-900);
+}
+
+.mir-table-pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mir-table-pagination-btn.mir-active {
+    background: var(--mir-primary);
+    color: white;
+    border-color: var(--mir-primary);
+}
+
+/* ===== BULK ACTIONS ===== */
+.mir-table-bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-3);
+    padding: var(--mir-space-3) var(--mir-space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(99, 102, 241, 0.05);
+    border-top: 2px solid var(--mir-primary);
+}
+
+.mir-table-bulk-actions.mir-hidden {
+    display: none;
+}
+
+.mir-table-bulk-info {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-700);
+    font-weight: 500;
+}
+
+.mir-table-bulk-actions-buttons {
+    display: flex;
+    gap: var(--mir-space-2);
+}
+
+/* ===== EMPTY STATE ===== */
+.mir-table-empty {
+    padding: var(--mir-space-8) var(--mir-space-4);
+    text-align: center;
+    color: var(--mir-gray-600);
+}
+
+.mir-table-empty-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--mir-gray-400);
+    margin: 0 auto var(--mir-space-4);
+}
+
+.mir-table-empty-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    color: var(--mir-gray-700);
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-table-empty-description {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-500);
+    margin-bottom: var(--mir-space-4);
+}
+
+/* ===== LOADING STATE ===== */
+.mir-table-loading {
+    padding: var(--mir-space-6) var(--mir-space-4);
+    text-align: center;
+}
+
+.mir-table-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(99, 102, 241, 0.2);
+    border-top: 3px solid var(--mir-primary);
+    border-radius: 50%;
+    animation: mir-spin 1s linear infinite;
+    margin: 0 auto var(--mir-space-3);
+}
+
+.mir-table-loading-text {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .mir-table-container {
+        border-radius: 8px;
+    }
+    
+    .mir-table-header {
+        flex-direction: column;
+        gap: var(--mir-space-3);
+        align-items: stretch;
+    }
+    
+    .mir-table-actions {
+        justify-content: space-between;
+    }
+    
+    .mir-table-search {
+        min-width: auto;
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .mir-table-container {
+        border-radius: 6px;
+    }
+    
+    .mir-table-header,
+    .mir-table-filters,
+    .mir-table-footer {
+        padding: var(--mir-space-3);
+    }
+    
+    .mir-table th,
+    .mir-table td {
+        padding: var(--mir-space-2);
+        font-size: var(--mir-text-xs);
+    }
+    
+    .mir-table-user {
+        flex-direction: column;
+        gap: var(--mir-space-1);
+        align-items: center;
+    }
+    
+    .mir-table-avatar {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .mir-table-actions-cell {
+        flex-direction: column;
+        gap: var(--mir-space-1);
+    }
+    
+    .mir-table-footer {
+        flex-direction: column;
+        gap: var(--mir-space-2);
+        align-items: stretch;
+    }
+    
+    .mir-table-pagination {
+        justify-content: center;
+    }
+    
+    .mir-table-bulk-actions {
+        flex-direction: column;
+        gap: var(--mir-space-2);
+        align-items: stretch;
+    }
+    
+    .mir-table-bulk-actions-buttons {
+        justify-content: center;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes mir-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .mir-table-container {
+        background: rgba(31, 41, 55, 0.1);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .mir-table-header,
+    .mir-table-filters,
+    .mir-table-footer {
+        background: rgba(31, 41, 55, 0.05);
+    }
+    
+    .mir-table th {
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-table td {
+        color: var(--mir-gray-200);
+    }
+    
+    .mir-table-user-name {
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-table-search-input,
+    .mir-table-filter-select,
+    .mir-table-per-page-select {
+        background: rgba(31, 41, 55, 0.1);
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-table-action-btn {
+        background: rgba(31, 41, 55, 0.1);
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-table-action-btn:hover {
+        background: rgba(31, 41, 55, 0.2);
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-table-checkbox-mark {
+        background: rgba(31, 41, 55, 0.1);
+        border-color: var(--mir-gray-600);
+    }
+    
+    .mir-table-empty-title {
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-table-loading-text {
+        color: var(--mir-gray-400);
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    .mir-table-loading-spinner {
+        animation-duration: 3s;
+    }
+    
+    .mir-table tbody tr,
+    .mir-table-action-btn,
+    .mir-table-pagination-btn {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .mir-table-container {
+        border-width: 2px;
+    }
+    
+    .mir-table th,
+    .mir-table td {
+        border-width: 2px;
+    }
+    
+    .mir-table-action-btn {
+        border-width: 2px;
+    }
+    
+    .mir-table-checkbox-mark {
+        border-width: 3px;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .mir-table-container {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+    
+    .mir-table-header,
+    .mir-table-filters,
+    .mir-table-footer,
+    .mir-table-bulk-actions {
+        display: none;
+    }
+    
+    .mir-table-actions-cell {
+        display: none;
+    }
+    
+    .mir-table-checkbox-column {
+        display: none;
+    }
+    
+    .mir-table {
+        font-size: 10px;
+    }
+    
+    .mir-table th,
+    .mir-table td {
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+    }
+}

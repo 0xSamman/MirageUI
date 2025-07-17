@@ -1,0 +1,556 @@
+/*
+ * MirageUI Dropdown Component
+ * Persian RTL Dropdown Menu with Glass Morphism
+ * Version: 1.0.0
+ */
+
+/* Dropdown Container */
+.mir-dropdown {
+    position: relative;
+    display: inline-block;
+    direction: rtl;
+}
+
+/* Dropdown Toggle Button */
+.mir-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mir-space-2);
+    padding: var(--mir-space-2) var(--mir-space-4);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--mir-gray-700);
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    min-width: 120px;
+    text-align: right;
+    font-family: 'YekanBakh', sans-serif;
+}
+
+.mir-dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--mir-gray-900);
+}
+
+.mir-dropdown-toggle:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.mir-dropdown-toggle:active {
+    transform: translateY(1px);
+}
+
+/* Dropdown Toggle Icon */
+.mir-dropdown-toggle-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.mir-dropdown.open .mir-dropdown-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.mir-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: var(--mir-space-1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    min-width: 200px;
+    max-width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    direction: rtl;
+}
+
+.mir-dropdown.open .mir-dropdown-menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Dropdown Menu Positioning */
+.mir-dropdown-menu.left {
+    right: auto;
+    left: 0;
+}
+
+.mir-dropdown-menu.center {
+    right: 50%;
+    transform: translateX(50%) translateY(-10px) scale(0.95);
+}
+
+.mir-dropdown.open .mir-dropdown-menu.center {
+    transform: translateX(50%) translateY(0) scale(1);
+}
+
+.mir-dropdown-menu.top {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: var(--mir-space-1);
+    transform: translateY(10px) scale(0.95);
+}
+
+.mir-dropdown.open .mir-dropdown-menu.top {
+    transform: translateY(0) scale(1);
+}
+
+/* Dropdown Menu Items */
+.mir-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+    padding: var(--mir-space-2) var(--mir-space-4);
+    color: var(--mir-gray-700);
+    text-decoration: none;
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: right;
+    font-family: 'YekanBakh', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mir-dropdown-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--mir-primary);
+}
+
+.mir-dropdown-item:focus {
+    outline: none;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--mir-primary);
+}
+
+.mir-dropdown-item:active {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+/* Dropdown Item States */
+.mir-dropdown-item.active {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--mir-primary);
+    font-weight: 600;
+}
+
+.mir-dropdown-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Dropdown Item Icon */
+.mir-dropdown-item-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.mir-dropdown-item:hover .mir-dropdown-item-icon {
+    opacity: 1;
+}
+
+/* Dropdown Item Badge */
+.mir-dropdown-item-badge {
+    background: var(--mir-primary);
+    color: white;
+    font-size: var(--mir-text-xs);
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: auto;
+}
+
+/* Dropdown Divider */
+.mir-dropdown-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: var(--mir-space-2) 0;
+}
+
+/* Dropdown Header */
+.mir-dropdown-header {
+    padding: var(--mir-space-2) var(--mir-space-4);
+    font-size: var(--mir-text-xs);
+    font-weight: 600;
+    color: var(--mir-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Footer */
+.mir-dropdown-footer {
+    padding: var(--mir-space-2) var(--mir-space-4);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown Variants */
+
+/* Primary Dropdown */
+.mir-dropdown-primary .mir-dropdown-toggle {
+    background: var(--mir-primary);
+    color: white;
+    border-color: var(--mir-primary);
+}
+
+.mir-dropdown-primary .mir-dropdown-toggle:hover {
+    background: var(--mir-primary-dark);
+    border-color: var(--mir-primary-dark);
+}
+
+/* Secondary Dropdown */
+.mir-dropdown-secondary .mir-dropdown-toggle {
+    background: var(--mir-gray-100);
+    color: var(--mir-gray-700);
+    border-color: var(--mir-gray-300);
+}
+
+.mir-dropdown-secondary .mir-dropdown-toggle:hover {
+    background: var(--mir-gray-200);
+    border-color: var(--mir-gray-400);
+}
+
+/* Success Dropdown */
+.mir-dropdown-success .mir-dropdown-toggle {
+    background: var(--mir-success);
+    color: white;
+    border-color: var(--mir-success);
+}
+
+.mir-dropdown-success .mir-dropdown-toggle:hover {
+    background: var(--mir-success-dark);
+    border-color: var(--mir-success-dark);
+}
+
+/* Warning Dropdown */
+.mir-dropdown-warning .mir-dropdown-toggle {
+    background: var(--mir-warning);
+    color: white;
+    border-color: var(--mir-warning);
+}
+
+.mir-dropdown-warning .mir-dropdown-toggle:hover {
+    background: var(--mir-warning-dark);
+    border-color: var(--mir-warning-dark);
+}
+
+/* Error Dropdown */
+.mir-dropdown-error .mir-dropdown-toggle {
+    background: var(--mir-error);
+    color: white;
+    border-color: var(--mir-error);
+}
+
+.mir-dropdown-error .mir-dropdown-toggle:hover {
+    background: var(--mir-error-dark);
+    border-color: var(--mir-error-dark);
+}
+
+/* Ghost Dropdown */
+.mir-dropdown-ghost .mir-dropdown-toggle {
+    background: transparent;
+    color: var(--mir-gray-700);
+    border-color: transparent;
+}
+
+.mir-dropdown-ghost .mir-dropdown-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Sizes */
+
+/* Small Dropdown */
+.mir-dropdown-sm .mir-dropdown-toggle {
+    padding: var(--mir-space-1) var(--mir-space-3);
+    font-size: var(--mir-text-xs);
+    border-radius: 6px;
+    min-width: 100px;
+}
+
+.mir-dropdown-sm .mir-dropdown-toggle-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.mir-dropdown-sm .mir-dropdown-menu {
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+.mir-dropdown-sm .mir-dropdown-item {
+    padding: var(--mir-space-1) var(--mir-space-3);
+    font-size: var(--mir-text-xs);
+}
+
+/* Large Dropdown */
+.mir-dropdown-lg .mir-dropdown-toggle {
+    padding: var(--mir-space-3) var(--mir-space-6);
+    font-size: var(--mir-text-base);
+    border-radius: 12px;
+    min-width: 150px;
+}
+
+.mir-dropdown-lg .mir-dropdown-toggle-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.mir-dropdown-lg .mir-dropdown-menu {
+    border-radius: 16px;
+    min-width: 250px;
+}
+
+.mir-dropdown-lg .mir-dropdown-item {
+    padding: var(--mir-space-3) var(--mir-space-6);
+    font-size: var(--mir-text-base);
+}
+
+/* Dropdown with Search */
+.mir-dropdown-search {
+    padding: var(--mir-space-2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mir-dropdown-search-input {
+    width: 100%;
+    padding: var(--mir-space-2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: var(--mir-text-sm);
+    background: white;
+    color: var(--mir-gray-700);
+    outline: none;
+    font-family: 'YekanBakh', sans-serif;
+    direction: rtl;
+}
+
+.mir-dropdown-search-input:focus {
+    border-color: var(--mir-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.mir-dropdown-search-input::placeholder {
+    color: var(--mir-gray-500);
+}
+
+/* Dropdown Group */
+.mir-dropdown-group {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-dropdown-group .mir-dropdown {
+    flex: 1;
+}
+
+/* Dropdown with Custom Trigger */
+.mir-dropdown-custom .mir-dropdown-toggle {
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    min-width: auto;
+}
+
+/* Dropdown Animation Variants */
+.mir-dropdown-menu.fade {
+    transition: opacity 0.3s ease;
+    transform: none;
+}
+
+.mir-dropdown-menu.fade.top {
+    transform: none;
+}
+
+.mir-dropdown-menu.slide {
+    transform: translateY(-20px);
+}
+
+.mir-dropdown.open .mir-dropdown-menu.slide {
+    transform: translateY(0);
+}
+
+.mir-dropdown-menu.zoom {
+    transform: scale(0.8);
+}
+
+.mir-dropdown.open .mir-dropdown-menu.zoom {
+    transform: scale(1);
+}
+
+/* Dropdown Context Menu */
+.mir-dropdown-context {
+    position: fixed;
+    z-index: 2000;
+}
+
+.mir-dropdown-context .mir-dropdown-menu {
+    position: static;
+    margin: 0;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* Dropdown Scrollbar */
+.mir-dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mir-dropdown-menu::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+.mir-dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+}
+
+.mir-dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Dropdown Loading State */
+.mir-dropdown-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mir-space-4);
+    color: var(--mir-gray-500);
+}
+
+.mir-dropdown-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--mir-primary);
+    border-radius: 50%;
+    animation: mirDropdownSpin 1s linear infinite;
+}
+
+@keyframes mirDropdownSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Dropdown Empty State */
+.mir-dropdown-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--mir-space-4);
+    color: var(--mir-gray-500);
+    font-size: var(--mir-text-sm);
+    text-align: center;
+}
+
+/* Responsive Dropdown */
+@media (max-width: 768px) {
+    .mir-dropdown-menu {
+        position: fixed;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%) scale(0.95);
+        width: 90%;
+        max-width: 320px;
+        max-height: 70vh;
+        margin: 0;
+        border-radius: 16px;
+    }
+    
+    .mir-dropdown.open .mir-dropdown-menu {
+        transform: translate(50%, -50%) scale(1);
+    }
+    
+    .mir-dropdown-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    .mir-dropdown.open .mir-dropdown-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+/* Force Light Mode */
+.mir-dropdown-toggle {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--mir-gray-700) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.mir-dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: var(--mir-gray-900) !important;
+}
+
+.mir-dropdown-menu {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.mir-dropdown-item {
+    color: var(--mir-gray-700) !important;
+}
+
+.mir-dropdown-item:hover {
+    color: var(--mir-primary) !important;
+}
+
+.mir-dropdown-header {
+    color: var(--mir-gray-500) !important;
+}
+
+.mir-dropdown-ghost .mir-dropdown-toggle {
+    background: transparent !important;
+    color: var(--mir-gray-700) !important;
+}
+
+.mir-dropdown-secondary .mir-dropdown-toggle {
+    background: var(--mir-gray-100) !important;
+    color: var(--mir-gray-700) !important;
+}
