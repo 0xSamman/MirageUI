@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش کامپوننت مراحل/ویزارد میراژ - MirageUI Steps Demo</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Steps Component Styles -->
+    <link rel="stylesheet" href="steps.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .demo-title {
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-primary);
+            margin-bottom: var(--mir-space-4);
+            text-align: center;
+        }
+        
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+            margin-bottom: var(--mir-space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .demo-description {
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-4);
+            line-height: 1.7;
+        }
+        
+        .demo-showcase {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: var(--mir-space-5);
+            margin: var(--mir-space-4) 0;
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--mir-space-3);
+            margin-bottom: var(--mir-space-4);
+            padding: var(--mir-space-3);
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+        
+        .demo-control {
+            display: flex;
+            flex-direction: column;
+            gap: var(--mir-space-1);
+        }
+        
+        .demo-control label {
+            font-size: var(--mir-text-sm);
+            font-weight: 500;
+            color: var(--mir-gray-700);
+        }
+        
+        .demo-control select,
+        .demo-control input {
+            padding: var(--mir-space-2);
+            border: 1px solid var(--mir-gray-300);
+            border-radius: var(--mir-radius-sm);
+            background: white;
+            font-size: var(--mir-text-sm);
+            min-width: 120px;
+        }
+        
+        .demo-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-size: var(--mir-text-sm);
+            color: var(--mir-blue-800);
+        }
+        
+        .demo-code {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--mir-space-4);
+            margin: var(--mir-space-4) 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mir-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--mir-space-3);
+            color: white;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: var(--mir-space-4);
+            right: var(--mir-space-4);
+            z-index: 1000;
+        }
+        
+        .log-output {
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ff00;
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            height: 120px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .sample-form {
+            display: grid;
+            gap: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+        }
+        
+        .sample-form input,
+        .sample-form select,
+        .sample-form textarea {
+            padding: var(--mir-space-2);
+            border: 1px solid var(--mir-gray-300);
+            border-radius: var(--mir-radius-sm);
+            font-size: var(--mir-text-sm);
+        }
+        
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--mir-space-3);
+        }
+        
+        .plan-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid var(--mir-gray-300);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card:hover {
+            border-color: var(--mir-primary);
+            transform: translateY(-2px);
+        }
+        
+        .plan-card.selected {
+            border-color: var(--mir-primary);
+            background: rgba(var(--mir-primary-rgb), 0.1);
+        }
+        
+        .plan-price {
+            font-size: var(--mir-text-xl);
+            font-weight: 700;
+            color: var(--mir-primary);
+            margin: var(--mir-space-2) 0;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--mir-space-1);
+            padding: var(--mir-space-1) var(--mir-space-2);
+            border-radius: var(--mir-radius-full);
+            font-size: var(--mir-text-xs);
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: rgba(107, 114, 128, 0.1);
+            color: var(--mir-gray-700);
+        }
+        
+        .status-active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--mir-blue-700);
+        }
+        
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--mir-green-700);
+        }
+        
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--mir-red-700);
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <!-- Back to Dashboard Link -->
+    <a href="../../index.html" class="mir-btn mir-btn-secondary back-link">
+        <i data-feather="arrow-right" class="mir-btn-icon"></i>
+        بازگشت به داشبورد
+    </a>
+
+    <div class="mir-container" style="margin-top: var(--mir-space-16);">
+        <!-- Header Section -->
+        <header class="demo-section">
+            <h1 class="demo-title">
+                <i data-feather="list" style="width: 32px; height: 32px; margin-left: var(--mir-space-2);"></i>
+                کامپوننت مراحل/ویزارد میراژ
+            </h1>
+            <p class="demo-description" style="text-align: center; font-size: var(--mir-text-lg);">
+                سیستم کامل ناوبری چندمرحله‌ای با پشتیبانی RTL، اعتبارسنجی، و قابلیت‌های پیشرفته برای فرآیندهای تعاملی
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="navigation"></i>
+                    </div>
+                    <h3>ناوبری RTL</h3>
+                    <p>پیش‌روی راست‌به‌چپ با کیبورد</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="check-circle"></i>
+                    </div>
+                    <h3>اعتبارسنجی</h3>
+                    <p>کنترل انتقال بین مراحل</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="layout"></i>
+                    </div>
+                    <h3>چندین طرح</h3>
+                    <p>افقی، عمودی، انواع مختلف</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="accessibility"></i>
+                    </div>
+                    <h3>دسترسی‌پذیر</h3>
+                    <p>سازگار با صفحه‌خوان‌ها</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Interactive Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="play"></i>
+                نمایش تعاملی
+            </h2>
+            <p class="demo-description">
+                با کنترل‌های زیر می‌توانید تنظیمات مختلف مراحل را آزمایش کنید:
+            </p>
+            
+            <div class="demo-controls">
+                <div class="demo-control">
+                    <label>نوع نمایش:</label>
+                    <select id="variant-select">
+                        <option value="default">پیش‌فرض</option>
+                        <option value="simple">ساده</option>
+                        <option value="outlined">خطی</option>
+                        <option value="minimal">حداقلی</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>اندازه:</label>
+                    <select id="size-select">
+                        <option value="sm">کوچک</option>
+                        <option value="md" selected>متوسط</option>
+                        <option value="lg">بزرگ</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>جهت:</label>
+                    <select id="direction-select">
+                        <option value="horizontal" selected>افقی</option>
+                        <option value="vertical">عمودی</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>نمایش پیشرفت:</label>
+                    <select id="progress-select">
+                        <option value="true" selected>بله</option>
+                        <option value="false">خیر</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>قابل کلیک:</label>
+                    <select id="clickable-select">
+                        <option value="true" selected>بله</option>
+                        <option value="false">خیر</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="demo-showcase">
+                <div id="interactive-steps"></div>
+            </div>
+            
+            <div class="demo-info">
+                مرحله فعلی: <strong id="current-step-info">۱</strong> | 
+                کل مراحل: <strong id="total-steps-info">۴</strong> | 
+                وضعیت: <span id="step-status-info" class="status-indicator status-active">فعال</span>
+            </div>
+            
+            <div class="log-output" id="event-log">
+                # Event Log - رویدادهای مراحل
+                System ready...
+            </div>
+        </section>
+
+        <!-- Variants Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="layers"></i>
+                انواع نمایش
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>پیش‌فرض (Default)</h3>
+                <p class="demo-description">نمایش استاندارد با افکت شیشه‌ای</p>
+                <div id="steps-default"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>ساده (Simple)</h3>
+                <p class="demo-description">نمایش ساده بدون پس‌زمینه پیچیده</p>
+                <div id="steps-simple"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>خطی (Outlined)</h3>
+                <p class="demo-description">تمرکز روی خطوط و حاشیه‌ها</p>
+                <div id="steps-outlined"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>حداقلی (Minimal)</h3>
+                <p class="demo-description">حداقل عناصر بصری ممکن</p>
+                <div id="steps-minimal"></div>
+            </div>
+        </section>
+
+        <!-- Directions Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="compass"></i>
+                جهت‌های مختلف
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>افقی (Horizontal)</h3>
+                <div id="steps-horizontal"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>عمودی (Vertical)</h3>
+                <div id="steps-vertical" style="max-width: 400px;"></div>
+            </div>
+        </section>
+
+        <!-- Sizes Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="maximize-2"></i>
+                اندازه‌های مختلف
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>کوچک (Small)</h3>
+                <div id="steps-sm"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>متوسط (Medium)</h3>
+                <div id="steps-md"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>بزرگ (Large)</h3>
+                <div id="steps-lg"></div>
+            </div>
+        </section>
+
+        <!-- States Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="activity"></i>
+                حالت‌های مختلف
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>حالت‌های موفقیت، خطا و هشدار</h3>
+                <div id="steps-states"></div>
+            </div>
+        </section>
+
+        <!-- Real-world Examples -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="briefcase"></i>
+                مثال‌های کاربردی
+            </h2>
+            
+            <!-- Registration Wizard -->
+            <div class="demo-showcase">
+                <h3>فرآیند ثبت‌نام</h3>
+                <p class="demo-description">ویزارد کامل ثبت‌نام کاربر با اعتبارسنجی</p>
+                <div id="registration-wizard"></div>
+            </div>
+            
+            <!-- Checkout Process -->
+            <div class="demo-showcase">
+                <h3>فرآیند خرید</h3>
+                <p class="demo-description">مراحل تکمیل سفارش و پرداخت</p>
+                <div id="checkout-wizard"></div>
+            </div>
+        </section>
+
+        <!-- Code Examples -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="code"></i>
+                نمونه کدها
+            </h2>
+            
+            <h3>راه‌اندازی ساده</h3>
+            <div class="demo-code">
+&lt;div id="my-steps"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+const steps = new MirageSteps('#my-steps', {
+    steps: [
+        {
+            title: 'مرحله اول',
+            description: 'توضیح مرحله اول',
+            icon: 'user'
+        },
+        {
+            title: 'مرحله دوم',
+            description: 'توضیح مرحله دوم',
+            icon: 'mail'
+        },
+        {
+            title: 'مرحله سوم',
+            description: 'مرحله پایانی',
+            icon: 'check'
+        }
+    ],
+    
+    onStepChange: function(newStep, oldStep) {
+        console.log('مرحله تغییر کرد:', newStep);
+    },
+    
+    onFinish: function() {
+        alert('تمام مراحل تکمیل شد!');
+    }
+});
+&lt;/script&gt;
+            </div>
+            
+            <h3>پیکربندی پیشرفته</h3>
+            <div class="demo-code">
+const advancedSteps = new MirageSteps('#advanced-steps', {
+    steps: stepsData,
+    variant: 'outlined',
+    size: 'lg',
+    direction: 'horizontal',
+    
+    showProgress: true,
+    showNavigation: true,
+    showContent: true,
+    clickable: false,
+    allowSkip: false,
+    validateOnNext: true,
+    
+    onValidate: function(stepIndex, step, instance) {
+        // اعتبارسنجی سفارشی
+        return validateStepData(stepIndex);
+    },
+    
+    onStepChange: function(newStep, oldStep) {
+        // بارگذاری محتوای جدید
+        loadStepContent(newStep);
+    },
+    
+    onFinish: function() {
+        // ارسال داده‌های نهایی
+        submitFormData();
+    }
+});
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="book"></i>
+                مرجع API
+            </h2>
+            
+            <h3>متدهای ناوبری</h3>
+            <div class="demo-code">
+// رفتن به مرحله خاص
+steps.goToStep(2);
+
+// مرحله بعدی
+steps.nextStep();
+
+// مرحله قبلی
+steps.previousStep();
+
+// رد کردن مرحله
+steps.skipStep();
+
+// پایان فرآیند
+steps.finish();
+            </div>
+            
+            <h3>مدیریت مراحل</h3>
+            <div class="demo-code">
+// اضافه کردن مرحله
+steps.addStep({
+    title: 'مرحله جدید',
+    description: 'توضیح'
+}, 1);
+
+// حذف مرحله
+steps.removeStep(2);
+
+// تنظیم وضعیت مرحله
+steps.setStepState(0, 'completed');
+steps.setStepState(1, 'error');
+
+// بازنشانی
+steps.reset();
+            </div>
+            
+            <h3>دریافت اطلاعات</h3>
+            <div class="demo-code">
+// مرحله فعلی
+const current = steps.getCurrentStep();
+
+// کل مراحل
+const total = steps.getTotalSteps();
+
+// بررسی تکمیل
+const isCompleted = steps.isStepCompleted(1);
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="steps.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        function logEvent(message) {
+            const log = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString('fa-IR');
+            log.innerHTML += `\n[${timestamp}] ${message}`;
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        function updateStepInfo(stepIndex, totalSteps, status = 'active') {
+            document.getElementById('current-step-info').textContent = (stepIndex + 1).toLocaleString('fa-IR');
+            document.getElementById('total-steps-info').textContent = totalSteps.toLocaleString('fa-IR');
+            
+            const statusEl = document.getElementById('step-status-info');
+            statusEl.className = `status-indicator status-${status}`;
+            
+            const statusTexts = {
+                pending: 'در انتظار',
+                active: 'فعال',
+                completed: 'تکمیل شده',
+                error: 'خطا'
+            };
+            statusEl.textContent = statusTexts[status] || 'فعال';
+        }
+        
+        // Sample steps data
+        const sampleSteps = [
+            {
+                title: 'اطلاعات شخصی',
+                description: 'نام، ایمیل، شماره تلفن',
+                icon: 'user',
+                contentTitle: 'وارد کردن اطلاعات شخصی',
+                contentText: 'لطفاً اطلاعات شخصی خود را با دقت وارد کنید.'
+            },
+            {
+                title: 'تأیید هویت',
+                description: 'بارگذاری مدارک شناسایی',
+                icon: 'shield-check',
+                contentTitle: 'تأیید هویت کاربری',
+                contentText: 'برای امنیت حساب، لطفاً مدارک شناسایی خود را بارگذاری کنید.'
+            },
+            {
+                title: 'تنظیمات حساب',
+                description: 'ترجیحات و پیکربندی',
+                icon: 'settings',
+                contentTitle: 'تنظیم حساب کاربری',
+                contentText: 'تنظیمات اولیه حساب خود را انجام دهید.'
+            },
+            {
+                title: 'تکمیل ثبت‌نام',
+                description: 'بررسی و تأیید نهایی',
+                icon: 'check-circle',
+                contentTitle: 'تکمیل فرآیند ثبت‌نام',
+                contentText: 'اطلاعات خود را بررسی کرده و ثبت‌نام را تکمیل کنید.'
+            }
+        ];
+        
+        // Interactive Steps
+        let interactiveSteps;
+        
+        function initInteractiveSteps() {
+            const variant = document.getElementById('variant-select').value;
+            const size = document.getElementById('size-select').value;
+            const direction = document.getElementById('direction-select').value;
+            const showProgress = document.getElementById('progress-select').value === 'true';
+            const clickable = document.getElementById('clickable-select').value === 'true';
+            
+            if (interactiveSteps) {
+                interactiveSteps.destroy();
+            }
+            
+            interactiveSteps = new MirageSteps('#interactive-steps', {
+                steps: sampleSteps,
+                variant: variant,
+                size: size,
+                direction: direction,
+                showProgress: showProgress,
+                clickable: clickable,
+                showNavigation: true,
+                showContent: true,
+                
+                onStepChange: function(newStep, oldStep) {
+                    logEvent(`Step changed from ${oldStep + 1} to ${newStep + 1}`);
+                    updateStepInfo(newStep, this.getTotalSteps());
+                },
+                
+                onStepClick: function(stepIndex) {
+                    logEvent(`Step ${stepIndex + 1} clicked`);
+                    return true;
+                },
+                
+                onNext: function(currentStep) {
+                    logEvent(`Next button clicked from step ${currentStep + 1}`);
+                    return true;
+                },
+                
+                onPrevious: function(currentStep) {
+                    logEvent(`Previous button clicked from step ${currentStep + 1}`);
+                    return true;
+                },
+                
+                onFinish: function() {
+                    logEvent('Wizard finished successfully!');
+                    updateStepInfo(this.getCurrentStep(), this.getTotalSteps(), 'completed');
+                    alert('تمام مراحل با موفقیت تکمیل شد!');
+                }
+            });
+            
+            updateStepInfo(0, sampleSteps.length);
+        }
+        
+        // Event listeners for controls
+        document.getElementById('variant-select').addEventListener('change', initInteractiveSteps);
+        document.getElementById('size-select').addEventListener('change', initInteractiveSteps);
+        document.getElementById('direction-select').addEventListener('change', initInteractiveSteps);
+        document.getElementById('progress-select').addEventListener('change', initInteractiveSteps);
+        document.getElementById('clickable-select').addEventListener('change', initInteractiveSteps);
+        
+        // Initialize all demos when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Interactive demo
+            initInteractiveSteps();
+            
+            // Variants demo
+            new MirageSteps('#steps-default', {
+                steps: [
+                    { title: 'مرحله اول', description: 'توضیح اول', icon: 'user' },
+                    { title: 'مرحله دوم', description: 'توضیح دوم', icon: 'mail' },
+                    { title: 'مرحله سوم', description: 'توضیح سوم', icon: 'check' }
+                ],
+                currentStep: 1,
+                variant: 'default',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-simple', {
+                steps: [
+                    { title: 'مرحله اول', description: 'توضیح اول' },
+                    { title: 'مرحله دوم', description: 'توضیح دوم' },
+                    { title: 'مرحله سوم', description: 'توضیح سوم' }
+                ],
+                currentStep: 1,
+                variant: 'simple',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-outlined', {
+                steps: [
+                    { title: 'مرحله اول', description: 'توضیح اول' },
+                    { title: 'مرحله دوم', description: 'توضیح دوم' },
+                    { title: 'مرحله سوم', description: 'توضیح سوم' }
+                ],
+                currentStep: 1,
+                variant: 'outlined',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-minimal', {
+                steps: [
+                    { title: 'مرحله اول' },
+                    { title: 'مرحله دوم' },
+                    { title: 'مرحله سوم' }
+                ],
+                currentStep: 1,
+                variant: 'minimal',
+                showNavigation: false
+            });
+            
+            // Directions demo
+            new MirageSteps('#steps-horizontal', {
+                steps: [
+                    { title: 'شروع', description: 'آغاز فرآیند', icon: 'play' },
+                    { title: 'پردازش', description: 'انجام عملیات', icon: 'loader' },
+                    { title: 'پایان', description: 'تکمیل موفق', icon: 'check' }
+                ],
+                currentStep: 1,
+                direction: 'horizontal',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-vertical', {
+                steps: [
+                    { title: 'شروع', description: 'آغاز فرآیند', icon: 'play' },
+                    { title: 'پردازش', description: 'انجام عملیات', icon: 'loader' },
+                    { title: 'پایان', description: 'تکمیل موفق', icon: 'check' }
+                ],
+                currentStep: 1,
+                direction: 'vertical',
+                showNavigation: false
+            });
+            
+            // Sizes demo
+            new MirageSteps('#steps-sm', {
+                steps: [
+                    { title: 'اول', icon: 'user' },
+                    { title: 'دوم', icon: 'mail' },
+                    { title: 'سوم', icon: 'check' }
+                ],
+                currentStep: 1,
+                size: 'sm',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-md', {
+                steps: [
+                    { title: 'مرحله اول', icon: 'user' },
+                    { title: 'مرحله دوم', icon: 'mail' },
+                    { title: 'مرحله سوم', icon: 'check' }
+                ],
+                currentStep: 1,
+                size: 'md',
+                showNavigation: false
+            });
+            
+            new MirageSteps('#steps-lg', {
+                steps: [
+                    { title: 'مرحله اول', description: 'توضیح کامل', icon: 'user' },
+                    { title: 'مرحله دوم', description: 'توضیح کامل', icon: 'mail' },
+                    { title: 'مرحله سوم', description: 'توضیح کامل', icon: 'check' }
+                ],
+                currentStep: 1,
+                size: 'lg',
+                showNavigation: false
+            });
+            
+            // States demo
+            new MirageSteps('#steps-states', {
+                steps: [
+                    { title: 'تکمیل شده', description: 'مرحله موفق', state: 'completed' },
+                    { title: 'فعال', description: 'مرحله جاری' },
+                    { title: 'خطا', description: 'مرحله ناموفق', state: 'error' },
+                    { title: 'هشدار', description: 'نیاز به توجه', state: 'warning' },
+                    { title: 'غیرفعال', description: 'دسترسی ندارد', disabled: true }
+                ],
+                currentStep: 1,
+                showNavigation: false,
+                clickable: false
+            });
+            
+            // Registration wizard
+            const registrationSteps = new MirageSteps('#registration-wizard', {
+                steps: [
+                    {
+                        title: 'اطلاعات پایه',
+                        description: 'نام، ایمیل، رمز عبور',
+                        icon: 'user',
+                        contentTitle: 'ایجاد حساب کاربری',
+                        contentHtml: `
+                            <div class="sample-form">
+                                <input type="text" placeholder="نام کامل" required>
+                                <input type="email" placeholder="آدرس ایمیل" required>
+                                <input type="password" placeholder="رمز عبور" required>
+                                <input type="password" placeholder="تکرار رمز عبور" required>
+                            </div>
+                        `,
+                        validate: function() {
+                            // شبیه‌سازی اعتبارسنجی
+                            const inputs = document.querySelectorAll('#registration-wizard input');
+                            return Array.from(inputs).every(input => input.value.trim() !== '');
+                        }
+                    },
+                    {
+                        title: 'تأیید ایمیل',
+                        description: 'کد ارسال شده به ایمیل',
+                        icon: 'mail-check',
+                        contentTitle: 'تأیید آدرس ایمیل',
+                        contentHtml: `
+                            <div class="sample-form">
+                                <p>کد تأیید به ایمیل شما ارسال شد.</p>
+                                <input type="text" placeholder="کد تأیید ۶ رقمی" maxlength="6">
+                                <button type="button" class="mir-btn mir-btn-ghost">ارسال مجدد کد</button>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'انتخاب طرح',
+                        description: 'نوع حساب کاربری',
+                        icon: 'package',
+                        contentTitle: 'انتخاب طرح عضویت',
+                        contentHtml: `
+                            <div class="plan-grid">
+                                <div class="plan-card" data-plan="free">
+                                    <h4>رایگان</h4>
+                                    <div class="plan-price">۰ تومان</div>
+                                    <p>امکانات پایه</p>
+                                </div>
+                                <div class="plan-card" data-plan="pro">
+                                    <h4>حرفه‌ای</h4>
+                                    <div class="plan-price">۱۰۰,۰۰۰ تومان</div>
+                                    <p>امکانات کامل</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'تکمیل',
+                        description: 'ثبت‌نام موفقیت‌آمیز',
+                        icon: 'check-circle',
+                        contentTitle: 'خوش آمدید!',
+                        contentText: 'حساب کاربری شما با موفقیت ایجاد شد.'
+                    }
+                ],
+                
+                validateOnNext: true,
+                
+                onValidate: function(stepIndex, step) {
+                    if (step.validate) {
+                        const isValid = step.validate();
+                        if (!isValid) {
+                            logEvent(`Validation failed for step ${stepIndex + 1}`);
+                        }
+                        return isValid;
+                    }
+                    return true;
+                },
+                
+                onStepChange: function(newStep, oldStep) {
+                    logEvent(`Registration step changed: ${oldStep + 1} -> ${newStep + 1}`);
+                },
+                
+                onFinish: function() {
+                    logEvent('Registration completed successfully!');
+                    alert('ثبت‌نام با موفقیت تکمیل شد!');
+                }
+            });
+            
+            // Checkout wizard
+            new MirageSteps('#checkout-wizard', {
+                steps: [
+                    {
+                        title: 'سبد خرید',
+                        description: 'بررسی اقلام',
+                        icon: 'shopping-cart',
+                        contentTitle: 'بررسی سبد خرید',
+                        contentText: 'اقلام انتخابی خود را بررسی کنید.'
+                    },
+                    {
+                        title: 'آدرس تحویل',
+                        description: 'انتخاب مقصد',
+                        icon: 'map-pin',
+                        contentTitle: 'آدرس تحویل',
+                        contentHtml: `
+                            <div class="sample-form">
+                                <input type="text" placeholder="آدرس کامل">
+                                <input type="text" placeholder="کد پستی">
+                                <select>
+                                    <option>انتخاب شهر</option>
+                                    <option>تهران</option>
+                                    <option>اصفهان</option>
+                                    <option>شیراز</option>
+                                </select>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'پرداخت',
+                        description: 'انتخاب روش پرداخت',
+                        icon: 'credit-card',
+                        contentTitle: 'پرداخت آنلاین',
+                        contentText: 'روش پرداخت مورد نظر خود را انتخاب کنید.'
+                    },
+                    {
+                        title: 'تأیید',
+                        description: 'تکمیل سفارش',
+                        icon: 'check-circle',
+                        contentTitle: 'تأیید نهایی سفارش',
+                        contentText: 'سفارش شما با موفقیت ثبت شد.'
+                    }
+                ],
+                
+                variant: 'outlined',
+                
+                onStepChange: function(newStep, oldStep) {
+                    logEvent(`Checkout step changed: ${oldStep + 1} -> ${newStep + 1}`);
+                },
+                
+                onFinish: function() {
+                    logEvent('Checkout completed successfully!');
+                    alert('سفارش شما با موفقیت ثبت شد!');
+                }
+            });
+            
+            // Plan selection event listener
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.plan-card')) {
+                    document.querySelectorAll('.plan-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    e.target.closest('.plan-card').classList.add('selected');
+                }
+            });
+            
+            logEvent('All steps components initialized successfully');
+        });
+    </script>
+</body>
+</html>
