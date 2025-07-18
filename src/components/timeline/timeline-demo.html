@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش کامپوننت تایم‌لاین - سیستم طراحی میراژ</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Timeline Component Styles -->
+    <link rel="stylesheet" href="timeline.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--mir-space-6);
+            direction: rtl;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--mir-space-8);
+        }
+
+        .demo-title {
+            font-size: var(--mir-text-4xl);
+            font-weight: 700;
+            color: var(--mir-primary);
+            margin-bottom: var(--mir-space-4);
+        }
+
+        .demo-description {
+            font-size: var(--mir-text-lg);
+            color: var(--mir-gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .demo-section {
+            margin-bottom: var(--mir-space-8);
+        }
+
+        .demo-section-title {
+            font-size: var(--mir-text-2xl);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+            margin-bottom: var(--mir-space-4);
+            text-align: center;
+        }
+
+        .demo-section-description {
+            font-size: var(--mir-text-base);
+            color: var(--mir-gray-600);
+            text-align: center;
+            margin-bottom: var(--mir-space-6);
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--mir-space-6);
+            margin-bottom: var(--mir-space-8);
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: var(--mir-space-6);
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-card-title {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+            margin-bottom: var(--mir-space-3);
+            text-align: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--mir-space-3);
+            margin-bottom: var(--mir-space-6);
+            flex-wrap: wrap;
+        }
+
+        .demo-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--mir-space-2);
+        }
+
+        .demo-control-group label {
+            font-size: var(--mir-text-sm);
+            font-weight: 500;
+            color: var(--mir-gray-700);
+        }
+
+        .demo-control-group select,
+        .demo-control-group input {
+            padding: var(--mir-space-2) var(--mir-space-3);
+            border: 1px solid var(--mir-gray-300);
+            border-radius: 8px;
+            font-size: var(--mir-text-sm);
+            direction: rtl;
+        }
+
+        .demo-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--mir-space-3);
+            margin-bottom: var(--mir-space-6);
+            flex-wrap: wrap;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+            color: var(--mir-primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: var(--mir-space-6);
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--mir-primary-dark);
+        }
+
+        .code-example {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: var(--mir-space-4);
+            margin-top: var(--mir-space-4);
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: rgba(var(--mir-primary-rgb), 0.1);
+            color: var(--mir-primary);
+            padding: var(--mir-space-1) var(--mir-space-2);
+            border-radius: 12px;
+            font-size: var(--mir-text-xs);
+            font-weight: 500;
+            margin: var(--mir-space-1);
+        }
+
+        .timeline-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: var(--mir-space-4);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--mir-space-4);
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <div class="demo-container">
+        <!-- Header -->
+        <div class="demo-header">
+            <a href="../../index.html" class="back-link">
+                <i data-feather="arrow-right"></i>
+                بازگشت به داشبورد
+            </a>
+            
+            <h1 class="demo-title">کامپوننت تایم‌لاین میراژ</h1>
+            <p class="demo-description">
+                سیستم کاملی برای نمایش فعالیت‌ها، تاریخچه رویدادها و فیدهای زمانی با پشتیبانی کامل از RTL و فارسی
+            </p>
+            
+            <div class="demo-features">
+                <span class="feature-badge">RTL Layout</span>
+                <span class="feature-badge">Persian Dates</span>
+                <span class="feature-badge">Persian Numbers</span>
+                <span class="feature-badge">Real-time Updates</span>
+                <span class="feature-badge">Multiple Variants</span>
+                <span class="feature-badge">Interactive Actions</span>
+            </div>
+        </div>
+
+        <!-- Interactive Demo Section -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">نمایش تعاملی</h2>
+            <p class="demo-section-description">تایم‌لاین زنده با قابلیت تغییر تنظیمات و اضافه کردن فعالیت‌های جدید</p>
+            
+            <!-- Controls -->
+            <div class="demo-controls">
+                <div class="demo-control-group">
+                    <label for="timeline-variant">نوع نمایش:</label>
+                    <select id="timeline-variant">
+                        <option value="vertical">عمودی</option>
+                        <option value="horizontal">افقی</option>
+                        <option value="compact">فشرده</option>
+                    </select>
+                </div>
+                
+                <div class="demo-control-group">
+                    <label for="timeline-size">اندازه:</label>
+                    <select id="timeline-size">
+                        <option value="sm">کوچک</option>
+                        <option value="md" selected>متوسط</option>
+                        <option value="lg">بزرگ</option>
+                    </select>
+                </div>
+                
+                <div class="demo-control-group">
+                    <label for="timeline-style">استایل:</label>
+                    <select id="timeline-style">
+                        <option value="default" selected>پیش‌فرض</option>
+                        <option value="simple">ساده</option>
+                        <option value="card">کارتی</option>
+                        <option value="minimal">حداقلی</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Action buttons -->
+            <div class="demo-actions">
+                <button id="add-user-activity" class="mir-btn mir-btn-primary">
+                    <i data-feather="user-plus"></i>
+                    اضافه کردن فعالیت کاربری
+                </button>
+                <button id="add-system-event" class="mir-btn mir-btn-secondary">
+                    <i data-feather="server"></i>
+                    اضافه کردن رویداد سیستمی
+                </button>
+                <button id="add-success-event" class="mir-btn mir-btn-success">
+                    <i data-feather="check-circle"></i>
+                    اضافه کردن موفقیت
+                </button>
+                <button id="clear-timeline" class="mir-btn mir-btn-danger">
+                    <i data-feather="trash-2"></i>
+                    پاک کردن همه
+                </button>
+            </div>
+            
+            <!-- Interactive Timeline -->
+            <div class="timeline-container">
+                <div id="interactive-timeline"></div>
+            </div>
+        </div>
+
+        <!-- Variants Demo -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">انواع نمایش</h2>
+            <p class="demo-section-description">تایم‌لاین در حالت‌های مختلف: عمودی، افقی، و فشرده</p>
+            
+            <div class="demo-grid">
+                <!-- Vertical Timeline -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">تایم‌لاین عمودی</h3>
+                    <div id="vertical-timeline"></div>
+                </div>
+                
+                <!-- Horizontal Timeline -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">تایم‌لاین افقی</h3>
+                    <div id="horizontal-timeline"></div>
+                </div>
+                
+                <!-- Compact Timeline -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">تایم‌لاین فشرده</h3>
+                    <div id="compact-timeline"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Styles Demo -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">انواع استایل</h2>
+            <p class="demo-section-description">استایل‌های مختلف برای تطبیق با طراحی وب‌سایت</p>
+            
+            <div class="demo-grid">
+                <!-- Default Style -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">استایل پیش‌فرض</h3>
+                    <div id="default-style-timeline"></div>
+                </div>
+                
+                <!-- Simple Style -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">استایل ساده</h3>
+                    <div id="simple-style-timeline"></div>
+                </div>
+                
+                <!-- Card Style -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">استایل کارتی</h3>
+                    <div id="card-style-timeline"></div>
+                </div>
+                
+                <!-- Minimal Style -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">استایل حداقلی</h3>
+                    <div id="minimal-style-timeline"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Types Demo -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">انواع فعالیت</h2>
+            <p class="demo-section-description">نمایش انواع مختلف فعالیت‌ها با رنگ‌ها و آیکون‌های مخصوص</p>
+            
+            <div class="demo-card">
+                <div id="activity-types-timeline"></div>
+            </div>
+        </div>
+
+        <!-- Real-world Examples -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">مثال‌های کاربردی</h2>
+            <p class="demo-section-description">نمونه‌های واقعی از کاربرد تایم‌لاین در سیستم‌های مختلف</p>
+            
+            <div class="demo-grid">
+                <!-- User Activity Feed -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">فید فعالیت کاربران</h3>
+                    <div id="user-activity-feed"></div>
+                </div>
+                
+                <!-- System Events -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">رویدادهای سیستم</h3>
+                    <div id="system-events-timeline"></div>
+                </div>
+                
+                <!-- Transaction History -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">تاریخچه تراکنش‌ها</h3>
+                    <div id="transaction-history"></div>
+                </div>
+                
+                <!-- Project Timeline -->
+                <div class="demo-card">
+                    <h3 class="demo-card-title">تایم‌لاین پروژه</h3>
+                    <div id="project-timeline"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State Demo -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">حالت خالی</h2>
+            <p class="demo-section-description">نمایش تایم‌لاین در حالت عدم وجود فعالیت</p>
+            
+            <div class="demo-card">
+                <div id="empty-timeline"></div>
+            </div>
+        </div>
+
+        <!-- Code Examples -->
+        <div class="demo-section">
+            <h2 class="demo-section-title">نمونه کد</h2>
+            <p class="demo-section-description">نحوه استفاده از کامپوننت تایم‌لاین در پروژه‌های شما</p>
+            
+            <div class="demo-card">
+                <h3 class="demo-card-title">راه‌اندازی اولیه</h3>
+                <div class="code-example">
+// HTML
+&lt;div id="my-timeline"&gt;&lt;/div&gt;
+
+// JavaScript
+const timeline = new MirageTimeline('#my-timeline', {
+    items: [
+        {
+            type: 'user',
+            title: 'کاربر وارد شد',
+            description: 'علی احمدی وارد سیستم شد',
+            time: new Date(),
+            avatar: '/images/user.jpg'
+        }
+    ],
+    variant: 'vertical',
+    animated: true,
+    realTime: true
+});
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="timeline.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Sample data for different demos
+        const sampleUserActivities = [
+            {
+                type: 'user',
+                title: 'کاربر جدید عضو شد',
+                subtitle: 'سارا کریمی',
+                description: 'کاربر از طریق دعوت‌نامه ایمیل عضو شد',
+                time: new Date(Date.now() - 1000 * 60 * 5),
+                avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c000?w=40&h=40&fit=crop&crop=face',
+                actions: [
+                    { type: 'profile', text: 'مشاهده پروفایل' },
+                    { type: 'message', text: 'ارسال پیام' }
+                ]
+            },
+            {
+                type: 'user',
+                title: 'کاربر فایل آپلود کرد',
+                subtitle: 'محمد رضایی',
+                time: new Date(Date.now() - 1000 * 60 * 15),
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face',
+                attachment: {
+                    name: 'گزارش-پروژه.pdf',
+                    size: '۲.۳ مگابایت',
+                    icon: 'file-text'
+                }
+            },
+            {
+                type: 'user',
+                title: 'کاربر پیام ارسال کرد',
+                subtitle: 'فاطمه موسوی',
+                description: 'پیام جدید در گروه "پروژه میراژ" ارسال شد',
+                time: new Date(Date.now() - 1000 * 60 * 30),
+                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face',
+                actions: [
+                    { type: 'reply', text: 'پاسخ' },
+                    { type: 'forward', text: 'ارسال به دیگران' }
+                ]
+            }
+        ];
+
+        const sampleSystemEvents = [
+            {
+                type: 'system',
+                title: 'پشتیبان‌گیری خودکار',
+                description: 'پشتیبان‌گیری شبانه پایگاه داده انجام شد',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 2),
+                icon: 'database',
+                tags: [
+                    { text: 'خودکار', type: 'info' },
+                    { text: 'موفق', type: 'success' }
+                ]
+            },
+            {
+                type: 'warning',
+                title: 'استفاده بالای CPU',
+                description: 'استفاده از CPU بالای ۸۰٪ رسیده است',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 4),
+                icon: 'cpu',
+                tags: [
+                    { text: '۸۵٪', type: 'warning' }
+                ]
+            },
+            {
+                type: 'error',
+                title: 'خطا در ارتباط با پایگاه داده',
+                description: 'اتصال به پایگاه داده اصلی قطع شده است',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 6),
+                icon: 'alert-circle',
+                tags: [
+                    { text: 'بحرانی', type: 'error' }
+                ]
+            }
+        ];
+
+        const sampleTransactions = [
+            {
+                type: 'success',
+                title: 'واریز موفق',
+                subtitle: 'از حساب ۱۲۳۴',
+                description: 'مبلغ ۵۰۰,۰۰۰ تومان به حساب شما واریز شد',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 1),
+                icon: 'trending-up',
+                tags: [
+                    { text: '۵۰۰,۰۰۰ تومان', type: 'success' }
+                ]
+            },
+            {
+                type: 'user',
+                title: 'برداشت از حساب',
+                subtitle: 'کارت ۵۶۷۸',
+                description: 'مبلغ ۱۰۰,۰۰۰ تومان از حساب برداشت شد',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 3),
+                icon: 'trending-down',
+                tags: [
+                    { text: '۱۰۰,۰۰۰ تومان', type: 'info' }
+                ]
+            },
+            {
+                type: 'error',
+                title: 'تراکنش ناموفق',
+                subtitle: 'کارت ۹۰۱۲',
+                description: 'موجودی کافی نیست',
+                time: new Date(Date.now() - 1000 * 60 * 60 * 5),
+                icon: 'x-circle',
+                tags: [
+                    { text: 'ناموفق', type: 'error' }
+                ]
+            }
+        ];
+
+        const sampleActivityTypes = [
+            {
+                type: 'user',
+                title: 'فعالیت کاربری',
+                description: 'فعالیت‌های انجام شده توسط کاربران',
+                time: new Date(Date.now() - 1000 * 60 * 10),
+                icon: 'user'
+            },
+            {
+                type: 'system',
+                title: 'رویداد سیستمی',
+                description: 'رویدادهای خودکار سیستم',
+                time: new Date(Date.now() - 1000 * 60 * 20),
+                icon: 'server'
+            },
+            {
+                type: 'success',
+                title: 'عملیات موفق',
+                description: 'عملیات با موفقیت انجام شد',
+                time: new Date(Date.now() - 1000 * 60 * 30),
+                icon: 'check-circle'
+            },
+            {
+                type: 'warning',
+                title: 'هشدار سیستم',
+                description: 'وضعیت نیازمند توجه',
+                time: new Date(Date.now() - 1000 * 60 * 40),
+                icon: 'alert-triangle'
+            },
+            {
+                type: 'error',
+                title: 'خطای سیستم',
+                description: 'خطایی در سیستم رخ داده است',
+                time: new Date(Date.now() - 1000 * 60 * 50),
+                icon: 'x-circle'
+            },
+            {
+                type: 'info',
+                title: 'اطلاعات عمومی',
+                description: 'اطلاعیه‌های عمومی سیستم',
+                time: new Date(Date.now() - 1000 * 60 * 60),
+                icon: 'info'
+            }
+        ];
+
+        const sampleProjectTimeline = [
+            {
+                type: 'info',
+                title: 'شروع پروژه',
+                description: 'کلنگ زنی پروژه میراژ',
+                time: new Date('2024-01-01'),
+                icon: 'play-circle'
+            },
+            {
+                type: 'user',
+                title: 'تشکیل تیم',
+                description: 'انتخاب اعضای تیم',
+                time: new Date('2024-01-05'),
+                icon: 'users'
+            },
+            {
+                type: 'warning',
+                title: 'بررسی میانی',
+                description: 'بررسی پیشرفت پروژه',
+                time: new Date('2024-01-15'),
+                icon: 'eye'
+            },
+            {
+                type: 'success',
+                title: 'تحویل اولیه',
+                description: 'تحویل نسخه اولیه',
+                time: new Date('2024-01-25'),
+                icon: 'package'
+            },
+            {
+                type: 'success',
+                title: 'تحویل نهایی',
+                description: 'تکمیل موفقیت‌آمیز پروژه',
+                time: new Date('2024-01-30'),
+                icon: 'check-circle'
+            }
+        ];
+
+        // Initialize all timelines
+        let interactiveTimeline;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Interactive Timeline
+            interactiveTimeline = new MirageTimeline('#interactive-timeline', {
+                items: [...sampleUserActivities],
+                variant: 'vertical',
+                size: 'md',
+                style: 'default',
+                animated: true,
+                realTime: true,
+                onItemClick: function(item, index) {
+                    alert(`کلیک روی: ${item.title}`);
+                },
+                onActionClick: function(action, item) {
+                    alert(`عملیات ${action.type} روی آیتم ${item.title}`);
+                }
+            });
+
+            // Variant timelines
+            new MirageTimeline('#vertical-timeline', {
+                items: sampleUserActivities.slice(0, 3),
+                variant: 'vertical',
+                size: 'sm',
+                animated: true
+            });
+
+            new MirageTimeline('#horizontal-timeline', {
+                items: sampleProjectTimeline.slice(0, 4),
+                variant: 'horizontal',
+                size: 'sm',
+                animated: true
+            });
+
+            new MirageTimeline('#compact-timeline', {
+                items: sampleSystemEvents.slice(0, 3),
+                variant: 'compact',
+                size: 'sm',
+                animated: true
+            });
+
+            // Style timelines
+            new MirageTimeline('#default-style-timeline', {
+                items: sampleUserActivities.slice(0, 2),
+                style: 'default',
+                size: 'sm'
+            });
+
+            new MirageTimeline('#simple-style-timeline', {
+                items: sampleUserActivities.slice(0, 2),
+                style: 'simple',
+                size: 'sm'
+            });
+
+            new MirageTimeline('#card-style-timeline', {
+                items: sampleUserActivities.slice(0, 2),
+                style: 'card',
+                size: 'sm'
+            });
+
+            new MirageTimeline('#minimal-style-timeline', {
+                items: sampleUserActivities.slice(0, 2),
+                style: 'minimal',
+                size: 'sm'
+            });
+
+            // Activity types timeline
+            new MirageTimeline('#activity-types-timeline', {
+                items: sampleActivityTypes,
+                variant: 'vertical',
+                size: 'md',
+                animated: true
+            });
+
+            // Real-world examples
+            new MirageTimeline('#user-activity-feed', {
+                items: sampleUserActivities,
+                variant: 'vertical',
+                size: 'sm',
+                animated: true
+            });
+
+            new MirageTimeline('#system-events-timeline', {
+                items: sampleSystemEvents,
+                variant: 'vertical',
+                size: 'sm',
+                animated: true
+            });
+
+            new MirageTimeline('#transaction-history', {
+                items: sampleTransactions,
+                variant: 'vertical',
+                size: 'sm',
+                animated: true
+            });
+
+            new MirageTimeline('#project-timeline', {
+                items: sampleProjectTimeline,
+                variant: 'horizontal',
+                size: 'sm',
+                animated: true
+            });
+
+            // Empty timeline
+            new MirageTimeline('#empty-timeline', {
+                items: [],
+                emptyIcon: 'clock'
+            });
+
+            // Bind control events
+            bindControlEvents();
+            
+            // Replace feather icons
+            feather.replace();
+        });
+
+        function bindControlEvents() {
+            // Interactive timeline controls
+            document.getElementById('timeline-variant').addEventListener('change', function() {
+                updateInteractiveTimeline();
+            });
+
+            document.getElementById('timeline-size').addEventListener('change', function() {
+                updateInteractiveTimeline();
+            });
+
+            document.getElementById('timeline-style').addEventListener('change', function() {
+                updateInteractiveTimeline();
+            });
+
+            // Action buttons
+            document.getElementById('add-user-activity').addEventListener('click', function() {
+                const userNames = ['علی احمدی', 'سارا کریمی', 'محمد رضایی', 'فاطمه موسوی', 'رضا حسینی'];
+                const activities = ['وارد شد', 'فایل آپلود کرد', 'پیام ارسال کرد', 'پست جدید منتشر کرد', 'کامنت گذاشت'];
+                
+                const randomUser = userNames[Math.floor(Math.random() * userNames.length)];
+                const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+                
+                interactiveTimeline.addItem({
+                    type: 'user',
+                    title: `${randomUser} ${randomActivity}`,
+                    subtitle: randomUser,
+                    time: new Date(),
+                    icon: 'user',
+                    actions: [
+                        { type: 'view', text: 'مشاهده' },
+                        { type: 'message', text: 'پیام' }
+                    ]
+                });
+            });
+
+            document.getElementById('add-system-event').addEventListener('click', function() {
+                const systemEvents = ['پشتیبان‌گیری انجام شد', 'بروزرسانی سیستم', 'تنظیمات تغییر کرد', 'کانفیگ بارگیری شد'];
+                const randomEvent = systemEvents[Math.floor(Math.random() * systemEvents.length)];
+                
+                interactiveTimeline.addItem({
+                    type: 'system',
+                    title: randomEvent,
+                    description: 'رویداد سیستمی جدید',
+                    time: new Date(),
+                    icon: 'server',
+                    tags: [
+                        { text: 'خودکار', type: 'info' }
+                    ]
+                });
+            });
+
+            document.getElementById('add-success-event').addEventListener('click', function() {
+                const successEvents = ['تراکنش موفق', 'ارسال ایمیل موفق', 'بارگیری کامل', 'عملیات موفق'];
+                const randomSuccess = successEvents[Math.floor(Math.random() * successEvents.length)];
+                
+                interactiveTimeline.addItem({
+                    type: 'success',
+                    title: randomSuccess,
+                    description: 'عملیات با موفقیت انجام شد',
+                    time: new Date(),
+                    icon: 'check-circle',
+                    tags: [
+                        { text: 'موفق', type: 'success' }
+                    ]
+                });
+            });
+
+            document.getElementById('clear-timeline').addEventListener('click', function() {
+                if (confirm('آیا مطمئن هستید که می‌خواهید همه فعالیت‌ها را پاک کنید؟')) {
+                    interactiveTimeline.clearItems();
+                }
+            });
+        }
+
+        function updateInteractiveTimeline() {
+            const variant = document.getElementById('timeline-variant').value;
+            const size = document.getElementById('timeline-size').value;
+            const style = document.getElementById('timeline-style').value;
+            
+            // Recreate timeline with new options
+            interactiveTimeline.destroy();
+            
+            interactiveTimeline = new MirageTimeline('#interactive-timeline', {
+                items: [...sampleUserActivities],
+                variant: variant,
+                size: size,
+                style: style,
+                animated: true,
+                realTime: true,
+                onItemClick: function(item, index) {
+                    alert(`کلیک روی: ${item.title}`);
+                },
+                onActionClick: function(action, item) {
+                    alert(`عملیات ${action.type} روی آیتم ${item.title}`);
+                }
+            });
+            
+            // Replace feather icons
+            setTimeout(() => {
+                feather.replace();
+            }, 100);
+        }
+    </script>
+</body>
+</html>

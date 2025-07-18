@@ -1,0 +1,672 @@
+/* MirageUI - Timeline Component */
+/* Persian RTL Design System - Activity Feed and History */
+
+/* ==========================================
+   TIMELINE CONTAINER
+   ========================================== */
+
+.mir-timeline {
+    position: relative;
+    direction: rtl;
+    font-family: var(--mir-font-family);
+    max-width: 100%;
+}
+
+/* Timeline Variants */
+.mir-timeline.mir-timeline-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mir-space-4);
+}
+
+.mir-timeline.mir-timeline-horizontal {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-6);
+    overflow-x: auto;
+    padding: var(--mir-space-4) 0;
+}
+
+.mir-timeline.mir-timeline-compact {
+    gap: var(--mir-space-2);
+}
+
+/* ==========================================
+   TIMELINE ITEM
+   ========================================== */
+
+.mir-timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mir-space-3);
+    padding: var(--mir-space-3);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.mir-timeline-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Horizontal Timeline Items */
+.mir-timeline.mir-timeline-horizontal .mir-timeline-item {
+    flex-direction: column;
+    min-width: 280px;
+    text-align: center;
+}
+
+/* Compact Timeline Items */
+.mir-timeline.mir-timeline-compact .mir-timeline-item {
+    padding: var(--mir-space-2);
+    border-radius: 8px;
+}
+
+/* ==========================================
+   TIMELINE INDICATOR
+   ========================================== */
+
+.mir-timeline-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mir-primary), var(--mir-primary-dark));
+    color: white;
+    font-weight: 600;
+    font-size: var(--mir-text-sm);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(var(--mir-primary-rgb), 0.3);
+}
+
+.mir-timeline-indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+    border-radius: 50%;
+}
+
+/* Icon in Indicator */
+.mir-timeline-indicator .mir-timeline-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Avatar in Indicator */
+.mir-timeline-indicator .mir-timeline-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ==========================================
+   TIMELINE CONTENT
+   ========================================== */
+
+.mir-timeline-content {
+    flex: 1;
+    direction: rtl;
+}
+
+.mir-timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--mir-space-2);
+    gap: var(--mir-space-3);
+}
+
+.mir-timeline-title {
+    font-size: var(--mir-text-base);
+    font-weight: 600;
+    color: var(--mir-gray-800);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.mir-timeline-subtitle {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    margin: var(--mir-space-1) 0 0 0;
+}
+
+.mir-timeline-time {
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-500);
+    white-space: nowrap;
+    direction: ltr;
+    text-align: left;
+}
+
+.mir-timeline-description {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-700);
+    line-height: 1.6;
+    margin: var(--mir-space-2) 0 0 0;
+}
+
+.mir-timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+    margin-top: var(--mir-space-2);
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-500);
+}
+
+/* ==========================================
+   TIMELINE CONNECTOR
+   ========================================== */
+
+.mir-timeline.mir-timeline-vertical::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 20px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--mir-primary), var(--mir-gray-300));
+    z-index: 1;
+}
+
+.mir-timeline.mir-timeline-horizontal::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(to left, var(--mir-primary), var(--mir-gray-300));
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.mir-timeline.mir-timeline-compact::before {
+    background: var(--mir-gray-300);
+}
+
+/* ==========================================
+   TIMELINE ITEM TYPES
+   ========================================== */
+
+/* User Action */
+.mir-timeline-item.mir-timeline-user .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-blue-500), var(--mir-blue-600));
+}
+
+/* System Event */
+.mir-timeline-item.mir-timeline-system .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-gray-500), var(--mir-gray-600));
+}
+
+/* Success Event */
+.mir-timeline-item.mir-timeline-success .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-success), var(--mir-green-600));
+}
+
+/* Warning Event */
+.mir-timeline-item.mir-timeline-warning .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-warning), var(--mir-yellow-600));
+}
+
+/* Error Event */
+.mir-timeline-item.mir-timeline-error .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-error), var(--mir-red-600));
+}
+
+/* Info Event */
+.mir-timeline-item.mir-timeline-info .mir-timeline-indicator {
+    background: linear-gradient(135deg, var(--mir-info), var(--mir-blue-600));
+}
+
+/* ==========================================
+   TIMELINE SIZES
+   ========================================== */
+
+/* Small Timeline */
+.mir-timeline.mir-timeline-sm .mir-timeline-indicator {
+    width: 32px;
+    height: 32px;
+    font-size: var(--mir-text-xs);
+}
+
+.mir-timeline.mir-timeline-sm .mir-timeline-indicator .mir-timeline-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.mir-timeline.mir-timeline-sm .mir-timeline-indicator .mir-timeline-avatar {
+    width: 24px;
+    height: 24px;
+}
+
+.mir-timeline.mir-timeline-sm .mir-timeline-title {
+    font-size: var(--mir-text-sm);
+}
+
+.mir-timeline.mir-timeline-sm .mir-timeline-description {
+    font-size: var(--mir-text-xs);
+}
+
+.mir-timeline.mir-timeline-sm::before {
+    right: 16px;
+}
+
+/* Large Timeline */
+.mir-timeline.mir-timeline-lg .mir-timeline-indicator {
+    width: 48px;
+    height: 48px;
+    font-size: var(--mir-text-base);
+}
+
+.mir-timeline.mir-timeline-lg .mir-timeline-indicator .mir-timeline-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.mir-timeline.mir-timeline-lg .mir-timeline-indicator .mir-timeline-avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.mir-timeline.mir-timeline-lg .mir-timeline-title {
+    font-size: var(--mir-text-lg);
+}
+
+.mir-timeline.mir-timeline-lg .mir-timeline-description {
+    font-size: var(--mir-text-base);
+}
+
+.mir-timeline.mir-timeline-lg::before {
+    right: 24px;
+}
+
+/* ==========================================
+   TIMELINE BADGES AND TAGS
+   ========================================== */
+
+.mir-timeline-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--mir-space-1) var(--mir-space-2);
+    background: rgba(var(--mir-primary-rgb), 0.1);
+    color: var(--mir-primary);
+    border-radius: 12px;
+    font-size: var(--mir-text-xs);
+    font-weight: 500;
+}
+
+.mir-timeline-badge.mir-timeline-badge-success {
+    background: rgba(var(--mir-success-rgb), 0.1);
+    color: var(--mir-success);
+}
+
+.mir-timeline-badge.mir-timeline-badge-warning {
+    background: rgba(var(--mir-warning-rgb), 0.1);
+    color: var(--mir-warning);
+}
+
+.mir-timeline-badge.mir-timeline-badge-error {
+    background: rgba(var(--mir-error-rgb), 0.1);
+    color: var(--mir-error);
+}
+
+.mir-timeline-badge.mir-timeline-badge-info {
+    background: rgba(var(--mir-info-rgb), 0.1);
+    color: var(--mir-info);
+}
+
+/* ==========================================
+   TIMELINE ACTIONS
+   ========================================== */
+
+.mir-timeline-actions {
+    display: flex;
+    gap: var(--mir-space-2);
+    margin-top: var(--mir-space-3);
+}
+
+.mir-timeline-action {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    background: transparent;
+    border: 1px solid var(--mir-gray-300);
+    border-radius: 6px;
+    color: var(--mir-gray-600);
+    font-size: var(--mir-text-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mir-timeline-action:hover {
+    background: var(--mir-gray-100);
+    border-color: var(--mir-gray-400);
+    color: var(--mir-gray-800);
+}
+
+/* ==========================================
+   TIMELINE ATTACHMENT
+   ========================================== */
+
+.mir-timeline-attachment {
+    margin-top: var(--mir-space-3);
+    padding: var(--mir-space-3);
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
+.mir-timeline-attachment-header {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-timeline-attachment-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--mir-gray-500);
+}
+
+.mir-timeline-attachment-name {
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    color: var(--mir-gray-800);
+}
+
+.mir-timeline-attachment-size {
+    font-size: var(--mir-text-xs);
+    color: var(--mir-gray-500);
+}
+
+/* ==========================================
+   TIMELINE VARIANTS
+   ========================================== */
+
+/* Simple Timeline */
+.mir-timeline.mir-timeline-simple .mir-timeline-item {
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    padding: var(--mir-space-2) 0;
+}
+
+.mir-timeline.mir-timeline-simple .mir-timeline-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Card Timeline */
+.mir-timeline.mir-timeline-card .mir-timeline-item {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Minimal Timeline */
+.mir-timeline.mir-timeline-minimal .mir-timeline-indicator {
+    width: 12px;
+    height: 12px;
+    background: var(--mir-primary);
+}
+
+.mir-timeline.mir-timeline-minimal .mir-timeline-item {
+    background: transparent;
+    border: none;
+    padding: var(--mir-space-1) 0;
+}
+
+.mir-timeline.mir-timeline-minimal::before {
+    right: 6px;
+    width: 1px;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 768px) {
+    .mir-timeline.mir-timeline-horizontal {
+        flex-direction: column;
+        gap: var(--mir-space-4);
+    }
+    
+    .mir-timeline.mir-timeline-horizontal .mir-timeline-item {
+        flex-direction: row;
+        text-align: right;
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .mir-timeline.mir-timeline-horizontal::before {
+        top: 0;
+        bottom: 0;
+        right: 20px;
+        left: auto;
+        width: 2px;
+        height: auto;
+        transform: none;
+    }
+    
+    .mir-timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--mir-space-1);
+    }
+    
+    .mir-timeline-time {
+        text-align: right;
+        direction: rtl;
+    }
+}
+
+@media (max-width: 480px) {
+    .mir-timeline-item {
+        padding: var(--mir-space-2);
+        gap: var(--mir-space-2);
+    }
+    
+    .mir-timeline-indicator {
+        width: 32px;
+        height: 32px;
+        font-size: var(--mir-text-xs);
+    }
+    
+    .mir-timeline-indicator .mir-timeline-icon {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .mir-timeline-title {
+        font-size: var(--mir-text-sm);
+    }
+    
+    .mir-timeline-description {
+        font-size: var(--mir-text-xs);
+    }
+    
+    .mir-timeline::before {
+        right: 16px;
+    }
+}
+
+/* ==========================================
+   DARK MODE SUPPORT
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+    .mir-timeline-item {
+        background: rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .mir-timeline-item:hover {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    
+    .mir-timeline-title {
+        color: var(--mir-gray-100);
+    }
+    
+    .mir-timeline-subtitle {
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-timeline-description {
+        color: var(--mir-gray-200);
+    }
+    
+    .mir-timeline-time {
+        color: var(--mir-gray-400);
+    }
+    
+    .mir-timeline-meta {
+        color: var(--mir-gray-400);
+    }
+    
+    .mir-timeline-attachment {
+        background: rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .mir-timeline-action {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--mir-gray-300);
+    }
+    
+    .mir-timeline-action:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: var(--mir-gray-100);
+    }
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+.mir-timeline-item.mir-timeline-fade-in {
+    animation: mirTimelineFadeIn 0.5s ease-out;
+}
+
+@keyframes mirTimelineFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mir-timeline-item.mir-timeline-slide-in {
+    animation: mirTimelineSlideIn 0.6s ease-out;
+}
+
+@keyframes mirTimelineSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+.mir-timeline {
+    role: list;
+}
+
+.mir-timeline-item {
+    role: listitem;
+}
+
+.mir-timeline-item:focus {
+    outline: 2px solid var(--mir-primary);
+    outline-offset: 2px;
+}
+
+.mir-timeline-item:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Screen reader only content */
+.mir-timeline-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ==========================================
+   TIMELINE LOADING STATE
+   ========================================== */
+
+.mir-timeline.mir-timeline-loading .mir-timeline-item {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.mir-timeline.mir-timeline-loading::after {
+    content: 'در حال بارگیری...';
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    color: var(--mir-gray-500);
+    font-size: var(--mir-text-sm);
+}
+
+/* ==========================================
+   TIMELINE EMPTY STATE
+   ========================================== */
+
+.mir-timeline-empty {
+    text-align: center;
+    padding: var(--mir-space-8);
+    color: var(--mir-gray-500);
+}
+
+.mir-timeline-empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--mir-space-3);
+    opacity: 0.5;
+}
+
+.mir-timeline-empty-title {
+    font-size: var(--mir-text-lg);
+    font-weight: 600;
+    margin-bottom: var(--mir-space-2);
+}
+
+.mir-timeline-empty-description {
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-400);
+}
