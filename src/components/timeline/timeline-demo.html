@@ -22,6 +22,12 @@
     <script src="https://unpkg.com/feather-icons"></script>
     
     <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'YekanBakh', sans-serif;
+        }
+
         .demo-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -32,21 +38,24 @@
         .demo-header {
             text-align: center;
             margin-bottom: var(--mir-space-8);
+            color: white;
         }
 
         .demo-title {
             font-size: var(--mir-text-4xl);
             font-weight: 700;
-            color: var(--mir-primary);
+            color: white;
             margin-bottom: var(--mir-space-4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .demo-description {
             font-size: var(--mir-text-lg);
-            color: var(--mir-gray-600);
+            color: rgba(255, 255, 255, 0.9);
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.7;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .demo-section {
@@ -56,16 +65,18 @@
         .demo-section-title {
             font-size: var(--mir-text-2xl);
             font-weight: 600;
-            color: var(--mir-gray-800);
+            color: white;
             margin-bottom: var(--mir-space-4);
             text-align: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         .demo-section-description {
             font-size: var(--mir-text-base);
-            color: var(--mir-gray-600);
+            color: rgba(255, 255, 255, 0.8);
             text-align: center;
             margin-bottom: var(--mir-space-6);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .demo-grid {
@@ -92,16 +103,21 @@
         .demo-card-title {
             font-size: var(--mir-text-lg);
             font-weight: 600;
-            color: var(--mir-gray-800);
+            color: white;
             margin-bottom: var(--mir-space-3);
             text-align: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         .demo-controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            margin-bottom: var(--mir-space-6);
             display: flex;
             justify-content: center;
             gap: var(--mir-space-3);
-            margin-bottom: var(--mir-space-6);
             flex-wrap: wrap;
         }
 
@@ -114,23 +130,38 @@
         .demo-control-group label {
             font-size: var(--mir-text-sm);
             font-weight: 500;
-            color: var(--mir-gray-700);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .demo-control-group select,
         .demo-control-group input {
             padding: var(--mir-space-2) var(--mir-space-3);
-            border: 1px solid var(--mir-gray-300);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
             font-size: var(--mir-text-sm);
             direction: rtl;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-control-group select:focus,
+        .demo-control-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .demo-actions {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            margin-bottom: var(--mir-space-6);
             display: flex;
             justify-content: center;
             gap: var(--mir-space-3);
-            margin-bottom: var(--mir-space-6);
             flex-wrap: wrap;
         }
 
@@ -138,15 +169,16 @@
             display: inline-flex;
             align-items: center;
             gap: var(--mir-space-2);
-            color: var(--mir-primary);
+            color: white;
             text-decoration: none;
             font-weight: 500;
             margin-bottom: var(--mir-space-6);
             transition: color 0.2s ease;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .back-link:hover {
-            color: var(--mir-primary-dark);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .code-example {
@@ -177,9 +209,10 @@
             max-height: 600px;
             overflow-y: auto;
             padding: var(--mir-space-4);
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         @media (max-width: 768px) {

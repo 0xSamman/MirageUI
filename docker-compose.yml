@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  puppeteer-mcp:
+    image: mcp/puppeteer
+    container_name: mirage-puppeteer-mcp
+    network_mode: host
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./screenshots:/app/screenshots
+      - ./reports:/app/reports
+      - /tmp:/tmp
+    environment:
+      - DISPLAY=:0
+    restart: unless-stopped
+
+  # Optional: Simple HTTP server to serve our demo pages
+  web-server:
+    image: nginx:alpine
+    container_name: mirage-web-server
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/usr/share/nginx/html
+    restart: unless-stopped
