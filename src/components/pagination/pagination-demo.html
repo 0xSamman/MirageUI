@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمایش کامپوننت صفحه‌بندی میراژ - MirageUI Pagination Demo</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="../../assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System -->
+    <link rel="stylesheet" href="../../assets/css/mirage-styles.css">
+    
+    <!-- Pagination Component Styles -->
+    <link rel="stylesheet" href="pagination.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <style>
+        .demo-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: var(--mir-space-6);
+            margin-bottom: var(--mir-space-6);
+        }
+        
+        .demo-title {
+            font-size: var(--mir-text-2xl);
+            font-weight: 700;
+            color: var(--mir-primary);
+            margin-bottom: var(--mir-space-4);
+            text-align: center;
+        }
+        
+        .demo-subtitle {
+            font-size: var(--mir-text-lg);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+            margin-bottom: var(--mir-space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .demo-description {
+            color: var(--mir-gray-600);
+            margin-bottom: var(--mir-space-4);
+            line-height: 1.7;
+        }
+        
+        .demo-showcase {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: var(--mir-space-5);
+            margin: var(--mir-space-4) 0;
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--mir-space-3);
+            margin-bottom: var(--mir-space-4);
+            padding: var(--mir-space-3);
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+        
+        .demo-control {
+            display: flex;
+            flex-direction: column;
+            gap: var(--mir-space-1);
+        }
+        
+        .demo-control label {
+            font-size: var(--mir-text-sm);
+            font-weight: 500;
+            color: var(--mir-gray-700);
+        }
+        
+        .demo-control select,
+        .demo-control input[type="number"] {
+            padding: var(--mir-space-2);
+            border: 1px solid var(--mir-gray-300);
+            border-radius: var(--mir-radius-sm);
+            background: white;
+            font-size: var(--mir-text-sm);
+            min-width: 120px;
+        }
+        
+        .demo-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-size: var(--mir-text-sm);
+            color: var(--mir-blue-800);
+        }
+        
+        .demo-code {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+        }
+        
+        .sample-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--mir-space-4);
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sample-table th,
+        .sample-table td {
+            padding: var(--mir-space-3);
+            text-align: right;
+            border-bottom: 1px solid var(--mir-gray-200);
+        }
+        
+        .sample-table th {
+            background: var(--mir-gray-50);
+            font-weight: 600;
+            color: var(--mir-gray-800);
+        }
+        
+        .sample-table tbody tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--mir-space-4);
+            margin: var(--mir-space-4) 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: var(--mir-space-4);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--mir-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--mir-space-3);
+            color: white;
+        }
+        
+        .back-link {
+            position: fixed;
+            top: var(--mir-space-4);
+            right: var(--mir-space-4);
+            z-index: 1000;
+        }
+        
+        .log-output {
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ff00;
+            border-radius: 8px;
+            padding: var(--mir-space-3);
+            margin: var(--mir-space-3) 0;
+            font-family: 'Courier New', monospace;
+            font-size: var(--mir-text-sm);
+            height: 120px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <!-- Back to Dashboard Link -->
+    <a href="../../index.html" class="mir-btn mir-btn-secondary back-link">
+        <i data-feather="arrow-right" class="mir-btn-icon"></i>
+        بازگشت به داشبورد
+    </a>
+
+    <div class="mir-container" style="margin-top: var(--mir-space-16);">
+        <!-- Header Section -->
+        <header class="demo-section">
+            <h1 class="demo-title">
+                <i data-feather="hash" style="width: 32px; height: 32px; margin-left: var(--mir-space-2);"></i>
+                کامپوننت صفحه‌بندی میراژ
+            </h1>
+            <p class="demo-description" style="text-align: center; font-size: var(--mir-text-lg);">
+                سیستم صفحه‌بندی کامل با پشتیبانی RTL، اعداد فارسی، و قابلیت‌های پیشرفته برای ناوبری در داده‌های بزرگ
+            </p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="globe"></i>
+                    </div>
+                    <h3>RTL کامل</h3>
+                    <p>چیدمان راست‌به‌چپ با ناوبری فارسی</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="hash"></i>
+                    </div>
+                    <h3>اعداد فارسی</h3>
+                    <p>تبدیل خودکار اعداد انگلیسی به فارسی</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="smartphone"></i>
+                    </div>
+                    <h3>ریسپانسیو</h3>
+                    <p>سازگار با همه اندازه‌های صفحه</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-feather="accessibility"></i>
+                    </div>
+                    <h3>دسترسی‌پذیر</h3>
+                    <p>سازگار با صفحه‌خوان‌ها و کیبورد</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Interactive Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="play"></i>
+                نمایش تعاملی
+            </h2>
+            <p class="demo-description">
+                با کنترل‌های زیر می‌توانید تنظیمات مختلف صفحه‌بندی را آزمایش کنید:
+            </p>
+            
+            <div class="demo-controls">
+                <div class="demo-control">
+                    <label>نوع نمایش:</label>
+                    <select id="variant-select">
+                        <option value="default">پیش‌فرض</option>
+                        <option value="simple">ساده</option>
+                        <option value="outlined">خطی</option>
+                        <option value="minimal">حداقلی</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>اندازه:</label>
+                    <select id="size-select">
+                        <option value="sm">کوچک</option>
+                        <option value="md" selected>متوسط</option>
+                        <option value="lg">بزرگ</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>چیدمان:</label>
+                    <select id="alignment-select">
+                        <option value="start">شروع</option>
+                        <option value="center" selected>وسط</option>
+                        <option value="end">پایان</option>
+                        <option value="between">فاصله‌دار</option>
+                    </select>
+                </div>
+                <div class="demo-control">
+                    <label>کل آیتم‌ها:</label>
+                    <input type="number" id="total-items" value="150" min="1" max="1000">
+                </div>
+                <div class="demo-control">
+                    <label>آیتم در صفحه:</label>
+                    <select id="items-per-page">
+                        <option value="10" selected>۱۰</option>
+                        <option value="20">۲۰</option>
+                        <option value="50">۵۰</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="demo-showcase">
+                <div id="interactive-pagination"></div>
+            </div>
+            
+            <div class="demo-info">
+                صفحه فعلی: <strong id="current-page-info">۱</strong> | 
+                کل صفحات: <strong id="total-pages-info">۱۵</strong> | 
+                کل آیتم‌ها: <strong id="total-items-info">۱۵۰</strong>
+            </div>
+            
+            <div class="log-output" id="event-log">
+                # Event Log - رویدادهای صفحه‌بندی
+                System ready...
+            </div>
+        </section>
+
+        <!-- Variants Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="layers"></i>
+                انواع نمایش
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>پیش‌فرض (Default)</h3>
+                <p class="demo-description">نمایش استاندارد با افکت شیشه‌ای و blur</p>
+                <div id="pagination-default"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>ساده (Simple)</h3>
+                <p class="demo-description">نمایش ساده بدون پس‌زمینه</p>
+                <div id="pagination-simple"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>خطی (Outlined)</h3>
+                <p class="demo-description">نمایش با حاشیه و بدون پس‌زمینه</p>
+                <div id="pagination-outlined"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>حداقلی (Minimal)</h3>
+                <p class="demo-description">حداقل عناصر ممکن</p>
+                <div id="pagination-minimal"></div>
+            </div>
+        </section>
+
+        <!-- Sizes Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="maximize-2"></i>
+                اندازه‌های مختلف
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>کوچک (Small)</h3>
+                <div id="pagination-sm"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>متوسط (Medium) - پیش‌فرض</h3>
+                <div id="pagination-md"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>بزرگ (Large)</h3>
+                <div id="pagination-lg"></div>
+            </div>
+        </section>
+
+        <!-- Alignment Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="align-center"></i>
+                چیدمان‌های مختلف
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>شروع (راست در RTL)</h3>
+                <div id="pagination-start"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>وسط</h3>
+                <div id="pagination-center"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>پایان (چپ در RTL)</h3>
+                <div id="pagination-end"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>فاصله‌گذاری</h3>
+                <div id="pagination-between"></div>
+            </div>
+        </section>
+
+        <!-- Table Integration Demo -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="table"></i>
+                ادغام با جدول
+            </h2>
+            <p class="demo-description">
+                مثال کاربردی استفاده از صفحه‌بندی با جدول داده‌ها
+            </p>
+            
+            <table class="sample-table">
+                <thead>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>نام</th>
+                        <th>ایمیل</th>
+                        <th>تاریخ عضویت</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody id="sample-table-body">
+                    <!-- داده‌ها با JavaScript پر می‌شود -->
+                </tbody>
+            </table>
+            
+            <div id="table-pagination"></div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="settings"></i>
+                قابلیت‌های پیشرفته
+            </h2>
+            
+            <div class="demo-showcase">
+                <h3>با انتخابگر تعداد آیتم</h3>
+                <p class="demo-description">امکان تغییر تعداد آیتم‌ها در هر صفحه</p>
+                <div id="pagination-with-size-selector"></div>
+            </div>
+            
+            <div class="demo-showcase">
+                <h3>حالت بارگیری</h3>
+                <p class="demo-description">نمایش وضعیت بارگیری داده‌ها</p>
+                <div id="pagination-loading"></div>
+                <button id="toggle-loading" class="mir-btn mir-btn-primary" style="margin-top: var(--mir-space-3);">
+                    تغییر حالت بارگیری
+                </button>
+            </div>
+        </section>
+
+        <!-- Code Examples -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="code"></i>
+                نمونه کدها
+            </h2>
+            
+            <h3>راه‌اندازی ساده</h3>
+            <div class="demo-code">
+&lt;div id="my-pagination"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+const pagination = new MiragePagination('#my-pagination', {
+    currentPage: 1,
+    totalPages: 10,
+    variant: 'default',
+    persianNumbers: true,
+    
+    onPageChange: function(page) {
+        console.log('صفحه تغییر کرد:', page);
+    }
+});
+&lt;/script&gt;
+            </div>
+            
+            <h3>پیکربندی پیشرفته</h3>
+            <div class="demo-code">
+const advancedPagination = new MiragePagination('#pagination', {
+    currentPage: 1,
+    totalItems: 500,
+    itemsPerPage: 20,
+    maxVisible: 7,
+    
+    variant: 'outlined',
+    size: 'lg',
+    alignment: 'center',
+    
+    showInfo: true,
+    showPageSizeSelector: true,
+    pageSizeOptions: [10, 20, 50, 100],
+    
+    labels: {
+        previous: 'قبلی',
+        next: 'بعدی',
+        showing: 'نمایش',
+        results: 'نتیجه'
+    },
+    
+    onPageChange: function(page, oldPage) {
+        loadData(page);
+    },
+    
+    onPageSizeChange: function(size) {
+        reloadData(size);
+    }
+});
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="demo-section">
+            <h2 class="demo-subtitle">
+                <i data-feather="book"></i>
+                مرجع API
+            </h2>
+            
+            <h3>متدهای عمومی</h3>
+            <div class="demo-code">
+// رفتن به صفحه خاص
+pagination.goToPage(5);
+
+// دریافت صفحه فعلی
+const currentPage = pagination.getCurrentPage();
+
+// تنظیم کل آیتم‌ها (بازمحاسبه صفحات)
+pagination.setTotalItems(250);
+
+// تنظیم حالت بارگیری
+pagination.setLoading(true);
+
+// حذف کامپوننت
+pagination.destroy();
+            </div>
+            
+            <h3>رویدادها</h3>
+            <div class="demo-code">
+{
+    onPageChange: function(newPage, oldPage, instance) {
+        // تغییر صفحه
+    },
+    
+    onPageSizeChange: function(newSize, oldSize, instance) {
+        // تغییر تعداد آیتم در صفحه
+    },
+    
+    onInit: function(instance) {
+        // راه‌اندازی کامپوننت
+    }
+}
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/mirage-script.js"></script>
+    <script src="pagination.js"></script>
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Sample data for table
+        const sampleUsers = [
+            {id: 1, name: 'علی احمدی', email: 'ali@example.com', date: '۱۴۰۳/۰۴/۱۵', status: 'فعال'},
+            {id: 2, name: 'فاطمه کریمی', email: 'fateme@example.com', date: '۱۴۰۳/۰۴/۱۰', status: 'فعال'},
+            {id: 3, name: 'محمد رضایی', email: 'mohammad@example.com', date: '۱۴۰۳/۰۳/۲۵', status: 'غیرفعال'},
+            {id: 4, name: 'زهرا موسوی', email: 'zahra@example.com', date: '۱۴۰۳/۰۳/۲۰', status: 'فعال'},
+            {id: 5, name: 'حسن فریدی', email: 'hasan@example.com', date: '۱۴۰۳/۰۳/۱۵', status: 'فعال'},
+            {id: 6, name: 'مریم صادقی', email: 'maryam@example.com', date: '۱۴۰۳/۰۳/۱۰', status: 'غیرفعال'},
+            {id: 7, name: 'رضا نوری', email: 'reza@example.com', date: '۱۴۰۳/۰۳/۰۵', status: 'فعال'},
+            {id: 8, name: 'سارا قاسمی', email: 'sara@example.com', date: '۱۴۰۳/۰۲/۲۸', status: 'فعال'}
+        ];
+        
+        function logEvent(message) {
+            const log = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString('fa-IR');
+            log.innerHTML += `\n[${timestamp}] ${message}`;
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        function updateTableData(page, itemsPerPage) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = sampleUsers.slice(startIndex, endIndex);
+            
+            const tbody = document.getElementById('sample-table-body');
+            tbody.innerHTML = pageData.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.date}</td>
+                    <td>
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 12px; 
+                                     background: ${user.status === 'فعال' ? 'rgba(16, 185, 129, 0.1); color: #10b981' : 'rgba(239, 68, 68, 0.1); color: #ef4444'}">
+                            ${user.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Interactive Pagination
+        let interactivePagination;
+        
+        function initInteractivePagination() {
+            const totalItems = parseInt(document.getElementById('total-items').value);
+            const itemsPerPage = parseInt(document.getElementById('items-per-page').value);
+            const variant = document.getElementById('variant-select').value;
+            const size = document.getElementById('size-select').value;
+            const alignment = document.getElementById('alignment-select').value;
+            
+            if (interactivePagination) {
+                interactivePagination.destroy();
+            }
+            
+            interactivePagination = new MiragePagination('#interactive-pagination', {
+                currentPage: 1,
+                totalItems: totalItems,
+                itemsPerPage: itemsPerPage,
+                variant: variant,
+                size: size,
+                alignment: alignment,
+                showInfo: true,
+                showPageSizeSelector: true,
+                pageSizeOptions: [10, 20, 50],
+                
+                onPageChange: function(page, oldPage) {
+                    logEvent(`Page changed from ${oldPage} to ${page}`);
+                    document.getElementById('current-page-info').textContent = this.formatNumber(page);
+                },
+                
+                onPageSizeChange: function(size, oldSize) {
+                    logEvent(`Page size changed from ${oldSize} to ${size}`);
+                    document.getElementById('total-pages-info').textContent = this.formatNumber(this.options.totalPages);
+                }
+            });
+            
+            // Update info
+            document.getElementById('current-page-info').textContent = '۱';
+            document.getElementById('total-pages-info').textContent = interactivePagination.formatNumber(Math.ceil(totalItems / itemsPerPage));
+            document.getElementById('total-items-info').textContent = interactivePagination.formatNumber(totalItems);
+        }
+        
+        // Event Listeners for Controls
+        document.getElementById('variant-select').addEventListener('change', initInteractivePagination);
+        document.getElementById('size-select').addEventListener('change', initInteractivePagination);
+        document.getElementById('alignment-select').addEventListener('change', initInteractivePagination);
+        document.getElementById('total-items').addEventListener('change', initInteractivePagination);
+        document.getElementById('items-per-page').addEventListener('change', initInteractivePagination);
+        
+        // Initialize all paginations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Interactive pagination
+            initInteractivePagination();
+            
+            // Variants
+            new MiragePagination('#pagination-default', {
+                currentPage: 3,
+                totalPages: 8,
+                variant: 'default'
+            });
+            
+            new MiragePagination('#pagination-simple', {
+                currentPage: 3,
+                totalPages: 8,
+                variant: 'simple'
+            });
+            
+            new MiragePagination('#pagination-outlined', {
+                currentPage: 3,
+                totalPages: 8,
+                variant: 'outlined'
+            });
+            
+            new MiragePagination('#pagination-minimal', {
+                currentPage: 3,
+                totalPages: 8,
+                variant: 'minimal'
+            });
+            
+            // Sizes
+            new MiragePagination('#pagination-sm', {
+                currentPage: 2,
+                totalPages: 5,
+                size: 'sm'
+            });
+            
+            new MiragePagination('#pagination-md', {
+                currentPage: 2,
+                totalPages: 5,
+                size: 'md'
+            });
+            
+            new MiragePagination('#pagination-lg', {
+                currentPage: 2,
+                totalPages: 5,
+                size: 'lg'
+            });
+            
+            // Alignments
+            new MiragePagination('#pagination-start', {
+                currentPage: 2,
+                totalPages: 5,
+                alignment: 'start'
+            });
+            
+            new MiragePagination('#pagination-center', {
+                currentPage: 2,
+                totalPages: 5,
+                alignment: 'center'
+            });
+            
+            new MiragePagination('#pagination-end', {
+                currentPage: 2,
+                totalPages: 5,
+                alignment: 'end'
+            });
+            
+            new MiragePagination('#pagination-between', {
+                currentPage: 2,
+                totalPages: 5,
+                alignment: 'between'
+            });
+            
+            // Table pagination
+            const tablePagination = new MiragePagination('#table-pagination', {
+                currentPage: 1,
+                totalItems: sampleUsers.length,
+                itemsPerPage: 3,
+                showInfo: true,
+                
+                onPageChange: function(page) {
+                    updateTableData(page, this.options.itemsPerPage);
+                    logEvent(`Table page changed to ${page}`);
+                }
+            });
+            
+            // Initialize table data
+            updateTableData(1, 3);
+            
+            // Advanced features
+            new MiragePagination('#pagination-with-size-selector', {
+                currentPage: 1,
+                totalItems: 100,
+                itemsPerPage: 10,
+                showInfo: true,
+                showPageSizeSelector: true,
+                pageSizeOptions: [10, 25, 50],
+                
+                onPageSizeChange: function(size) {
+                    logEvent(`Page size changed to ${size} items per page`);
+                }
+            });
+            
+            // Loading pagination
+            const loadingPagination = new MiragePagination('#pagination-loading', {
+                currentPage: 1,
+                totalPages: 10
+            });
+            
+            document.getElementById('toggle-loading').addEventListener('click', function() {
+                const isLoading = loadingPagination.element.classList.contains('mir-pagination-loading');
+                loadingPagination.setLoading(!isLoading);
+                this.textContent = isLoading ? 'تغییر حالت بارگیری' : 'متوقف کردن بارگیری';
+                
+                if (!isLoading) {
+                    // Auto stop loading after 3 seconds
+                    setTimeout(() => {
+                        loadingPagination.setLoading(false);
+                        this.textContent = 'تغییر حالت بارگیری';
+                    }, 3000);
+                }
+            });
+            
+            logEvent('All pagination components initialized successfully');
+        });
+    </script>
+</body>
+</html>

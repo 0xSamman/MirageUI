@@ -1,0 +1,439 @@
+/* MirageUI - Pagination Component */
+/* Persian RTL Design System - Page Navigation */
+
+/* ==========================================
+   PAGINATION CONTAINER
+   ========================================== */
+
+.mir-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--mir-space-1);
+    direction: rtl;
+    font-family: var(--mir-font-family);
+    user-select: none;
+    margin: var(--mir-space-4) 0;
+}
+
+.mir-pagination.mir-pagination-start {
+    justify-content: flex-start;
+}
+
+.mir-pagination.mir-pagination-end {
+    justify-content: flex-end;
+}
+
+.mir-pagination.mir-pagination-between {
+    justify-content: space-between;
+}
+
+/* ==========================================
+   PAGINATION ITEMS
+   ========================================== */
+
+.mir-pagination-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: var(--mir-space-2) var(--mir-space-3);
+    font-size: var(--mir-text-sm);
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--mir-gray-700);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--mir-radius-md);
+    backdrop-filter: blur(16px);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.mir-pagination-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.mir-pagination-item:hover::before {
+    opacity: 1;
+}
+
+.mir-pagination-item:hover {
+    color: var(--mir-primary);
+    border-color: rgba(var(--mir-primary-rgb), 0.3);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mir-pagination-item:active {
+    transform: translateY(0);
+}
+
+/* ==========================================
+   PAGINATION STATES
+   ========================================== */
+
+/* Active Page */
+.mir-pagination-item.mir-pagination-active {
+    color: white;
+    background: linear-gradient(135deg, var(--mir-primary), var(--mir-primary-dark));
+    border-color: var(--mir-primary);
+    box-shadow: 0 2px 8px rgba(var(--mir-primary-rgb), 0.3);
+}
+
+.mir-pagination-item.mir-pagination-active:hover {
+    background: linear-gradient(135deg, var(--mir-primary-dark), var(--mir-primary));
+    transform: translateY(-1px);
+}
+
+/* Disabled Items */
+.mir-pagination-item.mir-pagination-disabled {
+    color: var(--mir-gray-400);
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.mir-pagination-item.mir-pagination-disabled::before {
+    display: none;
+}
+
+/* ==========================================
+   PAGINATION VARIANTS
+   ========================================== */
+
+/* Simple Variant */
+.mir-pagination.mir-pagination-simple {
+    gap: var(--mir-space-2);
+}
+
+.mir-pagination.mir-pagination-simple .mir-pagination-item {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+}
+
+.mir-pagination.mir-pagination-simple .mir-pagination-item:hover {
+    background: rgba(var(--mir-primary-rgb), 0.1);
+    border-color: transparent;
+}
+
+/* Outlined Variant */
+.mir-pagination.mir-pagination-outlined .mir-pagination-item {
+    background: transparent;
+    backdrop-filter: none;
+    border: 2px solid var(--mir-gray-300);
+}
+
+.mir-pagination.mir-pagination-outlined .mir-pagination-item:hover {
+    border-color: var(--mir-primary);
+    background: rgba(var(--mir-primary-rgb), 0.05);
+}
+
+.mir-pagination.mir-pagination-outlined .mir-pagination-item.mir-pagination-active {
+    background: var(--mir-primary);
+    border-color: var(--mir-primary);
+}
+
+/* Minimal Variant */
+.mir-pagination.mir-pagination-minimal .mir-pagination-item {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: var(--mir-radius-full);
+}
+
+.mir-pagination.mir-pagination-minimal .mir-pagination-item:hover {
+    background: var(--mir-gray-100);
+}
+
+.mir-pagination.mir-pagination-minimal .mir-pagination-item.mir-pagination-active {
+    background: var(--mir-primary);
+    color: white;
+}
+
+/* ==========================================
+   PAGINATION SIZES
+   ========================================== */
+
+/* Small Size */
+.mir-pagination.mir-pagination-sm .mir-pagination-item {
+    min-width: 32px;
+    height: 32px;
+    padding: var(--mir-space-1) var(--mir-space-2);
+    font-size: var(--mir-text-xs);
+}
+
+/* Large Size */
+.mir-pagination.mir-pagination-lg .mir-pagination-item {
+    min-width: 48px;
+    height: 48px;
+    padding: var(--mir-space-3) var(--mir-space-4);
+    font-size: var(--mir-text-base);
+}
+
+/* ==========================================
+   NAVIGATION BUTTONS
+   ========================================== */
+
+.mir-pagination-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mir-space-1);
+}
+
+.mir-pagination-nav .mir-pagination-item {
+    padding: var(--mir-space-2);
+}
+
+.mir-pagination-nav .mir-pagination-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.mir-pagination-nav .mir-pagination-item:hover .mir-pagination-icon {
+    transform: translateX(-2px);
+}
+
+.mir-pagination-nav .mir-pagination-next:hover .mir-pagination-icon {
+    transform: translateX(2px);
+}
+
+/* ==========================================
+   ELLIPSIS
+   ========================================== */
+
+.mir-pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    color: var(--mir-gray-500);
+    font-weight: 500;
+    cursor: default;
+    user-select: none;
+}
+
+.mir-pagination.mir-pagination-sm .mir-pagination-ellipsis {
+    min-width: 32px;
+    height: 32px;
+}
+
+.mir-pagination.mir-pagination-lg .mir-pagination-ellipsis {
+    min-width: 48px;
+    height: 48px;
+}
+
+/* ==========================================
+   INFO SECTION
+   ========================================== */
+
+.mir-pagination-info {
+    display: flex;
+    align-items: center;
+    gap: var(--mir-space-4);
+    margin: var(--mir-space-2) 0;
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-600);
+    direction: rtl;
+}
+
+.mir-pagination-info-text {
+    white-space: nowrap;
+}
+
+.mir-pagination-info-select {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mir-space-2);
+}
+
+.mir-pagination-info-select select {
+    padding: var(--mir-space-1) var(--mir-space-2);
+    border: 1px solid var(--mir-gray-300);
+    border-radius: var(--mir-radius-sm);
+    background: white;
+    font-size: var(--mir-text-sm);
+    color: var(--mir-gray-700);
+    cursor: pointer;
+}
+
+/* ==========================================
+   PERSIAN NUMBERS
+   ========================================== */
+
+.mir-pagination .mir-persian-numbers {
+    font-feature-settings: "ss01" on;
+}
+
+/* Auto-convert English to Persian numbers */
+.mir-pagination-item:not(.mir-pagination-nav) {
+    font-feature-settings: "ss01" on;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 768px) {
+    .mir-pagination {
+        gap: var(--mir-space-0);
+        flex-wrap: wrap;
+    }
+    
+    .mir-pagination-item {
+        min-width: 36px;
+        height: 36px;
+        padding: var(--mir-space-1) var(--mir-space-2);
+        font-size: var(--mir-text-xs);
+    }
+    
+    .mir-pagination-info {
+        flex-direction: column;
+        gap: var(--mir-space-2);
+        text-align: center;
+    }
+    
+    /* Hide some page numbers on mobile */
+    .mir-pagination-mobile-hidden {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .mir-pagination {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .mir-pagination-item {
+        flex: 1;
+        max-width: 44px;
+    }
+    
+    /* Show only essential items on very small screens */
+    .mir-pagination-item:not(.mir-pagination-nav):not(.mir-pagination-active):not(.mir-pagination-ellipsis) {
+        display: none;
+    }
+}
+
+/* ==========================================
+   DARK MODE SUPPORT
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+    .mir-pagination-item {
+        color: var(--mir-gray-200);
+        background: rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .mir-pagination-item:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: rgba(var(--mir-primary-rgb), 0.4);
+    }
+    
+    .mir-pagination-item.mir-pagination-disabled {
+        color: var(--mir-gray-600);
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .mir-pagination-ellipsis {
+        color: var(--mir-gray-400);
+    }
+    
+    .mir-pagination-info {
+        color: var(--mir-gray-300);
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ========================================== */
+
+.mir-pagination-item:focus {
+    outline: 2px solid var(--mir-primary);
+    outline-offset: 2px;
+    z-index: 1;
+}
+
+.mir-pagination-item:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Screen reader only text */
+.mir-pagination-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ==========================================
+   ANIMATION CLASSES
+   ========================================== */
+
+.mir-pagination-fade-in {
+    animation: mirPaginationFadeIn 0.3s ease-out;
+}
+
+@keyframes mirPaginationFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   LOADING STATE
+   ========================================== */
+
+.mir-pagination.mir-pagination-loading .mir-pagination-item {
+    pointer-events: none;
+    opacity: 0.6;
+    position: relative;
+}
+
+.mir-pagination.mir-pagination-loading .mir-pagination-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: mirPaginationSpin 1s linear infinite;
+}
+
+@keyframes mirPaginationSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
