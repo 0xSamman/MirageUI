@@ -228,19 +228,38 @@ function initializePersianNumbers() {
 // ========================================
 
 function initializeNavigation() {
-    // Sidebar navigation active states
-    const navLinks = document.querySelectorAll('.mir-nav-link');
+    // Sidebar navigation active states and page switching
+    const navLinks = document.querySelectorAll('.mir-nav-link[data-page]');
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Remove active state from all items
+            const targetPage = this.getAttribute('data-page');
+            
+            // Remove active state from all navigation items
             document.querySelectorAll('.mir-nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
             // Add active state to clicked item
             this.parentElement.classList.add('active');
+            
+            // Hide all page content
+            document.querySelectorAll('.mir-page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show target page content
+            const targetPageElement = document.getElementById(`page-${targetPage}`);
+            if (targetPageElement) {
+                targetPageElement.classList.add('active');
+                
+                // Update page title in browser
+                updatePageTitle(targetPage);
+                
+                // Initialize any page-specific functionality
+                initializePageSpecificFeatures(targetPage);
+            }
             
             // Add ripple effect
             createRippleEffect(this, e);
@@ -398,13 +417,44 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Add CSS for ripple animation
+// Add CSS for ripple animation and page transitions
 const rippleCSS = `
 @keyframes ripple {
     to {
         transform: scale(2);
         opacity: 0;
     }
+}
+
+/* Page Content Transitions */
+.mir-page-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.mir-page-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth scrolling for page transitions */
+.mir-main-content {
+    scroll-behavior: smooth;
 }
 `;
 
@@ -460,4 +510,133 @@ function initializeThemeToggle() {
 }
 
 // Initialize theme toggle after DOM loads
-document.addEventListener('DOMContentLoaded', initializeThemeToggle); 
+document.addEventListener('DOMContentLoaded', initializeThemeToggle);
+
+// ========================================
+// PAGE NAVIGATION HELPERS
+// ========================================
+
+function updatePageTitle(pageName) {
+    const pageTitles = {
+        'dashboard': 'داشبورد - میراژ داش',
+        'orders': 'مدیریت سفارشات - میراژ داش',
+        'products': 'مدیریت محصولات - میراژ داش',
+        'customers': 'مدیریت مشتریان - میراژ داش',
+        'analytics': 'آنالیتیکس و گزارشات - میراژ داش',
+        'messages': 'مدیریت پیام‌ها - میراژ داش',
+        'settings': 'تنظیمات سیستم - میراژ داش'
+    };
+    
+    document.title = pageTitles[pageName] || 'پنل مدیریت میراژ - Mirage Admin Dashboard';
+}
+
+function initializePageSpecificFeatures(pageName) {
+    switch(pageName) {
+        case 'analytics':
+            // Initialize analytics charts if they don't exist
+            setTimeout(() => {
+                initializeAnalyticsCharts();
+            }, 100);
+            break;
+        case 'dashboard':
+            // Re-initialize main dashboard charts
+            setTimeout(() => {
+                initializeCharts();
+            }, 100);
+            break;
+        default:
+            // No specific initialization needed
+            break;
+    }
+}
+
+function initializeAnalyticsCharts() {
+    // Analytics Chart
+    const analyticsCtx = document.getElementById('analyticsChart');
+    if (analyticsCtx && !analyticsCtx.chartInstance) {
+        analyticsCtx.chartInstance = new Chart(analyticsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور'],
+                datasets: [{
+                    label: 'فروش (تومان)',
+                    data: [45000, 52000, 38000, 61000, 48000, 67000],
+                    backgroundColor: 'rgba(99, 102, 241, 0.8)',
+                    borderColor: '#6366f1',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: {
+                                family: 'YekanBakh, sans-serif'
+                            },
+                            callback: function(value) {
+                                return convertToPersianNumbers(value.toLocaleString()) + ' تومان';
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                family: 'YekanBakh, sans-serif'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    // Traffic Chart
+    const trafficCtx = document.getElementById('trafficChart');
+    if (trafficCtx && !trafficCtx.chartInstance) {
+        trafficCtx.chartInstance = new Chart(trafficCtx, {
+            type: 'pie',
+            data: {
+                labels: ['جستجوی گوگل', 'شبکه‌های اجتماعی', 'مستقیم', 'سایر منابع'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: [
+                        '#6366f1',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                family: 'YekanBakh, sans-serif',
+                                size: 12
+                            },
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}

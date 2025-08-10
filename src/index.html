@@ -97,45 +97,45 @@
             <nav class="mir-sidebar-nav">
                 <ul class="mir-nav-menu">
                     <li class="mir-nav-item active">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="dashboard">
                             <i data-feather="home" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">داشبورد</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="orders">
                             <i data-feather="shopping-bag" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">سفارشات</span>
                             <span class="mir-nav-badge">۱۲</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="products">
                             <i data-feather="box" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">محصولات</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="customers">
                             <i data-feather="users" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">مشتریان</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="analytics">
                             <i data-feather="bar-chart-2" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">آنالیتیکس</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="messages">
                             <i data-feather="message-square" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">پیام‌ها</span>
                             <span class="mir-nav-badge new">۵</span>
                         </a>
                     </li>
                     <li class="mir-nav-item">
-                        <a href="#" class="mir-nav-link">
+                        <a href="#" class="mir-nav-link" data-page="settings">
                             <i data-feather="settings" class="mir-nav-icon"></i>
                             <span class="mir-nav-text">تنظیمات</span>
                         </a>
@@ -268,6 +268,8 @@
         <!-- Main Content Area -->
         <main class="mir-main-content">
             <div class="mir-content-wrapper">
+                <!-- Dashboard Content (Default) -->
+                <div id="page-dashboard" class="mir-page-content active">
                 <!-- Page Header -->
                 <header class="mir-page-header">
                     <div class="mir-page-title">
@@ -745,6 +747,417 @@
                         </div>
                     </div>
                 </section>
+                </div>
+                
+                <!-- Orders Content -->
+                <div id="page-orders" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">مدیریت سفارشات</h1>
+                            <p class="mir-page-subtitle">مدیریت و بررسی تمامی سفارشات دریافتی</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="filter" class="mir-btn-icon"></i>
+                                فیلتر
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="plus" class="mir-btn-icon"></i>
+                                سفارش جدید
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-table-section">
+                        <div class="mir-card mir-table-card">
+                            <div class="mir-card-header">
+                                <h3 class="mir-card-title">لیست سفارشات</h3>
+                                <div class="mir-card-actions">
+                                    <button class="mir-btn mir-btn-ghost mir-btn-sm">خروجی Excel</button>
+                                </div>
+                            </div>
+                            <div class="mir-table-container">
+                                <table class="mir-table" dir="rtl">
+                                    <thead>
+                                        <tr>
+                                            <th>شناسه سفارش</th>
+                                            <th>مشتری</th>
+                                            <th>تاریخ</th>
+                                            <th>وضعیت</th>
+                                            <th>مبلغ</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#۱۲۳۴۵</td>
+                                            <td>
+                                                <div class="mir-table-user">
+                                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b332c000?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                    <span>سوفیا کلارک</span>
+                                                </div>
+                                            </td>
+                                            <td>۱۴۰۳/۰۴/۲۵</td>
+                                            <td><span class="mir-status mir-status-success">ارسال شده</span></td>
+                                            <td class="mir-persian-numbers">۱۵۰,۰۰۰ تومان</td>
+                                            <td>
+                                                <div class="mir-table-actions">
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">مشاهده</button>
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">ویرایش</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#۱۲۳۴۶</td>
+                                            <td>
+                                                <div class="mir-table-user">
+                                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                    <span>لیام کارتر</span>
+                                                </div>
+                                            </td>
+                                            <td>۱۴۰۳/۰۴/۲۴</td>
+                                            <td><span class="mir-status mir-status-warning">در حال پردازش</span></td>
+                                            <td class="mir-persian-numbers">۲۰۰,۰۰۰ تومان</td>
+                                            <td>
+                                                <div class="mir-table-actions">
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">مشاهده</button>
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">ویرایش</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#۱۲۳۴۷</td>
+                                            <td>
+                                                <div class="mir-table-user">
+                                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                    <span>الیویا بنت</span>
+                                                </div>
+                                            </td>
+                                            <td>۱۴۰۳/۰۴/۲۳</td>
+                                            <td><span class="mir-status mir-status-success">تحویل داده شده</span></td>
+                                            <td class="mir-persian-numbers">۱۰۰,۰۰۰ تومان</td>
+                                            <td>
+                                                <div class="mir-table-actions">
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">مشاهده</button>
+                                                    <button class="mir-btn mir-btn-ghost mir-btn-xs">ویرایش</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Products Content -->
+                <div id="page-products" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">مدیریت محصولات</h1>
+                            <p class="mir-page-subtitle">افزودن، ویرایش و مدیریت محصولات فروشگاه</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="search" class="mir-btn-icon"></i>
+                                جستجو
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="plus" class="mir-btn-icon"></i>
+                                محصول جدید
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-metrics-grid">
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon revenue">
+                                <i data-feather="package"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">کل محصولات</h3>
+                                <div class="mir-metric-value">۱,۲۳۴</div>
+                                <div class="mir-metric-change positive">
+                                    <i data-feather="trending-up"></i>
+                                    +۱۵ محصول این ماه
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon orders">
+                                <i data-feather="eye"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">محصولات فعال</h3>
+                                <div class="mir-metric-value">۹۸۵</div>
+                                <div class="mir-metric-change positive">
+                                    <i data-feather="check"></i>
+                                    ۸۰٪ از کل محصولات
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon customers">
+                                <i data-feather="alert-triangle"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">موجودی کم</h3>
+                                <div class="mir-metric-value">۲۳</div>
+                                <div class="mir-metric-change negative">
+                                    <i data-feather="alert-circle"></i>
+                                    نیاز به تأمین مجدد
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Customers Content -->
+                <div id="page-customers" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">مدیریت مشتریان</h1>
+                            <p class="mir-page-subtitle">مشاهده و مدیریت اطلاعات مشتریان</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="mail" class="mir-btn-icon"></i>
+                                ارسال ایمیل
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="user-plus" class="mir-btn-icon"></i>
+                                مشتری جدید
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-metrics-grid">
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon customers">
+                                <i data-feather="users"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">کل مشتریان</h3>
+                                <div class="mir-metric-value">۲,۵۶۷</div>
+                                <div class="mir-metric-change positive">
+                                    <i data-feather="trending-up"></i>
+                                    +۵۲ مشتری این ماه
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon orders">
+                                <i data-feather="user-check"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">مشتریان فعال</h3>
+                                <div class="mir-metric-value">۱,۸۹۳</div>
+                                <div class="mir-metric-change positive">
+                                    <i data-feather="activity"></i>
+                                    ۷۴٪ از کل مشتریان
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mir-card mir-metric-card">
+                            <div class="mir-metric-icon revenue">
+                                <i data-feather="star"></i>
+                            </div>
+                            <div class="mir-metric-content">
+                                <h3 class="mir-metric-title">مشتریان VIP</h3>
+                                <div class="mir-metric-value">۱۲۳</div>
+                                <div class="mir-metric-change positive">
+                                    <i data-feather="crown"></i>
+                                    بالاترین ارزش خرید
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Analytics Content -->
+                <div id="page-analytics" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">آنالیتیکس و گزارشات</h1>
+                            <p class="mir-page-subtitle">بررسی عملکرد و آمار فروشگاه</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="calendar" class="mir-btn-icon"></i>
+                                انتخاب بازه زمانی
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="download" class="mir-btn-icon"></i>
+                                دانلود گزارش
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-charts-section">
+                        <div class="mir-charts-grid">
+                            <div class="mir-card mir-chart-card">
+                                <div class="mir-card-header">
+                                    <h3 class="mir-card-title">روند فروش ماهانه</h3>
+                                </div>
+                                <div class="mir-chart-container">
+                                    <canvas id="analyticsChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="mir-card mir-chart-card">
+                                <div class="mir-card-header">
+                                    <h3 class="mir-card-title">منابع ترافیک</h3>
+                                </div>
+                                <div class="mir-chart-container">
+                                    <canvas id="trafficChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Messages Content -->
+                <div id="page-messages" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">مدیریت پیام‌ها</h1>
+                            <p class="mir-page-subtitle">پیام‌ها و تماس‌های مشتریان</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="archive" class="mir-btn-icon"></i>
+                                آرشیو
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="send" class="mir-btn-icon"></i>
+                                پیام جدید
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-table-section">
+                        <div class="mir-card mir-table-card">
+                            <div class="mir-card-header">
+                                <h3 class="mir-card-title">پیام‌های دریافتی</h3>
+                                <div class="mir-card-actions">
+                                    <span class="mir-nav-badge new" style="background: var(--mir-danger); color: white;">۵ پیام جدید</span>
+                                </div>
+                            </div>
+                            <div style="padding: var(--mir-space-4);">
+                                <div style="display: flex; flex-direction: column; gap: var(--mir-space-3);">
+                                    <div style="display: flex; align-items: center; gap: var(--mir-space-3); padding: var(--mir-space-3); background: rgba(99, 102, 241, 0.1); border-radius: 12px; border-right: 4px solid var(--mir-primary);">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c000?w=48&h=48&fit=crop&crop=face" alt="Customer" style="width: 48px; height: 48px; border-radius: 50%;">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; color: var(--mir-gray-900); margin-bottom: var(--mir-space-1);">سارا احمدی</div>
+                                            <div style="color: var(--mir-gray-700); margin-bottom: var(--mir-space-1);">سلام، درباره سفارش #۱۲۳۴۵ سوال دارم...</div>
+                                            <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-500);">۲ ساعت پیش</div>
+                                        </div>
+                                        <span style="background: var(--mir-primary); color: white; padding: var(--mir-space-1) var(--mir-space-2); border-radius: 6px; font-size: var(--mir-text-xs);">جدید</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: var(--mir-space-3); padding: var(--mir-space-3); background: rgba(255, 255, 255, 0.5); border-radius: 12px;">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=48&h=48&fit=crop&crop=face" alt="Customer" style="width: 48px; height: 48px; border-radius: 50%;">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; color: var(--mir-gray-900); margin-bottom: var(--mir-space-1);">محمد رضایی</div>
+                                            <div style="color: var(--mir-gray-700); margin-bottom: var(--mir-space-1);">از خدمات شما راضی هستم، تشکر</div>
+                                            <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-500);">۱ روز پیش</div>
+                                        </div>
+                                        <span style="background: var(--mir-success); color: white; padding: var(--mir-space-1) var(--mir-space-2); border-radius: 6px; font-size: var(--mir-text-xs);">پاسخ داده شده</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Settings Content -->
+                <div id="page-settings" class="mir-page-content">
+                    <header class="mir-page-header">
+                        <div class="mir-page-title">
+                            <h1 class="mir-heading-xl">تنظیمات سیستم</h1>
+                            <p class="mir-page-subtitle">پیکربندی و تنظیمات عمومی سیستم</p>
+                        </div>
+                        <div class="mir-page-actions">
+                            <button class="mir-btn mir-btn-secondary">
+                                <i data-feather="refresh-cw" class="mir-btn-icon"></i>
+                                بازنشانی
+                            </button>
+                            <button class="mir-btn mir-btn-primary">
+                                <i data-feather="save" class="mir-btn-icon"></i>
+                                ذخیره تغییرات
+                            </button>
+                        </div>
+                    </header>
+                    <section class="mir-forms-section">
+                        <div class="mir-card mir-form-demo-card">
+                            <div class="mir-card-header">
+                                <h3 class="mir-card-title">تنظیمات عمومی</h3>
+                                <p class="mir-card-subtitle">پیکربندی اصلی سیستم و فروشگاه</p>
+                            </div>
+                            
+                            <form class="mir-form">
+                                <div class="mir-form-grid">
+                                    <div class="mir-input-group">
+                                        <input type="text" id="site-name" class="mir-input" placeholder="" value="میراژ استور" dir="rtl">
+                                        <label class="mir-label" for="site-name">نام فروشگاه</label>
+                                        <i class="mir-input-icon" data-feather="home"></i>
+                                    </div>
+                                    
+                                    <div class="mir-input-group">
+                                        <input type="email" id="site-email" class="mir-input" placeholder="" value="info@miragestore.com" dir="ltr">
+                                        <label class="mir-label" for="site-email">ایمیل فروشگاه</label>
+                                        <i class="mir-input-icon" data-feather="mail"></i>
+                                    </div>
+                                    
+                                    <div class="mir-input-group">
+                                        <select id="currency" class="mir-select" dir="rtl">
+                                            <option selected>تومان</option>
+                                            <option>ریال</option>
+                                            <option>دلار</option>
+                                            <option>یورو</option>
+                                        </select>
+                                        <label class="mir-label" for="currency">واحد پول</label>
+                                        <i class="mir-input-icon" data-feather="dollar-sign"></i>
+                                    </div>
+                                    
+                                    <div class="mir-input-group">
+                                        <select id="language" class="mir-select" dir="rtl">
+                                            <option selected>فارسی</option>
+                                            <option>انگلیسی</option>
+                                            <option>عربی</option>
+                                        </select>
+                                        <label class="mir-label" for="language">زبان پیش‌فرض</label>
+                                        <i class="mir-input-icon" data-feather="globe"></i>
+                                    </div>
+                                    
+                                    <div class="mir-form-group mir-form-group-full">
+                                        <label class="mir-label">توضیحات فروشگاه</label>
+                                        <textarea class="mir-textarea" rows="4" placeholder="توضیحات کوتاهی درباره فروشگاه خود بنویسید..." dir="rtl">میراژ استور، فروشگاهی مدرن برای تمامی نیازهای شما</textarea>
+                                    </div>
+                                    
+                                    <div class="mir-form-group mir-form-group-full">
+                                        <label class="mir-label">تنظیمات اعلان‌ها</label>
+                                        <div class="mir-checkbox-group">
+                                            <label class="mir-checkbox">
+                                                <input type="checkbox" checked>
+                                                <span class="mir-checkbox-mark"></span>
+                                                اعلان سفارشات جدید
+                                            </label>
+                                            <label class="mir-checkbox">
+                                                <input type="checkbox" checked>
+                                                <span class="mir-checkbox-mark"></span>
+                                                اعلان پیام‌های جدید
+                                            </label>
+                                            <label class="mir-checkbox">
+                                                <input type="checkbox">
+                                                <span class="mir-checkbox-mark"></span>
+                                                اعلان کاهش موجودی
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mir-form-actions">
+                                    <button type="reset" class="mir-btn mir-btn-secondary">بازنشانی</button>
+                                    <button type="submit" class="mir-btn mir-btn-primary">ذخیره تنظیمات</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
             </div>
         </main>
     </div>
