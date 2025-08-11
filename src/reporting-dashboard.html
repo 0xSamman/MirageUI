@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد گزارشات تحلیلی - Mirage Reporting Dashboard</title>
+    
+    <!-- Persian Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/fontiran/IRANSansX@v2.0/IRANSansX-font-face.css" rel="stylesheet">
+    
+    <!-- Yekan Bakh Font -->
+    <link rel="stylesheet" href="assets/css/fonts-yekanbakh.css">
+    
+    <!-- Mirage Design System Styles -->
+    <link rel="stylesheet" href="assets/css/mirage-styles.css">
+    
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="components/input/input.css">
+    <link rel="stylesheet" href="components/alert/alert.css">
+    <link rel="stylesheet" href="components/loading/loading.css">
+    <link rel="stylesheet" href="components/table/table.css">
+    <link rel="stylesheet" href="components/card/card.css">
+    <link rel="stylesheet" href="components/tabs/tabs.css">
+    <link rel="stylesheet" href="components/dropdown/dropdown.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- Chart.js for advanced charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <!-- Additional Reporting Dashboard Styles -->
+    <style>
+        /* Reporting-specific enhancements */
+        .reporting-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--mir-space-5);
+            margin-bottom: var(--mir-space-8);
+        }
+        
+        .reporting-chart-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--mir-space-5);
+            margin-bottom: var(--mir-space-8);
+        }
+        
+        .reporting-full-chart {
+            grid-column: 1 / -1;
+        }
+        
+        .reporting-filters {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: var(--mir-space-5);
+            margin-bottom: var(--mir-space-6);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--mir-space-4);
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .reporting-filter-group {
+            display: flex;
+            gap: var(--mir-space-3);
+            align-items: center;
+        }
+        
+        .reporting-export-actions {
+            display: flex;
+            gap: var(--mir-space-2);
+        }
+        
+        .kpi-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+            font-size: var(--mir-text-sm);
+            margin-top: var(--mir-space-2);
+        }
+        
+        .kpi-trend.positive {
+            color: var(--mir-success);
+        }
+        
+        .kpi-trend.negative {
+            color: var(--mir-error);
+        }
+        
+        .kpi-trend.neutral {
+            color: var(--mir-gray-600);
+        }
+        
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--mir-space-4);
+            justify-content: center;
+            margin-top: var(--mir-space-4);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--mir-space-2);
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .data-table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--mir-space-4);
+            flex-wrap: wrap;
+            gap: var(--mir-space-3);
+        }
+        
+        .table-search {
+            position: relative;
+            max-width: 300px;
+        }
+        
+        .table-search input {
+            padding-right: 40px;
+        }
+        
+        .table-search i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--mir-gray-500);
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 8;
+            r: 45;
+            cx: 50;
+            cy: 50;
+        }
+        
+        .progress-ring .background {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-ring .progress {
+            stroke: var(--mir-primary-solid);
+            stroke-linecap: round;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 70;
+            transition: stroke-dashoffset 0.5s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .reporting-chart-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reporting-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .reporting-filter-group {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body class="mir-body">
+    <!-- Top Navigation -->
+    <nav class="mir-nav">
+        <div class="mir-nav-container">
+            <!-- Logo & Brand (Right side in RTL) -->
+            <div class="mir-nav-brand">
+                <div class="mir-logo">
+                    <div class="mir-logo-icon"></div>
+                    <span class="mir-logo-text">میراژ ریپورت</span>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="mir-nav-search">
+                <div class="mir-search-container">
+                    <i data-feather="search" class="mir-search-icon"></i>
+                    <input type="text" placeholder="جستجو در گزارشات..." class="mir-search-input" dir="rtl">
+                </div>
+            </div>
+            
+            <!-- User Menu (Left side in RTL) -->
+            <div class="mir-nav-user">
+                <div class="mir-notifications">
+                    <button class="mir-notification-btn">
+                        <i data-feather="bell"></i>
+                        <span class="mir-notification-badge">۷</span>
+                    </button>
+                </div>
+                <div class="mir-user-profile">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User Avatar" class="mir-user-avatar">
+                    <div class="mir-user-info">
+                        <span class="mir-user-name">مدیر تحلیل</span>
+                        <span class="mir-user-role">آنالیست ارشد</span>
+                    </div>
+                    <i data-feather="chevron-down" class="mir-dropdown-icon"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout Container -->
+    <div class="mir-main-container">
+        <!-- Main Content Area -->
+        <main class="mir-main-content" style="margin-right: 0; padding: var(--mir-space-6);">
+            <div class="mir-content-wrapper">
+                <!-- Page Header -->
+                <header class="mir-page-header">
+                    <div class="mir-page-title">
+                        <h1 class="mir-heading-xl">داشبورد گزارشات تحلیلی</h1>
+                        <p class="mir-page-subtitle">تحلیل جامع عملکرد کسب‌وکار و آمار پیشرفته</p>
+                    </div>
+                    <div class="mir-page-actions">
+                        <button class="mir-btn mir-btn-secondary">
+                            <i data-feather="calendar" class="mir-btn-icon"></i>
+                            انتخاب بازه زمانی
+                        </button>
+                        <div class="mir-dropdown">
+                            <button class="mir-btn mir-btn-primary mir-dropdown-trigger">
+                                <i data-feather="download" class="mir-btn-icon"></i>
+                                دانلود گزارش
+                                <i data-feather="chevron-down"></i>
+                            </button>
+                            <div class="mir-dropdown-menu">
+                                <a href="#" class="mir-dropdown-item">
+                                    <i data-feather="file-text"></i>
+                                    گزارش PDF
+                                </a>
+                                <a href="#" class="mir-dropdown-item">
+                                    <i data-feather="grid"></i>
+                                    فایل Excel
+                                </a>
+                                <a href="#" class="mir-dropdown-item">
+                                    <i data-feather="bar-chart"></i>
+                                    داده‌های JSON
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Advanced Filters Section -->
+                <section class="reporting-filters">
+                    <div class="reporting-filter-group">
+                        <label class="mir-label" style="margin: 0; font-weight: 600;">بازه زمانی:</label>
+                        <select class="mir-select" style="min-width: 160px;">
+                            <option selected>۳۰ روز گذشته</option>
+                            <option>۷ روز گذشته</option>
+                            <option>۹۰ روز گذشته</option>
+                            <option>۱ سال گذشته</option>
+                            <option>دلخواه</option>
+                        </select>
+                    </div>
+                    
+                    <div class="reporting-filter-group">
+                        <label class="mir-label" style="margin: 0; font-weight: 600;">دسته‌بندی:</label>
+                        <select class="mir-select" style="min-width: 140px;">
+                            <option selected>همه دسته‌ها</option>
+                            <option>فروش</option>
+                            <option>بازاریابی</option>
+                            <option>پشتیبانی</option>
+                            <option>محصول</option>
+                        </select>
+                    </div>
+                    
+                    <div class="reporting-filter-group">
+                        <label class="mir-label" style="margin: 0; font-weight: 600;">وضعیت:</label>
+                        <select class="mir-select" style="min-width: 120px;">
+                            <option selected>همه</option>
+                            <option>فعال</option>
+                            <option>غیرفعال</option>
+                            <option>در انتظار</option>
+                        </select>
+                    </div>
+                    
+                    <div class="reporting-export-actions">
+                        <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                            <i data-feather="refresh-cw"></i>
+                            بروزرسانی
+                        </button>
+                        <button class="mir-btn mir-btn-secondary mir-btn-sm">
+                            <i data-feather="filter"></i>
+                            فیلترهای پیشرفته
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Key Performance Indicators -->
+                <section class="reporting-kpi-grid">
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon revenue" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i data-feather="trending-up"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">کل درآمد</h3>
+                            <div class="mir-metric-value">۲,۴۵۰,۰۰۰ تومان</div>
+                            <div class="kpi-trend positive">
+                                <i data-feather="arrow-up"></i>
+                                <span>+۱۸٪ نسبت به ماه قبل</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="85"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon orders" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+                            <i data-feather="shopping-cart"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">تعداد فروش</h3>
+                            <div class="mir-metric-value">۳,۲۸۹</div>
+                            <div class="kpi-trend positive">
+                                <i data-feather="arrow-up"></i>
+                                <span>+۱۲٪ افزایش</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="115"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon customers" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                            <i data-feather="users"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">کاربران فعال</h3>
+                            <div class="mir-metric-value">۱۵,۴۷۲</div>
+                            <div class="kpi-trend positive">
+                                <i data-feather="arrow-up"></i>
+                                <span>+۲۴٪ رشد</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="70"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon conversion" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <i data-feather="target"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">نرخ تبدیل</h3>
+                            <div class="mir-metric-value">۴.۷٪</div>
+                            <div class="kpi-trend negative">
+                                <i data-feather="arrow-down"></i>
+                                <span>-۱.۲٪ کاهش</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="200"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                            <i data-feather="clock"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">میانگین زمان بازدید</h3>
+                            <div class="mir-metric-value">۵:۲۷</div>
+                            <div class="kpi-trend neutral">
+                                <i data-feather="minus"></i>
+                                <span>بدون تغییر</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="140"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mir-card mir-metric-card">
+                        <div class="mir-metric-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                            <i data-feather="alert-triangle"></i>
+                        </div>
+                        <div class="mir-metric-content">
+                            <h3 class="mir-metric-title">نرخ ترک صفحه</h3>
+                            <div class="mir-metric-value">۳۲.۱٪</div>
+                            <div class="kpi-trend positive">
+                                <i data-feather="arrow-down"></i>
+                                <span>-۵٪ بهبود</span>
+                            </div>
+                            <div style="margin-top: var(--mir-space-3);">
+                                <svg class="progress-ring" width="100" height="100">
+                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="170"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced Charts Section -->
+                <section class="reporting-chart-grid">
+                    <!-- Revenue Trend Chart -->
+                    <div class="mir-card mir-chart-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">روند درآمد ماهانه</h3>
+                            <div class="mir-card-actions">
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                                    <i data-feather="maximize-2"></i>
+                                </button>
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                                    <i data-feather="download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mir-chart-container">
+                            <canvas id="revenueChart" height="300"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #6366f1;"></div>
+                                <span>درآمد فعلی</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #10b981;"></div>
+                                <span>درآمد سال گذشته</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Sources -->
+                    <div class="mir-card mir-chart-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">منابع ترافیک</h3>
+                        </div>
+                        <div class="mir-chart-container">
+                            <canvas id="trafficChart" height="300"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #6366f1;"></div>
+                                <span>جستجوی ارگانیک</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #10b981;"></div>
+                                <span>مستقیم</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f59e0b;"></div>
+                                <span>شبکه‌های اجتماعی</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sales Funnel Chart -->
+                    <div class="mir-card mir-chart-card reporting-full-chart">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">قیف فروش و تحلیل مرحله‌ای</h3>
+                            <div class="mir-card-actions">
+                                <select class="mir-select mir-select-sm">
+                                    <option selected>این ماه</option>
+                                    <option>ماه گذشته</option>
+                                    <option>۳ ماه گذشته</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mir-chart-container">
+                            <canvas id="funnelChart" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Customer Behavior Heatmap -->
+                    <div class="mir-card mir-chart-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">رفتار کاربران در طول روز</h3>
+                        </div>
+                        <div class="mir-chart-container">
+                            <canvas id="behaviorChart" height="300"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Geographic Distribution -->
+                    <div class="mir-card mir-chart-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">توزیع جغرافیایی کاربران</h3>
+                        </div>
+                        <div class="mir-chart-container">
+                            <canvas id="geoChart" height="300"></canvas>
+                        </div>
+                        <div style="padding: var(--mir-space-4); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--mir-space-3); font-size: var(--mir-text-sm);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-2); background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <span>تهران</span>
+                                <span style="font-weight: 600;">۳۴٪</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-2); background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <span>اصفهان</span>
+                                <span style="font-weight: 600;">۱۸٪</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-2); background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <span>مشهد</span>
+                                <span style="font-weight: 600;">۱۵٪</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-2); background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <span>شیراز</span>
+                                <span style="font-weight: 600;">۱۲٪</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced Data Table -->
+                <section class="mir-table-section">
+                    <div class="mir-card mir-table-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">جدول جامع تراکنش‌ها</h3>
+                            <div class="mir-card-actions">
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                                    <i data-feather="columns"></i>
+                                    ستون‌ها
+                                </button>
+                                <button class="mir-btn mir-btn-secondary mir-btn-sm">
+                                    <i data-feather="download"></i>
+                                    خروجی CSV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="data-table-controls">
+                            <div class="table-search">
+                                <input type="text" placeholder="جستجو در تراکنش‌ها..." class="mir-input" dir="rtl">
+                                <i data-feather="search"></i>
+                            </div>
+                            
+                            <div style="display: flex; gap: var(--mir-space-3); align-items: center;">
+                                <select class="mir-select mir-select-sm">
+                                    <option selected>۲۰ مورد</option>
+                                    <option>۵۰ مورد</option>
+                                    <option>۱۰۰ مورد</option>
+                                </select>
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                                    <i data-feather="filter"></i>
+                                    فیلتر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mir-table-container">
+                            <table class="mir-table" dir="rtl">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            شناسه تراکنش
+                                            <i data-feather="chevron-up" style="width: 14px; height: 14px; margin-right: 4px;"></i>
+                                        </th>
+                                        <th>مشتری</th>
+                                        <th>محصول/خدمات</th>
+                                        <th>مبلغ</th>
+                                        <th>تاریخ</th>
+                                        <th>وضعیت</th>
+                                        <th>نرخ سود</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family: monospace; font-weight: 600;">#TXN-۲۰۲۵-۰۰۱</td>
+                                        <td>
+                                            <div class="mir-table-user">
+                                                <img src="https://images.unsplash.com/photo-1494790108755-2616b332c000?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                <span>زهرا محمدی</span>
+                                            </div>
+                                        </td>
+                                        <td>پکیج طراحی وب</td>
+                                        <td class="mir-persian-numbers" style="font-weight: 600; color: var(--mir-success);">+۸۵۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۳/۰۵/۱۵ - ۱۴:۳۰</td>
+                                        <td><span class="mir-status mir-status-success">تکمیل شده</span></td>
+                                        <td style="color: var(--mir-success);">۱۵٪</td>
+                                        <td>
+                                            <div class="mir-table-actions">
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="download"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="font-family: monospace; font-weight: 600;">#TXN-۲۰۲۵-۰۰۲</td>
+                                        <td>
+                                            <div class="mir-table-user">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                <span>امیر رضایی</span>
+                                            </div>
+                                        </td>
+                                        <td>مشاوره کسب‌وکار</td>
+                                        <td class="mir-persian-numbers" style="font-weight: 600; color: var(--mir-success);">+۴۵۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۳/۰۵/۱۴ - ۱۰:۱۵</td>
+                                        <td><span class="mir-status mir-status-warning">در حال پردازش</span></td>
+                                        <td style="color: var(--mir-success);">۲۰٪</td>
+                                        <td>
+                                            <div class="mir-table-actions">
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="download"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="font-family: monospace; font-weight: 600;">#TXN-۲۰۲۵-۰۰۳</td>
+                                        <td>
+                                            <div class="mir-table-user">
+                                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                <span>فاطمه کریمی</span>
+                                            </div>
+                                        </td>
+                                        <td>برنامه موبایل</td>
+                                        <td class="mir-persian-numbers" style="font-weight: 600; color: var(--mir-error);">-۱۲۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۳/۰۵/۱۳ - ۱۶:۴۵</td>
+                                        <td><span class="mir-status mir-status-error">لغو شده</span></td>
+                                        <td style="color: var(--mir-gray-500);">-</td>
+                                        <td>
+                                            <div class="mir-table-actions">
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="rotate-ccw"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="font-family: monospace; font-weight: 600;">#TXN-۲۰۲۵-۰۰۴</td>
+                                        <td>
+                                            <div class="mir-table-user">
+                                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                <span>حسن موسوی</span>
+                                            </div>
+                                        </td>
+                                        <td>سیستم مدیریت محتوا</td>
+                                        <td class="mir-persian-numbers" style="font-weight: 600; color: var(--mir-success);">+۱,۲۰۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۳/۰۵/۱۲ - ۱۳:۲۰</td>
+                                        <td><span class="mir-status mir-status-success">تکمیل شده</span></td>
+                                        <td style="color: var(--mir-success);">۱۸٪</td>
+                                        <td>
+                                            <div class="mir-table-actions">
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="download"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="font-family: monospace; font-weight: 600;">#TXN-۲۰۲۵-۰۰۵</td>
+                                        <td>
+                                            <div class="mir-table-user">
+                                                <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=32&h=32&fit=crop&crop=face" alt="Customer" class="mir-table-avatar">
+                                                <span>مریم احمدی</span>
+                                            </div>
+                                        </td>
+                                        <td>خدمات SEO</td>
+                                        <td class="mir-persian-numbers" style="font-weight: 600; color: var(--mir-success);">+۳۲۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۳/۰۵/۱۱ - ۰۹:۳۰</td>
+                                        <td><span class="mir-status mir-status-info">در حال انجام</span></td>
+                                        <td style="color: var(--mir-success);">۲۵٪</td>
+                                        <td>
+                                            <div class="mir-table-actions">
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="eye"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="edit"></i>
+                                                </button>
+                                                <button class="mir-btn mir-btn-ghost mir-btn-xs">
+                                                    <i data-feather="more-horizontal"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Table Pagination -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--mir-space-4); border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="color: var(--mir-gray-600); font-size: var(--mir-text-sm);">
+                                نمایش ۱ تا ۵ از ۱۲۳ مورد
+                            </div>
+                            <div style="display: flex; gap: var(--mir-space-2);">
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm" disabled>
+                                    <i data-feather="chevron-right"></i>
+                                </button>
+                                <button class="mir-btn mir-btn-primary mir-btn-sm">۱</button>
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">۲</button>
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">۳</button>
+                                <button class="mir-btn mir-btn-ghost mir-btn-sm">
+                                    <i data-feather="chevron-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Actions & Export Options -->
+                <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--mir-space-5); margin-top: var(--mir-space-8);">
+                    <div class="mir-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">گزارشات اتوماتیک</h3>
+                        </div>
+                        <div style="padding: var(--mir-space-4);">
+                            <div style="display: flex; flex-direction: column; gap: var(--mir-space-3);">
+                                <label class="mir-checkbox" style="background: rgba(255, 255, 255, 0.05); padding: var(--mir-space-3); border-radius: 8px;">
+                                    <input type="checkbox" checked>
+                                    <span class="mir-checkbox-mark"></span>
+                                    <div>
+                                        <div style="font-weight: 600;">گزارش روزانه</div>
+                                        <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-600);">ارسال ایمیل در ساعت ۹ صبح</div>
+                                    </div>
+                                </label>
+                                <label class="mir-checkbox" style="background: rgba(255, 255, 255, 0.05); padding: var(--mir-space-3); border-radius: 8px;">
+                                    <input type="checkbox">
+                                    <span class="mir-checkbox-mark"></span>
+                                    <div>
+                                        <div style="font-weight: 600;">گزارش هفتگی</div>
+                                        <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-600);">یکشنبه‌ها ساعت ۸ صبح</div>
+                                    </div>
+                                </label>
+                                <label class="mir-checkbox" style="background: rgba(255, 255, 255, 0.05); padding: var(--mir-space-3); border-radius: 8px;">
+                                    <input type="checkbox" checked>
+                                    <span class="mir-checkbox-mark"></span>
+                                    <div>
+                                        <div style="font-weight: 600;">گزارش ماهانه</div>
+                                        <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-600);">اول هر ماه</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <button class="mir-btn mir-btn-primary" style="width: 100%; margin-top: var(--mir-space-4);">
+                                <i data-feather="save"></i>
+                                ذخیره تنظیمات
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mir-card">
+                        <div class="mir-card-header">
+                            <h3 class="mir-card-title">هشدارهای هوشمند</h3>
+                        </div>
+                        <div style="padding: var(--mir-space-4);">
+                            <div style="display: flex; flex-direction: column; gap: var(--mir-space-4);">
+                                <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--mir-warning); border-radius: 8px; padding: var(--mir-space-3);">
+                                    <div style="display: flex; align-items: center; gap: var(--mir-space-2); margin-bottom: var(--mir-space-2);">
+                                        <i data-feather="alert-triangle" style="color: var(--mir-warning);"></i>
+                                        <span style="font-weight: 600; color: var(--mir-warning);">هشدار کاهش فروش</span>
+                                    </div>
+                                    <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-700);">
+                                        فروش این هفته ۱۲٪ کمتر از هفته قبل است
+                                    </div>
+                                </div>
+
+                                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--mir-success); border-radius: 8px; padding: var(--mir-space-3);">
+                                    <div style="display: flex; align-items: center; gap: var(--mir-space-2); margin-bottom: var(--mir-space-2);">
+                                        <i data-feather="trending-up" style="color: var(--mir-success);"></i>
+                                        <span style="font-weight: 600; color: var(--mir-success);">رشد ترافیک</span>
+                                    </div>
+                                    <div style="font-size: var(--mir-text-sm); color: var(--mir-gray-700);">
+                                        ترافیک ارگانیک ۲۸٪ افزایش یافته
+                                    </div>
+                                </div>
+
+                                <button class="mir-btn mir-btn-secondary" style="width: 100%;">
+                                    <i data-feather="settings"></i>
+                                    تنظیم هشدارها
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/mirage-script.js"></script>
+    <script src="components/input/input.js"></script>
+    <script src="components/alert/alert.js"></script>
+    <script src="components/toast/toast.js"></script>
+    <script src="components/loading/loading.js"></script>
+    <script src="components/table/table.js"></script>
+    <script src="components/card/card.js"></script>
+    <script src="components/tabs/tabs.js"></script>
+    <script src="components/dropdown/dropdown.js"></script>
+    
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Initialize Advanced Reporting Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeReportingCharts();
+            initializeReportingInteractions();
+        });
+
+        function initializeReportingCharts() {
+            // Revenue Trend Chart with Comparison
+            const revenueCtx = document.getElementById('revenueChart');
+            if (revenueCtx) {
+                new Chart(revenueCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان'],
+                        datasets: [{
+                            label: 'درآمد امسال (تومان)',
+                            data: [450000, 680000, 520000, 750000, 890000, 1200000, 980000, 1100000],
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#6366f1',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                        }, {
+                            label: 'درآمد سال قبل (تومان)',
+                            data: [380000, 520000, 440000, 620000, 710000, 850000, 780000, 920000],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.4,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c',
+                                    callback: function(value) {
+                                        return (value / 1000) + 'K';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Traffic Sources Pie Chart
+            const trafficCtx = document.getElementById('trafficChart');
+            if (trafficCtx) {
+                new Chart(trafficCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['جستجوی ارگانیک', 'مستقیم', 'شبکه‌های اجتماعی', 'تبلیغات', 'ایمیل مارکتینگ'],
+                        datasets: [{
+                            data: [45, 25, 15, 10, 5],
+                            backgroundColor: [
+                                '#6366f1',
+                                '#10b981',
+                                '#f59e0b',
+                                '#ef4444',
+                                '#8b5cf6'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Sales Funnel Chart
+            const funnelCtx = document.getElementById('funnelChart');
+            if (funnelCtx) {
+                new Chart(funnelCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['بازدیدکنندگان', 'علاقه‌مندان', 'مشتریان بالقوه', 'خریداران', 'مشتریان وفادار'],
+                        datasets: [{
+                            label: 'تعداد',
+                            data: [15472, 8934, 4521, 1289, 456],
+                            backgroundColor: [
+                                'rgba(99, 102, 241, 0.9)',
+                                'rgba(99, 102, 241, 0.7)',
+                                'rgba(99, 102, 241, 0.5)',
+                                'rgba(99, 102, 241, 0.3)',
+                                'rgba(99, 102, 241, 0.1)'
+                            ],
+                            borderColor: '#6366f1',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Customer Behavior Heatmap (using bar chart to simulate heatmap)
+            const behaviorCtx = document.getElementById('behaviorChart');
+            if (behaviorCtx) {
+                new Chart(behaviorCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['۰-۶', '۶-۱۲', '۱۲-۱۸', '۱۸-۲۴'],
+                        datasets: [
+                            {
+                                label: 'شنبه',
+                                data: [120, 450, 380, 280],
+                                backgroundColor: 'rgba(99, 102, 241, 0.8)'
+                            },
+                            {
+                                label: 'یکشنبه',
+                                data: [80, 620, 540, 420],
+                                backgroundColor: 'rgba(16, 185, 129, 0.8)'
+                            },
+                            {
+                                label: 'دوشنبه',
+                                data: [60, 580, 720, 380],
+                                backgroundColor: 'rgba(245, 158, 11, 0.8)'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Geographic Distribution Chart
+            const geoCtx = document.getElementById('geoChart');
+            if (geoCtx) {
+                new Chart(geoCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['تهران', 'اصفهان', 'مشهد', 'شیراز', 'تبریز', 'اهواز'],
+                        datasets: [{
+                            label: 'تعداد کاربران',
+                            data: [5260, 2784, 2321, 1856, 1243, 892],
+                            backgroundColor: 'rgba(99, 102, 241, 0.8)',
+                            borderColor: '#6366f1',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#78716c'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initializeReportingInteractions() {
+            // Table search functionality
+            const searchInput = document.querySelector('.table-search input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    // Here you would implement actual search functionality
+                    console.log('Searching for:', e.target.value);
+                });
+            }
+
+            // Dropdown functionality
+            const dropdowns = document.querySelectorAll('.mir-dropdown');
+            dropdowns.forEach(dropdown => {
+                const trigger = dropdown.querySelector('.mir-dropdown-trigger');
+                const menu = dropdown.querySelector('.mir-dropdown-menu');
+                
+                if (trigger && menu) {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+                    });
+                    
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!dropdown.contains(e.target)) {
+                            menu.style.display = 'none';
+                        }
+                    });
+                }
+            });
+
+            // Demo alert on load
+            setTimeout(() => {
+                if (typeof MirageAlert !== 'undefined') {
+                    MirageAlert.success('داشبورد گزارشات آماده', 'تمامی گزارشات و آمار به‌روزرسانی شدند!', {
+                        position: 'top-right',
+                        duration: 4000,
+                        showProgress: true
+                    });
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
