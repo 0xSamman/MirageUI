@@ -1,0 +1,551 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MirageUI Design System",
+  "description": "Comprehensive Persian RTL Design System with Glass Morphism Aesthetics - AI Agent Friendly Format",
+  "version": "2.4.0",
+  "lastUpdated": "2025-08-11",
+  "language": "fa",
+  "direction": "rtl",
+  "type": "design-system",
+  
+  "metadata": {
+    "name": "MirageUI",
+    "fullName": "MirageUI Persian RTL Design System",
+    "description": "Complete right-to-left layout support optimized for Persian/Farsi interfaces with glass morphism aesthetics",
+    "author": "MirageUI Team",
+    "license": "MIT",
+    "repository": "https://github.com/0xSamman/MirageUI",
+    "documentation": "docs/mirage.md",
+    "culturalContext": "Persian/Farsi",
+    "designPhilosophy": [
+      "RTL-First Design",
+      "Persian Typography Excellence", 
+      "Glass Morphism Aesthetics",
+      "Golden Ratio Spacing",
+      "Cultural Authenticity"
+    ]
+  },
+
+  "designTokens": {
+    "colors": {
+      "primary": {
+        "gradient": "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+        "solid": "#6366f1",
+        "soft": "rgba(99, 102, 241, 0.12)",
+        "glow": "rgba(99, 102, 241, 0.4)",
+        "description": "Primary brand colors with gradient support"
+      },
+      "neutrals": {
+        "50": "#fafafa",
+        "100": "#f5f5f4", 
+        "200": "#e7e5e4",
+        "300": "#d6d3d1",
+        "400": "#a8a29e",
+        "500": "#78716c",
+        "600": "#57534e",
+        "700": "#44403c",
+        "800": "#292524",
+        "900": "#1c1917",
+        "950": "#0f0e0d",
+        "description": "Neutral color palette for text and backgrounds"
+      },
+      "semantic": {
+        "success": "#10b981",
+        "warning": "#f59e0b", 
+        "error": "#ef4444",
+        "info": "#06b6d4",
+        "description": "Semantic colors for status and feedback"
+      }
+    },
+    
+    "typography": {
+      "fontFamilies": {
+        "primary": "'YekanBakh', 'Vazirmatn Variable', Tahoma, Arial, sans-serif",
+        "fallback": "Tahoma, Arial, sans-serif",
+        "description": "Persian-optimized font stack with proper fallbacks"
+      },
+      "fontSizes": {
+        "xs": "12px",
+        "sm": "14px", 
+        "base": "clamp(1rem, 0.9rem + 0.5vw, 1.125rem)",
+        "lg": "18px",
+        "xl": "20px",
+        "2xl": "clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem)",
+        "3xl": "clamp(1.875rem, 1.5rem + 1.5vw, 3rem)",
+        "description": "Responsive typography scale with fluid sizing"
+      },
+      "lineHeights": {
+        "tight": "1.2",
+        "normal": "1.4", 
+        "relaxed": "1.6",
+        "loose": "1.75",
+        "description": "Line heights optimized for Persian script readability"
+      },
+      "fontWeights": {
+        "normal": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700,
+        "description": "Font weight scale for hierarchy"
+      }
+    },
+
+    "spacing": {
+      "scale": {
+        "1": "0.25rem",
+        "2": "4px",
+        "3": "8px", 
+        "4": "12px",
+        "5": "16px",
+        "6": "20px",
+        "7": "4.25rem",
+        "8": "6.875rem",
+        "description": "Golden ratio based spacing system"
+      },
+      "philosophy": "Golden Ratio Spacing for visual harmony"
+    },
+
+    "shadows": {
+      "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
+      "md": "0 4px 6px rgba(0, 0, 0, 0.07)",
+      "lg": "0 8px 32px rgba(0, 0, 0, 0.08)",
+      "xl": "0 20px 40px rgba(0, 0, 0, 0.12)",
+      "glow": "0 0 0 3px var(--mir-primary-soft)",
+      "description": "Elevation system with glass morphism support"
+    },
+
+    "borderRadius": {
+      "md": "6px",
+      "xl": "10px", 
+      "2xl": "14px",
+      "full": "9999px",
+      "description": "Border radius scale for modern aesthetics"
+    },
+
+    "animations": {
+      "easing": {
+        "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "decelerate": "cubic-bezier(0, 0, 0.2, 1)",
+        "accelerate": "cubic-bezier(0.4, 0, 1, 1)",
+        "spring": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        "description": "Animation timing functions"
+      },
+      "durations": {
+        "fast": "0.15s",
+        "normal": "0.2s",
+        "slow": "0.3s",
+        "description": "Standard animation durations"
+      }
+    },
+
+    "glassMorphism": {
+      "backdrop": "blur(16px)",
+      "background": "rgba(255, 255, 255, 0.95)",
+      "border": "1px solid rgba(255, 255, 255, 0.3)",
+      "description": "Glass morphism effect specifications"
+    }
+  },
+
+  "components": {
+    "statistics": {
+      "completed": 33,
+      "planned": 39,
+      "total": 72,
+      "completionRate": "45.8%"
+    },
+    
+    "categories": {
+      "navigation": {
+        "name": "Navigation & Layout",
+        "completed": 7,
+        "total": 7,
+        "status": "complete",
+        "components": [
+          "top-navigation",
+          "sidebar-navigation", 
+          "tabs",
+          "breadcrumb",
+          "dropdown", 
+          "pagination",
+          "steps-wizard"
+        ]
+      },
+      "basic": {
+        "name": "Basic Components",
+        "completed": 6,
+        "total": 6,
+        "status": "complete",
+        "components": [
+          "button-system",
+          "input-system",
+          "form-controls",
+          "textarea",
+          "select-dropdown",
+          "labels"
+        ]
+      },
+      "dataDisplay": {
+        "name": "Data Display", 
+        "completed": 6,
+        "total": 11,
+        "status": "partial",
+        "components": [
+          "metric-cards",
+          "basic-tables",
+          "status-badges", 
+          "advanced-tables",
+          "card-system",
+          "timeline"
+        ]
+      },
+      "feedback": {
+        "name": "Feedback & Status",
+        "completed": 5,
+        "total": 8, 
+        "status": "partial",
+        "components": [
+          "status-indicators",
+          "modal-dialog",
+          "alert-notification",
+          "toast-messages", 
+          "loading-states"
+        ]
+      },
+      "forms": {
+        "name": "Form Components",
+        "completed": 7,
+        "total": 14,
+        "status": "partial", 
+        "components": [
+          "form-validation"
+        ]
+      },
+      "charts": {
+        "name": "Charts & Analytics",
+        "completed": 2,
+        "total": 7,
+        "status": "partial",
+        "components": [
+          "line-charts",
+          "doughnut-charts"
+        ]
+      }
+    },
+
+    "specifications": {
+      "button": {
+        "name": "Button System",
+        "status": "completed",
+        "location": "src/components/button/",
+        "cssClass": "mir-btn",
+        "variants": [
+          "primary",
+          "secondary", 
+          "ghost",
+          "outline",
+          "success",
+          "warning",
+          "danger"
+        ],
+        "sizes": ["xs", "sm", "md", "lg", "xl"],
+        "states": ["default", "hover", "focus", "active", "disabled", "loading"],
+        "rtlSupport": true,
+        "persianText": true,
+        "accessibility": "WCAG AA compliant",
+        "description": "Complete button system with 7 variants and 5 sizes"
+      },
+
+      "input": {
+        "name": "Input System", 
+        "status": "completed",
+        "location": "src/components/input/",
+        "cssClass": "mir-input",
+        "types": ["text", "email", "password", "search", "phone", "textarea", "select"],
+        "states": ["default", "focus", "error", "disabled"],
+        "rtlSupport": true,
+        "persianNumbers": true,
+        "floatingLabels": true,
+        "icons": true,
+        "description": "Comprehensive input system with Persian number support"
+      },
+
+      "modal": {
+        "name": "Modal/Dialog System",
+        "status": "completed", 
+        "location": "src/components/modal/",
+        "cssClass": "mir-modal",
+        "variants": ["small", "medium", "large", "fullscreen"],
+        "features": ["backdrop-click-close", "escape-key-close", "focus-management"],
+        "animations": true,
+        "rtlSupport": true,
+        "persianText": true,
+        "description": "Modal system with RTL support and Persian text"
+      },
+
+      "table": {
+        "name": "Advanced Tables",
+        "status": "completed",
+        "location": "src/components/table/", 
+        "cssClass": "mir-table",
+        "features": ["sorting", "filtering", "pagination", "selection", "responsive"],
+        "rtlSupport": true,
+        "persianNumbers": true,
+        "persianDates": true,
+        "accessibility": "Screen reader support",
+        "description": "Feature-rich tables with Persian localization"
+      },
+
+      "card": {
+        "name": "Card System",
+        "status": "completed",
+        "location": "src/components/card/",
+        "cssClass": "mir-card",
+        "variants": ["basic", "stat", "user", "product", "image", "icon"],
+        "glassMorphism": true,
+        "rtlSupport": true,
+        "hoverEffects": true,
+        "description": "Versatile card system with glass morphism"
+      },
+
+      "alert": {
+        "name": "Alert/Notification System", 
+        "status": "completed",
+        "location": "src/components/alert/",
+        "cssClass": "mir-alert",
+        "types": ["success", "warning", "error", "info"],
+        "positions": ["top-left", "top-right", "bottom-left", "bottom-right"],
+        "features": ["auto-dismiss", "progress-bar", "close-button"],
+        "rtlSupport": true,
+        "persianText": true,
+        "description": "Notification system with Persian support"
+      },
+
+      "tabs": {
+        "name": "Tabs Component",
+        "status": "completed",
+        "location": "src/components/tabs/",
+        "cssClass": "mir-tabs", 
+        "variants": ["default", "pills", "bordered", "vertical"],
+        "features": ["keyboard-navigation", "closable-tabs", "badges"],
+        "rtlSupport": true,
+        "persianText": true,
+        "description": "Tabbed interface with RTL support"
+      }
+    }
+  },
+
+  "rtlConfiguration": {
+    "direction": "rtl",
+    "textAlign": "right", 
+    "iconFlipping": {
+      "arrows": "flip-horizontal",
+      "chevrons": "flip-horizontal",
+      "directional": "context-aware"
+    },
+    "layoutFlow": "right-to-left",
+    "marginPaddingLogic": "logical-properties",
+    "examples": {
+      "marginInlineStart": "margin-right in RTL",
+      "marginInlineEnd": "margin-left in RTL"
+    }
+  },
+
+  "persianLocalization": {
+    "numbers": {
+      "persian": "۰۱۲۳۴۵۶۷۸۹",
+      "english": "0123456789", 
+      "autoConversion": true,
+      "className": "mir-persian-numbers"
+    },
+    "calendar": {
+      "system": "Jalali/Persian",
+      "format": "۱۴۰۳/۰۴/۲۵",
+      "months": [
+        "فروردین", "اردیبهشت", "خرداد", "تیر",
+        "مرداد", "شهریور", "مهر", "آبان", 
+        "آذر", "دی", "بهمن", "اسفند"
+      ]
+    },
+    "currency": {
+      "symbol": "تومان",
+      "format": "۱۵۰,۰۰۰ تومان",
+      "separator": ","
+    },
+    "typography": {
+      "primaryFont": "YekanBakh",
+      "lineHeight": 1.75,
+      "characterSpacing": "optimized-for-persian"
+    }
+  },
+
+  "fileStructure": {
+    "root": "/",
+    "assets": "src/assets/",
+    "css": "src/assets/css/",
+    "js": "src/assets/js/",
+    "fonts": "src/assets/fonts/",
+    "components": "src/components/",
+    "docs": "docs/",
+    "mainStylesheet": "src/assets/css/mirage-styles.css",
+    "mainScript": "src/assets/js/mirage-script.js",
+    "dashboard": "src/index.html",
+    "componentStructure": {
+      "pattern": "src/components/[component-name]/",
+      "requiredFiles": [
+        "[component-name].css",
+        "[component-name].js", 
+        "[component-name]-docs.md",
+        "[component-name]-demo.html"
+      ]
+    }
+  },
+
+  "designPrinciples": {
+    "rtlFirst": {
+      "description": "All components designed with right-to-left layout as primary consideration",
+      "implementation": "Direction RTL, text-align right, icon positioning"
+    },
+    "persianTypography": {
+      "description": "YekanBakh font optimized for Persian script",
+      "features": ["proper-fallbacks", "line-height-1.75", "character-spacing"]
+    },
+    "glassMorphism": {
+      "description": "Modern backdrop blur effects and transparent backgrounds",
+      "implementation": "backdrop-filter: blur(16px), transparent backgrounds"
+    },
+    "goldenRatioSpacing": {
+      "description": "Mathematical spacing system for visual harmony",
+      "ratio": "1.618",
+      "application": "margins, paddings, component spacing"
+    },
+    "semanticColors": {
+      "description": "Consistent color palette with Persian cultural considerations",
+      "culturalColors": "Turquoise/teal accents, warm neutrals"
+    }
+  },
+
+  "developmentGuidelines": {
+    "naming": {
+      "convention": "mir-component-name",
+      "prefix": "mir-",
+      "example": "mir-btn, mir-input, mir-card"
+    },
+    "css": {
+      "architecture": "CSS Custom Properties",
+      "methodology": "BEM-like with mir- prefix",
+      "rtlConsiderations": ["logical-properties", "right-alignment", "icon-positioning"]
+    },
+    "javascript": {
+      "framework": "Vanilla JavaScript",
+      "pattern": "Module pattern",
+      "eventSystem": "Custom events",
+      "persianNumbers": "Automatic conversion"
+    },
+    "accessibility": {
+      "standard": "WCAG AA",
+      "features": ["keyboard-navigation", "screen-reader-support", "focus-management"],
+      "testing": "Required for all components"
+    }
+  },
+
+  "buildSystem": {
+    "type": "static",
+    "noCompilation": true,
+    "development": {
+      "server": "Open src/index.html in browser", 
+      "components": "Open component demo files"
+    },
+    "deployment": "Static file hosting"
+  },
+
+  "qualityStandards": {
+    "checklist": [
+      "RTL layout works correctly",
+      "Persian text renders properly", 
+      "All variants implemented",
+      "Mobile responsive design",
+      "Keyboard accessibility",
+      "Screen reader support",
+      "Documentation complete",
+      "Demo page showcases all features"
+    ],
+    "browser-support": [
+      "Chrome 90+",
+      "Firefox 88+", 
+      "Safari 14+",
+      "Edge 90+"
+    ]
+  },
+
+  "aiAgentInstructions": {
+    "componentCreation": {
+      "steps": [
+        "Create component directory in src/components/",
+        "Follow mir-component-name convention",
+        "Include CSS, JS, docs, and demo files",
+        "Ensure RTL compatibility",
+        "Test with Persian content", 
+        "Add to main dashboard if applicable",
+        "Update COMPONENT_ROADMAP.md",
+        "Update this design.json file"
+      ],
+      "requiredFeatures": [
+        "RTL support",
+        "Persian text compatibility",
+        "Glass morphism styling",
+        "Responsive design", 
+        "Accessibility compliance"
+      ]
+    },
+    "styling": {
+      "useVariables": "All styling should use CSS custom properties from :root",
+      "rtlProperties": "Use logical properties (margin-inline-start vs margin-left)",
+      "typography": "Always use YekanBakh font family",
+      "glassMorphism": "Include backdrop-filter and transparent backgrounds"
+    },
+    "testing": {
+      "browsers": "Test in Chrome, Firefox, Safari, Edge",
+      "devices": "Desktop, tablet, mobile responsive",
+      "languages": "Test with Persian text and numbers",
+      "accessibility": "Screen reader and keyboard navigation"
+    }
+  },
+
+  "integration": {
+    "dashboard": {
+      "location": "src/index.html",
+      "sections": [
+        "navigation",
+        "metrics", 
+        "forms",
+        "tables",
+        "charts"
+      ],
+      "updateRequired": "Add new components to sidebar navigation and demo sections"
+    },
+    "stylesheets": {
+      "main": "src/assets/css/mirage-styles.css",
+      "components": "Individual component CSS files",
+      "imports": "Link component stylesheets in index.html head"
+    },
+    "scripts": {
+      "main": "src/assets/js/mirage-script.js", 
+      "components": "Individual component JS files",
+      "initialization": "DOMContentLoaded event handlers"
+    }
+  },
+
+  "maintenance": {
+    "versioning": "Semantic versioning (major.minor.patch)",
+    "updates": {
+      "weekly": "Progress review",
+      "monthly": "Roadmap reassessment", 
+      "quarterly": "Priority adjustments"
+    },
+    "documentation": {
+      "componentRoadmap": "COMPONENT_ROADMAP.md - MUST update after every component",
+      "claudeInstructions": "CLAUDE.md - Update with new components",
+      "designSystem": "design.json - This file, update with all changes"
+    }
+  }
+}
