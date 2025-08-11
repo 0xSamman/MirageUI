@@ -144,16 +144,28 @@
             color: var(--mir-gray-500);
         }
         
+        /* KPI Card Layout Improvements */
+        .kpi-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--mir-space-4);
+        }
+        
+        .kpi-progress-container {
+            flex-shrink: 0;
+        }
+        
         .progress-ring {
             transform: rotate(-90deg);
         }
         
         .progress-ring circle {
             fill: none;
-            stroke-width: 8;
-            r: 45;
-            cx: 50;
-            cy: 50;
+            stroke-width: 6;
+            r: 24;
+            cx: 30;
+            cy: 30;
         }
         
         .progress-ring .background {
@@ -163,9 +175,27 @@
         .progress-ring .progress {
             stroke: var(--mir-primary-solid);
             stroke-linecap: round;
-            stroke-dasharray: 283;
-            stroke-dashoffset: 70;
+            stroke-dasharray: 151;
+            stroke-dashoffset: 45;
             transition: stroke-dashoffset 0.5s ease-in-out;
+        }
+        
+        /* Ensure metric cards have proper layout */
+        .mir-metric-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mir-metric-content {
+            flex: 1;
+        }
+        
+        .mir-metric-title {
+            margin-bottom: var(--mir-space-2);
+        }
+        
+        .mir-metric-value {
+            margin-bottom: var(--mir-space-3);
         }
         
         @media (max-width: 768px) {
@@ -313,8 +343,16 @@
                 <!-- Key Performance Indicators -->
                 <section class="reporting-kpi-grid">
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon revenue" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                            <i data-feather="trending-up"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon revenue" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <i data-feather="trending-up"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="188" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="188" stroke-dashoffset="56"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">کل درآمد</h3>
@@ -323,18 +361,20 @@
                                 <i data-feather="arrow-up"></i>
                                 <span>+۱۸٪ نسبت به ماه قبل</span>
                             </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="85"></circle>
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon orders" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
-                            <i data-feather="shopping-cart"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon orders" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+                                <i data-feather="shopping-cart"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="151" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="151" stroke-dashoffset="75"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">تعداد فروش</h3>
@@ -343,18 +383,20 @@
                                 <i data-feather="arrow-up"></i>
                                 <span>+۱۲٪ افزایش</span>
                             </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="115"></circle>
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon customers" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
-                            <i data-feather="users"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon customers" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                                <i data-feather="users"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="151" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="151" stroke-dashoffset="37"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">کاربران فعال</h3>
@@ -363,18 +405,20 @@
                                 <i data-feather="arrow-up"></i>
                                 <span>+۲۴٪ رشد</span>
                             </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="70"></circle>
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon conversion" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                            <i data-feather="target"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon conversion" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <i data-feather="target"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="151" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="151" stroke-dashoffset="120"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">نرخ تبدیل</h3>
@@ -383,18 +427,20 @@
                                 <i data-feather="arrow-down"></i>
                                 <span>-۱.۲٪ کاهش</span>
                             </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="200"></circle>
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
-                            <i data-feather="clock"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                                <i data-feather="clock"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="151" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="151" stroke-dashoffset="90"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">میانگین زمان بازدید</h3>
@@ -403,18 +449,20 @@
                                 <i data-feather="minus"></i>
                                 <span>بدون تغییر</span>
                             </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="140"></circle>
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
                     <div class="mir-card mir-metric-card">
-                        <div class="mir-metric-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-                            <i data-feather="alert-triangle"></i>
+                        <div class="kpi-card-header">
+                            <div class="mir-metric-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                <i data-feather="alert-triangle"></i>
+                            </div>
+                            <div class="kpi-progress-container">
+                                <svg class="progress-ring" width="60" height="60">
+                                    <circle class="background" stroke-dasharray="151" stroke-dashoffset="0"></circle>
+                                    <circle class="progress" stroke-dasharray="151" stroke-dashoffset="100"></circle>
+                                </svg>
+                            </div>
                         </div>
                         <div class="mir-metric-content">
                             <h3 class="mir-metric-title">نرخ ترک صفحه</h3>
@@ -422,12 +470,6 @@
                             <div class="kpi-trend positive">
                                 <i data-feather="arrow-down"></i>
                                 <span>-۵٪ بهبود</span>
-                            </div>
-                            <div style="margin-top: var(--mir-space-3);">
-                                <svg class="progress-ring" width="100" height="100">
-                                    <circle class="background" stroke-dasharray="283" stroke-dashoffset="0"></circle>
-                                    <circle class="progress" stroke-dasharray="283" stroke-dashoffset="170"></circle>
-                                </svg>
                             </div>
                         </div>
                     </div>
@@ -860,9 +902,19 @@
         });
 
         function initializeReportingCharts() {
+            // Destroy existing charts to prevent conflicts
+            Chart.helpers.each(Chart.instances, function(instance) {
+                instance.destroy();
+            });
+            
             // Revenue Trend Chart with Comparison
             const revenueCtx = document.getElementById('revenueChart');
             if (revenueCtx) {
+                const existingChart = Chart.getChart(revenueCtx);
+                if (existingChart) {
+                    existingChart.destroy();
+                }
+                
                 new Chart(revenueCtx, {
                     type: 'line',
                     data: {
@@ -931,6 +983,11 @@
             // Traffic Sources Pie Chart
             const trafficCtx = document.getElementById('trafficChart');
             if (trafficCtx) {
+                const existingTrafficChart = Chart.getChart(trafficCtx);
+                if (existingTrafficChart) {
+                    existingTrafficChart.destroy();
+                }
+                
                 new Chart(trafficCtx, {
                     type: 'doughnut',
                     data: {
